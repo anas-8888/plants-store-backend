@@ -1,5 +1,19 @@
 const pool = require("../config/db");
 
+// Create a new customer
+async function createCustomer(customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  const [result] = await connection.execute(
+    'INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)',
+    [firstName, lastName, email, thumbnail, googleId]
+  );
+  
+  connection.release();
+  return result.insertId;
+}
+
 // Find all customers
 async function findAllCustomer() {
   const connection = await pool.getConnection();
@@ -43,6 +57,19 @@ async function findCustomerByEmail(email) {
   return rows.length > 0 ? rows[0] : null;
 }
 
+// Update customer by ID
+async function updateCustomer(id, customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  await connection.execute(
+    'UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ? WHERE id = ?',
+    [firstName, lastName, email, thumbnail, googleId, id]
+  );
+  
+  connection.release();
+}
+
 // Delete customer by ID
 async function deleteCustomer(id) {
   const connection = await pool.getConnection();
@@ -51,10 +78,12 @@ async function deleteCustomer(id) {
 }
 
 module.exports = {
+  createCustomer,
   findAllCustomer,
   findCustomerById,
   findCustomerByGoogleId,
   findCustomerByName,
   findCustomerByEmail,
+  updateCustomer,
   deleteCustomer,
 };
