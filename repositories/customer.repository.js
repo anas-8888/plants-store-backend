@@ -1,18 +1,30 @@
 const pool = require("../config/db");
 
+<<<<<<< HEAD
+=======
+// Create a new customer
+>>>>>>> 549333a8cbe8a9dd5e99b8c623397f2fb752a83c
 async function createCustomer(customerData) {
   const connection = await pool.getConnection();
   const { firstName, lastName, email, thumbnail, googleId } = customerData;
 
   const [result] = await connection.execute(
+<<<<<<< HEAD
     "INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)",
     [firstName, lastName, email, thumbnail, googleId]
   );
 
+=======
+    'INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)',
+    [firstName, lastName, email, thumbnail, googleId]
+  );
+  
+>>>>>>> 549333a8cbe8a9dd5e99b8c623397f2fb752a83c
   connection.release();
   return result.insertId;
 }
 
+<<<<<<< HEAD
 // Update customer by ID
 async function updateCustomer(id, customerData) {
   const connection = await pool.getConnection();
@@ -26,6 +38,8 @@ async function updateCustomer(id, customerData) {
   connection.release();
 }
 
+=======
+>>>>>>> 549333a8cbe8a9dd5e99b8c623397f2fb752a83c
 // Find all customers
 async function findAllCustomer() {
   const connection = await pool.getConnection();
@@ -77,6 +91,19 @@ async function findCustomerByEmail(email) {
   return rows.length > 0 ? rows[0] : null;
 }
 
+// Update customer by ID
+async function updateCustomer(id, customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  await connection.execute(
+    'UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ? WHERE id = ?',
+    [firstName, lastName, email, thumbnail, googleId, id]
+  );
+  
+  connection.release();
+}
+
 // Delete customer by ID
 async function deleteCustomer(id) {
   const connection = await pool.getConnection();
@@ -85,11 +112,13 @@ async function deleteCustomer(id) {
 }
 
 module.exports = {
+  createCustomer,
   findAllCustomer,
   findCustomerById,
   findCustomerByGoogleId,
   findCustomerByName,
   findCustomerByEmail,
+  updateCustomer,
   deleteCustomer,
   createCustomer,
   updateCustomer,
