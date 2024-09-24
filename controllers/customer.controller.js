@@ -1,6 +1,33 @@
 const customerRepository = require("../repositories/customer.repository");
 const validator = require("validator");
 
+// Create a new customer
+async function createCustomer(customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  const [result] = await connection.execute(
+    "INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)",
+    [firstName, lastName, email, thumbnail, googleId]
+  );
+
+  connection.release();
+  return result.insertId;
+}
+
+// Update customer by ID
+async function updateCustomer(id, customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  await connection.execute(
+    "UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ? WHERE id = ?",
+    [firstName, lastName, email, thumbnail, googleId, id]
+  );
+
+  connection.release();
+}
+
 // Get all customers
 async function getAllCustomer(req, res) {
   try {
@@ -77,4 +104,6 @@ module.exports = {
   findCustomerByName,
   findCustomerByEmail,
   deleteCustomer,
+  createCustomer,
+  updateCustomer,
 };

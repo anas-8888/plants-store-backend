@@ -1,9 +1,35 @@
 const pool = require("../config/db");
 
+async function createCustomer(customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  const [result] = await connection.execute(
+    "INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)",
+    [firstName, lastName, email, thumbnail, googleId]
+  );
+
+  connection.release();
+  return result.insertId;
+}
+
+// Update customer by ID
+async function updateCustomer(id, customerData) {
+  const connection = await pool.getConnection();
+  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+
+  await connection.execute(
+    "UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ? WHERE id = ?",
+    [firstName, lastName, email, thumbnail, googleId, id]
+  );
+
+  connection.release();
+}
+
 // Find all customers
 async function findAllCustomer() {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM customer');
+  const [rows] = await connection.query("SELECT * FROM customer");
   connection.release();
   return rows;
 }
@@ -11,7 +37,9 @@ async function findAllCustomer() {
 // Find customer by ID
 async function findCustomerById(id) {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM customer WHERE id = ?', [id]);
+  const [rows] = await connection.query("SELECT * FROM customer WHERE id = ?", [
+    id,
+  ]);
   connection.release();
   return rows.length > 0 ? rows[0] : null;
 }
@@ -19,7 +47,10 @@ async function findCustomerById(id) {
 // Find customer by GoogleID
 async function findCustomerByGoogleId(googleId) {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM customer WHERE googleId = ?', [googleId]);
+  const [rows] = await connection.query(
+    "SELECT * FROM customer WHERE googleId = ?",
+    [googleId]
+  );
   connection.release();
   return rows.length > 0 ? rows[0] : null;
 }
@@ -28,7 +59,7 @@ async function findCustomerByGoogleId(googleId) {
 async function findCustomerByName(name) {
   const connection = await pool.getConnection();
   const [rows] = await connection.query(
-    'SELECT * FROM customer WHERE firstName LIKE ? OR lastName LIKE ?', 
+    "SELECT * FROM customer WHERE firstName LIKE ? OR lastName LIKE ?",
     [`%${name}%`, `%${name}%`]
   );
   connection.release();
@@ -38,7 +69,10 @@ async function findCustomerByName(name) {
 // Find customer by email
 async function findCustomerByEmail(email) {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM customer WHERE email = ?', [email]);
+  const [rows] = await connection.query(
+    "SELECT * FROM customer WHERE email = ?",
+    [email]
+  );
   connection.release();
   return rows.length > 0 ? rows[0] : null;
 }
@@ -46,7 +80,7 @@ async function findCustomerByEmail(email) {
 // Delete customer by ID
 async function deleteCustomer(id) {
   const connection = await pool.getConnection();
-  await connection.execute('DELETE FROM customer WHERE id = ?', [id]);
+  await connection.execute("DELETE FROM customer WHERE id = ?", [id]);
   connection.release();
 }
 
@@ -57,4 +91,6 @@ module.exports = {
   findCustomerByName,
   findCustomerByEmail,
   deleteCustomer,
+  createCustomer,
+  updateCustomer,
 };

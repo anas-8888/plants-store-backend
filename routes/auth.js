@@ -1,9 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const { 
-  checkNotLoggedIn,
-  checkLoggedIn
-} = require("./../midleware/auth");
+const { checkNotLoggedIn, checkLoggedIn } = require("./../middleware/auth");
 
 const auth = express.Router();
 
@@ -29,7 +26,7 @@ auth.get(
 // Auth logout
 auth.get("/logout", checkLoggedIn, (req, res) => {
   req.logout();
-  res.send('successful logout');
-}); 
+  res.send("successful logout");
+});
 
 module.exports = auth;

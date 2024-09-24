@@ -5,7 +5,7 @@ const {
   getOrderById,
   getAllProfits,
 } = require("../controllers/order.controller");
-const { validateOrder } = require("../midleware/orderValidation");
+const { validateOrder } = require("../middleware/orderValidation");
 
 const orderRouter = express.Router();
 
