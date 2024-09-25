@@ -1,11 +1,20 @@
 CREATE TABLE plant (
   id INT AUTO_INCREMENT PRIMARY KEY,
   plant_name VARCHAR(100) NOT NULL,
-  description TEXT NOT NULL,
-  photo VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL DEFAULT 'no info',
   price DECIMAL(10, 2) NOT NULL,
   pot VARCHAR(50) NOT NULL,
   quantity INT NOT NULL,
+  water VARCHAR(255) NOT NULL DEFAULT 'no info',
+  light VARCHAR(255) NOT NULL DEFAULT 'no info',
+  toxicity VARCHAR(255) NOT NULL DEFAULT 'no info',
+  humidity VARCHAR(255) NOT NULL DEFAULT 'no info',
+  problems_pests VARCHAR(255) NOT NULL DEFAULT 'no info',
+  fertilizing VARCHAR(255) NOT NULL DEFAULT 'no info',
+  temperatures VARCHAR(255) NOT NULL DEFAULT 'no info',
+  soil_repotting VARCHAR(255) NOT NULL DEFAULT 'no info',
+  learn_more VARCHAR(255) NOT NULL DEFAULT 'no info',
+  characteristics VARCHAR(255) NOT NULL DEFAULT 'no info',
   subcategory_id INT NOT NULL,
   FOREIGN KEY (subcategory_id) REFERENCES subcategory(id) ON DELETE CASCADE
 );

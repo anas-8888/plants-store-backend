@@ -1,218 +1,135 @@
-const pool = require("../config/db");
-const validator = require("validator");
+const db = require("../config/db");
 
-// Create Plant
 async function savePlant(plantData) {
-  const {
-    plant_name,
-    description,
-    photo,
-    price,
-    pot,
-    quantity,
-    subcategory_id,
-  } = plantData;
-
+  const query = `
+    INSERT INTO plant (plant_name, description, price, pot, quantity, water, light, toxicity, humidity, problems_pests, fertilizing, temperatures, soil_repotting, learn_more, characteristics, subcategory_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
   try {
-    const connection = await pool.getConnection();
-
-    const query = `
-      INSERT INTO plant (plant_name, description, photo, price, pot, quantity, subcategory_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    const [result] = await connection.execute(query, [
-      plant_name,
-      description,
-      photo,
-      price,
-      pot,
-      quantity,
-      subcategory_id,
+    const result = await db.execute(query, [
+      plantData.plant_name,
+      plantData.description,
+      plantData.price,
+      plantData.pot,
+      plantData.quantity,
+      plantData.water,
+      plantData.light,
+      plantData.toxicity,
+      plantData.humidity,
+      plantData.problems_pests,
+      plantData.fertilizing,
+      plantData.temperatures,
+      plantData.soil_repotting,
+      plantData.learn_more,
+      plantData.characteristics,
+      plantData.subcategory_id,
     ]);
-
-    connection.release();
-
     return result;
   } catch (error) {
-    console.error("Error creating plant:", error);
-    throw error;
+    throw new Error("Database error: " + error.message);
   }
 }
 
-// Find All Plants
+async function savePlantPhotos(plantId, photos) {
+  const query = `INSERT INTO plant_photo (plant_id, photo) VALUES (?, ?)`;
+  for (const photo of photos) {
+    await db.execute(query, [plantId, photo.path]);
+  }
+}
+
 async function findAllPlants() {
-  try {
-    const connection = await pool.getConnection();
-
-    const query = `SELECT * FROM plant`;
-
-    const [rows] = await connection.execute(query);
-
-    connection.release();
-
-    return rows;
-  } catch (error) {
-    console.error("Error finding plants:", error);
-    throw error;
-  }
+  const query = `SELECT * FROM plant`;
+  const [plants] = await db.execute(query);
+  return plants;
 }
 
-// Find Plant By ID
-async function findPlantById(plantId) {
-  try {
-    const connection = await pool.getConnection();
-
-    const query = `SELECT * FROM plant WHERE id = ?`;
-
-    const [rows] = await connection.execute(query, [plantId]);
-
-    connection.release();
-
-    if (rows.length === 0) {
-      throw new Error("Plant Not Found!");
-    }
-
-    return rows[0];
-  } catch (error) {
-    console.error("Error finding plant by ID:", error);
-    throw error;
-  }
+async function findPlantById(id) {
+  const query = `SELECT * FROM plant WHERE id = ?`;
+  const [plants] = await db.execute(query, [id]);
+  return plants[0];
 }
 
 async function findPlantsBySubcategory(subcategoryId) {
   try {
-    const connection = await pool.getConnection();
-    const query = `SELECT * FROM plant WHERE subcategory_id = ?`;
+    const [plants] = await db.query(
+      'SELECT * FROM plant WHERE subcategory_id = ?',
+      [subcategoryId]
+    );
 
-    const [rows] = await connection.execute(query, [subcategoryId]);
-
-    connection.release();
-
-    if (rows.length === 0) {
-      throw new Error("No plants found for the given subcategory.");
-    }
-
-    return rows;
+    return plants;
   } catch (error) {
-    console.error("Error finding plants by subcategory:", error);
+    console.error('Error fetching plants by subcategory:', error);
     throw error;
   }
 }
-async function updatePlant(plantId, plantData) {
-  const {
-    plant_name,
-    description,
-    photo,
-    price,
-    pot,
-    quantity,
-    subcategory_id,
-  } = plantData;
 
-  try {
-    const connection = await pool.getConnection();
-
-    const updates = [];
-    const values = [];
-
-    if (plant_name !== undefined) {
-      updates.push("plant_name = ?");
-      values.push(plant_name);
-    }
-
-    if (description !== undefined) {
-      updates.push("description = ?");
-      values.push(description);
-    }
-
-    if (photo !== undefined) {
-      updates.push("photo = ?");
-      values.push(photo);
-    }
-
-    if (price !== undefined) {
-      if (!validator.isDecimal(String(price), { decimal_digits: "1,2" })) {
-        throw new Error("Invalid Price Format!");
-      }
-      updates.push("price = ?");
-      values.push(price);
-    }
-
-    if (pot !== undefined) {
-      updates.push("pot = ?");
-      values.push(pot);
-    }
-
-    if (quantity !== undefined) {
-      if (!validator.isInt(String(quantity))) {
-        throw new Error("Invalid Quantity Format!");
-      }
-      updates.push("quantity = ?");
-      values.push(quantity);
-    }
-
-    if (subcategory_id !== undefined) {
-      if (!validator.isInt(String(subcategory_id))) {
-        throw new Error("Invalid Subcategory ID!");
-      }
-      updates.push("subcategory_id = ?");
-      values.push(subcategory_id);
-    }
-
-    if (updates.length === 0) {
-      throw new Error("No fields to update!");
-    }
-
-    const query = `
-        UPDATE plant
-        SET ${updates.join(", ")}
-        WHERE id = ?
-      `;
-    values.push(plantId);
-
-    const [result] = await connection.execute(query, values);
-
-    connection.release();
-
-    if (result.affectedRows === 0) {
-      throw new Error("Plant Not Found or Not Updated");
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error updating plant:", error);
-    return { success: false, message: error.message };
-  }
+async function findPlantPhotosById(plantId) {
+  const query = `SELECT * FROM plant_photo WHERE plant_id = ?`;
+  const [photos] = await db.execute(query, [plantId]);
+  return photos;
 }
 
-// Delete Plant
-async function deletePlant(plantId) {
-  try {
-    const connection = await pool.getConnection();
+async function findPlantPhotoById(photoId) {
+  const query = `SELECT * FROM plant_photo WHERE id = ?`;
+  const [photos] = await db.execute(query, [photoId]);
+  return photos[0];
+}
 
-    const query = `DELETE FROM plant WHERE id = ?`;
+async function updatePlant(id, plantData) {
+  let query = `
+    UPDATE plant
+    SET plant_name = ?, description = ?, price = ?, pot = ?, quantity = ?, subcategory_id = ?,
+        water = ?, light = ?, toxicity = ?, humidity = ?, problems_pests = ?, fertilizing = ?,
+        temperatures = ?, soil_repotting = ?, learn_more = ?, characteristics = ?
+    WHERE id = ?
+  `;
+  const result = await db.execute(query, [
+    plantData.plant_name,
+    plantData.description,
+    plantData.price,
+    plantData.pot,
+    plantData.quantity,
+    plantData.subcategory_id,
+    plantData.water,
+    plantData.light,
+    plantData.toxicity,
+    plantData.humidity,
+    plantData.problems_pests,
+    plantData.fertilizing,
+    plantData.temperatures,
+    plantData.soil_repotting,
+    plantData.learn_more,
+    plantData.characteristics,
+    id,
+  ]);
+  return { success: result[0].affectedRows > 0, message: "Plant updated successfully" };
+}
 
-    const [result] = await connection.execute(query, [plantId]);
+async function deletePlant(id) {
+  const query = `DELETE FROM plant WHERE id = ?`;
+  await db.execute(query, [id]);
+}
 
-    connection.release();
+async function deletePlantPhotos(plantId) {
+  const query = `DELETE FROM plant_photo WHERE plant_id = ?`;
+  await db.execute(query, [plantId]);
+}
 
-    if (result.affectedRows === 0) {
-      throw new Error("Plant Not Found or Already Deleted");
-    }
-
-    return result;
-  } catch (error) {
-    console.error("Error deleting plant:", error);
-    throw error;
-  }
+async function deletePlantPhoto(photoId) {
+  const query = `DELETE FROM plant_photo WHERE id = ?`;
+  await db.execute(query, [photoId]);
 }
 
 module.exports = {
   savePlant,
+  savePlantPhotos,
   findAllPlants,
   findPlantById,
+  findPlantPhotosById,
+  findPlantPhotoById,
+  findPlantsBySubcategory,
   updatePlant,
   deletePlant,
-  findPlantsBySubcategory,
+  deletePlantPhotos,
+  deletePlantPhoto,
 };

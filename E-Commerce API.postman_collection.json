@@ -66,7 +66,8 @@
 							],
 							"variable": [
 								{
-									"key": "name"
+									"key": "name",
+									"value": "anas"
 								}
 							]
 						}
@@ -107,13 +108,19 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{ \"category_name\": \"string\" }",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category_name",
+									"value": "string",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "Screenshot (387).png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{base_url}}/createCategory",
@@ -161,7 +168,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "8"
 								}
 							]
 						}
@@ -185,7 +192,7 @@
 							"variable": [
 								{
 									"key": "name",
-									"value": "Gifts"
+									"value": "string"
 								}
 							]
 						}
@@ -198,13 +205,20 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{ \"category_name\": \"annnnnnas\" }",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category_name",
+									"value": "sssssssss",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "Screenshot (381).png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{base_url}}/updateCategory/:id",
@@ -218,7 +232,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -241,7 +255,8 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "7"
 								}
 							]
 						}
@@ -259,13 +274,24 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{ \"subcategory_name\": \"string\", \"category_id\": 1 }",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "subcategory_name",
+									"value": "substring",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "Screenshot (463).png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{base_url}}/createSubcategory",
@@ -312,7 +338,32 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subcategory By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findSubcategoryByName/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findSubcategoryByName",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "substring"
 								}
 							]
 						}
@@ -325,13 +376,26 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{ \"subcategory_name\": \"string\", \"category_id\": 1 }",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "subcategory_name",
+									"value": "new subcategory",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category_id",
+									"value": "9",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "Screenshot (482).png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{base_url}}/updateSubcategory/:id",
@@ -344,7 +408,8 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "10"
 								}
 							]
 						}
@@ -367,7 +432,8 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "6"
 								}
 							]
 						}
@@ -385,13 +451,98 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{ \"plant_name\": \"string\", \"description\": \"text\", \"photo\": \"url\", \"price\": 0.0, \"pot\": \"size\", \"quantity\": 10, \"subcategory_id\": 1 }",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plant_name",
+									"value": "Monstera Deliciosa",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "A tropical plant with large, split leaves.",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "29.99",
+									"type": "text"
+								},
+								{
+									"key": "pot",
+									"value": "Ceramic",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "subcategory_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "water",
+									"value": "Weekly",
+									"type": "text"
+								},
+								{
+									"key": "light",
+									"value": "Bright indirect light",
+									"type": "text"
+								},
+								{
+									"key": "toxicity",
+									"value": "Mildly toxic to pets",
+									"type": "text"
+								},
+								{
+									"key": "humidity",
+									"value": "High humidity",
+									"type": "text"
+								},
+								{
+									"key": "problems_pests",
+									"value": "Susceptible to spider mites",
+									"type": "text"
+								},
+								{
+									"key": "fertilizing",
+									"value": "Monthly",
+									"type": "text"
+								},
+								{
+									"key": "temperatures",
+									"value": "65-85°F",
+									"type": "text"
+								},
+								{
+									"key": "soil_repotting",
+									"value": "Well-draining soil",
+									"type": "text"
+								},
+								{
+									"key": "learn_more",
+									"value": "This plant is native to tropical rainforests",
+									"type": "text"
+								},
+								{
+									"key": "characteristics",
+									"value": "Large leaves with distinctive holes",
+									"type": "text"
+								},
+								{
+									"key": "photos",
+									"type": "file",
+									"src": [
+										"Screenshot (81).png",
+										"Screenshot (81).png",
+										"Screenshot (82).png"
+									]
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{base_url}}/createPlant",
@@ -438,7 +589,32 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "27"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Plant By subcategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findPlantsBySubcategory/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findPlantsBySubcategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
 								}
 							]
 						}
@@ -451,13 +627,110 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"plant_name\": \"fff2fff\",\r\n    \"description\": \"text\",\r\n    \"photo\": \"url\",\r\n    \"price\": 0.0,\r\n    \"pot\": \"size\",\r\n    \"quantity\": 10,\r\n    \"subcategory_id\": 1\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plant_name",
+									"value": "Monstera Deliciosa",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "A tropical plant with large, split leaves.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "39.99",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pot",
+									"value": "Ceramic",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "quantity",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "subcategory_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "water",
+									"value": "Weekly",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "light",
+									"value": "Bright indirect light",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "toxicity",
+									"value": "Mildly toxic to pets",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "humidity",
+									"value": "High humidity",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "problems_pests",
+									"value": "Susceptible to spider mites",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "fertilizing",
+									"value": "Monthly",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "temperatures",
+									"value": "65-85°F",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "soil_repotting",
+									"value": "Well-draining soil",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "learn_more",
+									"value": "This plant is native to tropical rainforests",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "characteristics",
+									"value": "Large leaves with distinctive holes",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photos",
+									"type": "file",
+									"src": "Screenshot (397).png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{base_url}}/updatePlant/:id",
@@ -471,7 +744,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "5"
+									"value": "27"
 								}
 							]
 						}
@@ -494,7 +767,32 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "27"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Photo Plant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deletePlantPhoto/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deletePlantPhoto",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "36"
 								}
 							]
 						}

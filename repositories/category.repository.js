@@ -1,19 +1,16 @@
 const pool = require("../config/db");
 
-// Create Category
 async function saveCategory(categoryData) {
   try {
-    const { category_name } = categoryData;
-
+    const { category_name, photoPath } = categoryData;
     const connection = await pool.getConnection();
 
     const query = `
-      INSERT INTO category (category_name)
-      VALUES (?)
+      INSERT INTO category (category_name, photoPath)
+      VALUES (?, ?)
     `;
 
-    const [result] = await connection.execute(query, [category_name]);
-
+    const [result] = await connection.execute(query, [category_name, photoPath]);
     connection.release();
     return result;
   } catch (error) {
@@ -22,17 +19,11 @@ async function saveCategory(categoryData) {
   }
 }
 
-// Find All Categories
 async function findAllCategories() {
   try {
     const connection = await pool.getConnection();
-
-    const query = `
-      SELECT * FROM category
-    `;
-
+    const query = `SELECT * FROM category`;
     const [rows] = await connection.execute(query);
-
     connection.release();
     return rows;
   } catch (error) {
@@ -41,16 +32,11 @@ async function findAllCategories() {
   }
 }
 
-// Find Category By ID
 async function findCategoryById(categoryId) {
   try {
     const connection = await pool.getConnection();
-    const query = `
-      SELECT * FROM category WHERE id = ?
-    `;
-
+    const query = `SELECT * FROM category WHERE id = ?`;
     const [rows] = await connection.execute(query, [categoryId]);
-
     connection.release();
 
     if (rows.length === 0) {
@@ -67,9 +53,7 @@ async function findCategoryByName(name) {
   try {
     const connection = await pool.getConnection();
     const query = `SELECT * FROM category WHERE category_name LIKE ?`;
-
     const [rows] = await connection.execute(query, [`%${name}%`]);
-
     connection.release();
 
     if (rows.length === 0) {
@@ -83,28 +67,22 @@ async function findCategoryByName(name) {
   }
 }
 
-// Update Category
 async function updateCategory(categoryData) {
-  const { id, category_name } = categoryData;
+  const { id, category_name, photoPath } = categoryData;
 
   try {
     const connection = await pool.getConnection();
-
     const query = `
       UPDATE category
-      SET category_name = ?
+      SET category_name = ?, photoPath = ?
       WHERE id = ?
     `;
 
-    const [result] = await connection.execute(query, [category_name, id]);
-
+    const [result] = await connection.execute(query, [category_name, photoPath, id]);
     connection.release();
 
     if (result.affectedRows === 0) {
-      return {
-        success: false,
-        message: "Category Not Found or No Changes Made",
-      };
+      return { success: false, message: "Category Not Found or No Changes Made" };
     }
 
     return { success: true };
@@ -114,16 +92,12 @@ async function updateCategory(categoryData) {
   }
 }
 
-// Delete Category
 async function deleteCategory(categoryId) {
   try {
     const connection = await pool.getConnection();
-    const query = `
-      DELETE FROM category WHERE id = ?
-    `;
+    const query = `DELETE FROM category WHERE id = ?`;
 
     const [result] = await connection.execute(query, [categoryId]);
-
     connection.release();
 
     if (result.affectedRows === 0) {

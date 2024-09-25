@@ -2,32 +2,6 @@ const customerRepository = require("../repositories/customer.repository");
 const validator = require("validator");
 
 // Create a new customer
-<<<<<<< HEAD
-async function createCustomer(customerData) {
-  const connection = await pool.getConnection();
-  const { firstName, lastName, email, thumbnail, googleId } = customerData;
-
-  const [result] = await connection.execute(
-    "INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)",
-    [firstName, lastName, email, thumbnail, googleId]
-  );
-
-  connection.release();
-  return result.insertId;
-}
-
-// Update customer by ID
-async function updateCustomer(id, customerData) {
-  const connection = await pool.getConnection();
-  const { firstName, lastName, email, thumbnail, googleId } = customerData;
-
-  await connection.execute(
-    "UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ? WHERE id = ?",
-    [firstName, lastName, email, thumbnail, googleId, id]
-  );
-
-  connection.release();
-=======
 async function createCustomer(req, res) {
   const { firstName, lastName, email, thumbnail, googleId } = req.body;
 
@@ -71,7 +45,6 @@ async function createCustomer(req, res) {
       .status(500)
       .json({ error: "Failed to create customer", details: error.message });
   }
->>>>>>> 549333a8cbe8a9dd5e99b8c623397f2fb752a83c
 }
 
 // Get all customers

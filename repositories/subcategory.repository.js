@@ -3,26 +3,24 @@ const validator = require("validator");
 
 // Save Subcategory
 async function saveSubcategory(subcategoryData) {
-  const { subcategory_name, category_id } = subcategoryData;
+  const { subcategory_name, category_id, photoPath } = subcategoryData;
 
   if (!subcategory_name || typeof subcategory_name !== 'string') {
     throw new Error("Subcategory name is required and must be a string.");
   }
-  
+
   if (!validator.isInt(String(category_id))) {
     throw new Error("Category ID must be a valid integer.");
   }
 
   try {
     const connection = await pool.getConnection();
-
     const query = `
-      INSERT INTO subcategory (subcategory_name, category_id)
-      VALUES (?, ?)
+      INSERT INTO subcategory (subcategory_name, category_id, photoPath)
+      VALUES (?, ?, ?)
     `;
 
-    const [result] = await connection.execute(query, [subcategory_name, category_id]);
-
+    const [result] = await connection.execute(query, [subcategory_name, category_id, photoPath]);
     connection.release();
     return result;
   } catch (error) {
@@ -35,13 +33,10 @@ async function saveSubcategory(subcategoryData) {
 async function findAllSubcategories() {
   try {
     const connection = await pool.getConnection();
-
     const query = `
       SELECT * FROM subcategory
     `;
-
     const [rows] = await connection.execute(query);
-
     connection.release();
     return rows;
   } catch (error) {
@@ -61,9 +56,7 @@ async function findSubcategoryById(subcategoryId) {
     const query = `
       SELECT * FROM subcategory WHERE id = ?
     `;
-
     const [rows] = await connection.execute(query, [subcategoryId]);
-
     connection.release();
 
     if (rows.length === 0) {
@@ -76,9 +69,28 @@ async function findSubcategoryById(subcategoryId) {
   }
 }
 
+// Find Subcategory By name
+async function findSubcategoryByName(name) {
+  try {
+    const connection = await pool.getConnection();
+    const query = `SELECT * FROM subcategory WHERE subcategory_name LIKE ?`;
+    const [rows] = await connection.execute(query, [`%${name}%`]);
+    connection.release();
+
+    if (rows.length === 0) {
+      throw new Error("No subcategories found with the given name.");
+    }
+
+    return rows;
+  } catch (error) {
+    console.error("Error finding subcategory by name:", error);
+    throw error;
+  }
+}
+
 // Update Subcategory
 async function updateSubcategory(subcategoryData) {
-  const { id, subcategory_name, category_id } = subcategoryData;
+  const { id, subcategory_name, category_id, photoPath } = subcategoryData;
 
   if (!validator.isInt(String(id))) {
     throw new Error("Subcategory ID must be a valid integer.");
@@ -90,15 +102,13 @@ async function updateSubcategory(subcategoryData) {
 
   try {
     const connection = await pool.getConnection();
-
     const query = `
       UPDATE subcategory
-      SET subcategory_name = ?, category_id = ?
+      SET subcategory_name = ?, category_id = ?, photoPath = ?
       WHERE id = ?
     `;
 
-    const [result] = await connection.execute(query, [subcategory_name, category_id, id]);
-
+    const [result] = await connection.execute(query, [subcategory_name, category_id, photoPath, id]);
     connection.release();
 
     if (result.affectedRows === 0) {
@@ -126,9 +136,7 @@ async function deleteSubcategory(subcategoryId) {
     const query = `
       DELETE FROM subcategory WHERE id = ?
     `;
-
     const [result] = await connection.execute(query, [subcategoryId]);
-
     connection.release();
 
     if (result.affectedRows === 0) {
@@ -146,6 +154,7 @@ module.exports = {
   saveSubcategory,
   findAllSubcategories,
   findSubcategoryById,
+  findSubcategoryByName,
   updateSubcategory,
   deleteSubcategory
 };
