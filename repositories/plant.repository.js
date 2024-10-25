@@ -2,26 +2,54 @@ const db = require("../config/db");
 
 async function savePlant(plantData) {
   const query = `
-    INSERT INTO plant (plant_name, description, price, pot, quantity, water, light, toxicity, humidity, problems_pests, fertilizing, temperatures, soil_repotting, learn_more, characteristics, subcategory_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO plant (
+      plant_name_EN, plant_name_AR, description_EN, description_AR, price, 
+      pot_EN, pot_AR, quantity, water_EN, water_AR, light_EN, light_AR, 
+      toxicity_EN, toxicity_AR, humidity_EN, humidity_AR, problems_pests_EN, 
+      problems_pests_AR, fertilizing_EN, fertilizing_AR, temperatures_EN, 
+      temperatures_AR, soil_repotting_EN, soil_repotting_AR, learn_more_EN, 
+      learn_more_AR, characteristics_EN, characteristics_AR, easy_EN, easy_AR, 
+      part_sun_EN, part_sun_AR, midium_EN, midium_AR, newest, recommended, subcategory_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
   `;
   try {
     const result = await db.execute(query, [
-      plantData.plant_name,
-      plantData.description,
+      plantData.plant_name_EN,
+      plantData.plant_name_AR,
+      plantData.description_EN,
+      plantData.description_AR,
       plantData.price,
-      plantData.pot,
+      plantData.pot_EN,
+      plantData.pot_AR,
       plantData.quantity,
-      plantData.water,
-      plantData.light,
-      plantData.toxicity,
-      plantData.humidity,
-      plantData.problems_pests,
-      plantData.fertilizing,
-      plantData.temperatures,
-      plantData.soil_repotting,
-      plantData.learn_more,
-      plantData.characteristics,
+      plantData.water_EN,
+      plantData.water_AR,
+      plantData.light_EN,
+      plantData.light_AR,
+      plantData.toxicity_EN,
+      plantData.toxicity_AR,
+      plantData.humidity_EN,
+      plantData.humidity_AR,
+      plantData.problems_pests_EN,
+      plantData.problems_pests_AR,
+      plantData.fertilizing_EN,
+      plantData.fertilizing_AR,
+      plantData.temperatures_EN,
+      plantData.temperatures_AR,
+      plantData.soil_repotting_EN,
+      plantData.soil_repotting_AR,
+      plantData.learn_more_EN,
+      plantData.learn_more_AR,
+      plantData.characteristics_EN,
+      plantData.characteristics_AR,
+      plantData.easy_EN,
+      plantData.easy_AR,
+      plantData.part_sun_EN,
+      plantData.part_sun_AR,
+      plantData.midium_EN,
+      plantData.midium_AR,
+      plantData.newest,
+      plantData.recommended,
       plantData.subcategory_id,
     ]);
     return result;
@@ -55,7 +83,6 @@ async function findPlantsBySubcategory(subcategoryId) {
       'SELECT * FROM plant WHERE subcategory_id = ?',
       [subcategoryId]
     );
-
     return plants;
   } catch (error) {
     console.error('Error fetching plants by subcategory:', error);
@@ -78,32 +105,63 @@ async function findPlantPhotoById(photoId) {
 async function updatePlant(id, plantData) {
   let query = `
     UPDATE plant
-    SET plant_name = ?, description = ?, price = ?, pot = ?, quantity = ?, subcategory_id = ?,
-        water = ?, light = ?, toxicity = ?, humidity = ?, problems_pests = ?, fertilizing = ?,
-        temperatures = ?, soil_repotting = ?, learn_more = ?, characteristics = ?
+    SET plant_name_EN = ?, plant_name_AR = ?, description_EN = ?, description_AR = ?, 
+        price = ?, newest = ?, recommended = ?, pot_EN = ?, pot_AR = ?, 
+        quantity = ?, water_EN = ?, water_AR = ?, light_EN = ?, light_AR = ?, 
+        toxicity_EN = ?, toxicity_AR = ?, humidity_EN = ?, humidity_AR = ?, 
+        problems_pests_EN = ?, problems_pests_AR = ?, fertilizing_EN = ?, 
+        fertilizing_AR = ?, temperatures_EN = ?, temperatures_AR = ?, 
+        soil_repotting_EN = ?, soil_repotting_AR = ?, learn_more_EN = ?, 
+        learn_more_AR = ?, characteristics_EN = ?, characteristics_AR = ?, 
+        easy_EN = ?, easy_AR = ?, part_sun_EN = ?, part_sun_AR = ?, 
+        midium_EN = ?, midium_AR = ?, subcategory_id = ?
     WHERE id = ?
   `;
+
   const result = await db.execute(query, [
-    plantData.plant_name,
-    plantData.description,
+    plantData.plant_name_EN,
+    plantData.plant_name_AR,
+    plantData.description_EN,
+    plantData.description_AR,
     plantData.price,
-    plantData.pot,
+    plantData.newest,
+    plantData.recommended,
+    plantData.pot_EN,
+    plantData.pot_AR,
     plantData.quantity,
+    plantData.water_EN,
+    plantData.water_AR,
+    plantData.light_EN,
+    plantData.light_AR,
+    plantData.toxicity_EN,
+    plantData.toxicity_AR,
+    plantData.humidity_EN,
+    plantData.humidity_AR,
+    plantData.problems_pests_EN,
+    plantData.problems_pests_AR,
+    plantData.fertilizing_EN,
+    plantData.fertilizing_AR,
+    plantData.temperatures_EN,
+    plantData.temperatures_AR,
+    plantData.soil_repotting_EN,
+    plantData.soil_repotting_AR,
+    plantData.learn_more_EN,
+    plantData.learn_more_AR,
+    plantData.characteristics_EN,
+    plantData.characteristics_AR,
+    plantData.easy_EN,
+    plantData.easy_AR,
+    plantData.part_sun_EN,
+    plantData.part_sun_AR,
+    plantData.midium_EN,
+    plantData.midium_AR,
     plantData.subcategory_id,
-    plantData.water,
-    plantData.light,
-    plantData.toxicity,
-    plantData.humidity,
-    plantData.problems_pests,
-    plantData.fertilizing,
-    plantData.temperatures,
-    plantData.soil_repotting,
-    plantData.learn_more,
-    plantData.characteristics,
     id,
   ]);
+
   return { success: result[0].affectedRows > 0, message: "Plant updated successfully" };
 }
+
 
 async function deletePlant(id) {
   const query = `DELETE FROM plant WHERE id = ?`;

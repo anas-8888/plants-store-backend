@@ -1,0 +1,7 @@
+CREATE TABLE favorite (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customerId INT NOT NULL,
+  plantId INT NOT NULL,
+  FOREIGN KEY (customerId) REFERENCES customer(id) ON DELETE CASCADE,
+  FOREIGN KEY (plantId) REFERENCES plant(id) ON DELETE CASCADE
+);

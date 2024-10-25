@@ -1,12 +1,12 @@
 const pool = require("../config/db");
 
-// Create a new order
-async function createOrder(orderData) {
+// Create a new cart
+async function createCart(cartData) {
   const connection = await pool.getConnection();
-  const { location, items, totalPrice, customerId, paymentId } = orderData;
+  const { location, items, totalPrice, customerId, paymentId } = cartData;
 
   const [result] = await connection.execute(
-    "INSERT INTO `order` (location, items, totalPrice, customerId, paymentId) VALUES (?, ?, ?, ?, ?)",
+    "INSERT INTO `cart` (location, items, totalPrice, customerId, paymentId) VALUES (?, ?, ?, ?, ?)",
     [location, JSON.stringify(items), totalPrice, customerId, paymentId]
   );
 
@@ -29,18 +29,18 @@ async function getPlantsByIds(ids) {
   return rows;
 }
 
-// Find all orders
-async function findAllOrders() {
+// Find all carts
+async function findAllCarts() {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query("SELECT * FROM `order`");
+  const [rows] = await connection.query("SELECT * FROM `cart`");
   connection.release();
   return rows;
 }
 
-// Find order by ID
-async function findOrderById(id) {
+// Find cart by ID
+async function findCartById(id) {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query("SELECT * FROM `order` WHERE id = ?", [
+  const [rows] = await connection.query("SELECT * FROM `cart` WHERE id = ?", [
     id,
   ]);
   connection.release();
@@ -51,16 +51,16 @@ async function findOrderById(id) {
 async function calculateTotalProfits() {
   const connection = await pool.getConnection();
   const [rows] = await connection.query(
-    "SELECT SUM(totalPrice) AS totalProfit FROM `order`"
+    "SELECT SUM(totalPrice) AS totalProfit FROM `cart`"
   );
   connection.release();
   return rows.length > 0 ? rows[0].totalProfit : 0;
 }
 
 module.exports = {
-  createOrder,
+  createCart,
   getPlantsByIds,
-  findAllOrders,
-  findOrderById,
+  findAllCarts,
+  findCartById,
   calculateTotalProfits,
 };

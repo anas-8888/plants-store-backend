@@ -1,6 +1,6 @@
 CREATE TABLE plant_photo (
   id INT AUTO_INCREMENT PRIMARY KEY,
   plant_id INT NOT NULL,
-  photo VARCHAR(255) NOT NULL,
+  photoPath VARCHAR(255) NOT NULL,
   FOREIGN KEY (plant_id) REFERENCES plant(id) ON DELETE CASCADE
 );

@@ -1,4 +1,4 @@
-function validateOrder(req, res, next) {
+function validateCart(req, res, next) {
   const validate = true; // TODO
   if (validate) {
     next();
@@ -6,5 +6,5 @@ function validateOrder(req, res, next) {
 }
 
 module.exports = {
-  validateOrder,
+  validateCart,
 };

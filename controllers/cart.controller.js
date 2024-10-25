@@ -1,8 +1,8 @@
-const orderRepository = require("../repositories/order.repository");
+const cartRepository = require("../repositories/cart.repository");
 const { validationResult } = require("express-validator");
 
-// Create Order
-async function createOrder(req, res) {
+// Create cart
+async function createCart(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -11,7 +11,7 @@ async function createOrder(req, res) {
   try {
     const { location, items, customerId, paymentId } = req.body;
     const plantIds = Object.values(items).map((item) => item.id);
-    const plants = await orderRepository.getPlantsByIds(plantIds);
+    const plants = await cartRepository.getPlantsByIds(plantIds);
     let totalPrice = 0;
 
     for (const itemKey in items) {
@@ -25,7 +25,7 @@ async function createOrder(req, res) {
       totalPrice += plant.price * quantity;
     }
 
-    const orderId = await orderRepository.createOrder({
+    const cartId = await cartRepository.createCart({
       location,
       items,
       totalPrice,
@@ -34,42 +34,42 @@ async function createOrder(req, res) {
     });
 
     return res.status(201).json({
-      message: "Order created successfully",
-      orderId: orderId,
+      message: "cart created successfully",
+      cartId: cartId,
     });
   } catch (error) {
     return res.status(500).json({
-      error: "Failed to create order",
+      error: "Failed to create cart",
       details: error.message,
     });
   }
 }
 
-// Get All Orders
-async function getAllOrders(req, res) {
+// Get All carts
+async function getAllCarts(req, res) {
   try {
-    const orders = await orderRepository.findAllOrders();
-    return res.status(200).json(orders);
+    const carts = await cartRepository.findAllCarts();
+    return res.status(200).json(carts);
   } catch (error) {
     return res.status(500).json({
-      error: "Failed to retrieve orders",
+      error: "Failed to retrieve carts",
       details: error.message,
     });
   }
 }
 
-// Get Order By ID
-async function getOrderById(req, res) {
+// Get cart By ID
+async function getCartById(req, res) {
   try {
     const { id } = req.params;
-    const order = await orderRepository.findOrderById(id);
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+    const cart = await cartRepository.findCartById(id);
+    if (!cart) {
+      return res.status(404).json({ error: "cart not found" });
     }
-    return res.status(200).json(order);
+    return res.status(200).json(cart);
   } catch (error) {
     return res.status(500).json({
-      error: "Failed to retrieve order",
+      error: "Failed to retrieve cart",
       details: error.message,
     });
   }
@@ -78,7 +78,7 @@ async function getOrderById(req, res) {
 // Get All Profits
 async function getAllProfits(req, res) {
   try {
-    const totalProfit = await orderRepository.calculateTotalProfits();
+    const totalProfit = await cartRepository.calculateTotalProfits();
     return res.status(200).json({ totalProfit });
   } catch (error) {
     return res.status(500).json({
@@ -89,8 +89,8 @@ async function getAllProfits(req, res) {
 }
 
 module.exports = {
-  createOrder,
-  getAllOrders,
-  getOrderById,
+  createCart,
+  getAllCarts,
+  getCartById,
   getAllProfits,
 };

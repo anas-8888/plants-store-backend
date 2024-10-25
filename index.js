@@ -14,12 +14,15 @@ const cookieSession = require("cookie-session");
 
 // Import routes
 const test = require("./routes/test");
-const order = require("./routes/order");
+const cart = require("./routes/cart");
 const plant = require("./routes/plant");
 const auth = require("./routes/auth");
 const category = require("./routes/category");
 const customer = require("./routes/customer");
 const subCategory = require("./routes/subCategory");
+
+// Import middlewares
+const languageMiddleware = require('./middleware/languageMiddleware');
 
 // Init
 const app = express();
@@ -69,10 +72,13 @@ app.use("/api/", apiLimiter);
 app.use(helmet()); //USE to secure inspect //TODO LATER
 app.use(morgan("combined"));
 
+// Middleware
+app.use(languageMiddleware);
+
 // APIs
 app.use("/auth", auth);
 app.use("/api", test);
-app.use("/api", order);
+app.use("/api", cart);
 app.use("/api", plant);
 app.use("/api", category);
 app.use("/api", customer);
