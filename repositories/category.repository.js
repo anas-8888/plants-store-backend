@@ -2,15 +2,19 @@ const pool = require("../config/db");
 
 async function saveCategory(categoryData) {
   try {
-    const { category_name, photoPath } = categoryData;
+    const { category_name_AR, category_name_EN, photoPath } = categoryData;
     const connection = await pool.getConnection();
 
     const query = `
-      INSERT INTO category (category_name, photoPath)
-      VALUES (?, ?)
+      INSERT INTO category (category_name_AR,category_name_EN, photoPath)
+      VALUES (?, ?, ?)
     `;
 
-    const [result] = await connection.execute(query, [category_name, photoPath]);
+    const [result] = await connection.execute(query, [
+      category_name_AR,
+      category_name_EN,
+      photoPath,
+    ]);
     connection.release();
     return result;
   } catch (error) {
@@ -52,8 +56,12 @@ async function findCategoryById(categoryId) {
 async function findCategoryByName(name) {
   try {
     const connection = await pool.getConnection();
-    const query = `SELECT * FROM category WHERE category_name LIKE ?`;
-    const [rows] = await connection.execute(query, [`%${name}%`]);
+    const query = `
+      SELECT *
+      FROM category
+      WHERE category_name_AR LIKE ? OR category_name_EN LIKE ?
+    `;
+    const [rows] = await connection.execute(query, [`%${name}%`, `%${name}%`]);
     connection.release();
 
     if (rows.length === 0) {
@@ -68,21 +76,29 @@ async function findCategoryByName(name) {
 }
 
 async function updateCategory(categoryData) {
-  const { id, category_name, photoPath } = categoryData;
+  const { id, category_name_AR, category_name_EN, photoPath } = categoryData;
 
   try {
     const connection = await pool.getConnection();
     const query = `
       UPDATE category
-      SET category_name = ?, photoPath = ?
+      SET category_name_AR = ?,category_name_EN = ?, photoPath = ?
       WHERE id = ?
     `;
 
-    const [result] = await connection.execute(query, [category_name, photoPath, id]);
+    const [result] = await connection.execute(query, [
+      category_name_AR,
+      category_name_EN,
+      photoPath,
+      id,
+    ]);
     connection.release();
 
     if (result.affectedRows === 0) {
-      return { success: false, message: "Category Not Found or No Changes Made" };
+      return {
+        success: false,
+        message: "Category Not Found or No Changes Made",
+      };
     }
 
     return { success: true };

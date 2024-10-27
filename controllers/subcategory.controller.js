@@ -4,10 +4,12 @@ const fs = require("fs");
 
 // Create Subcategory
 async function createSubcategory(req, res) {
-  const { subcategory_name, category_id } = req.body;
-  const photoPath = req.file ? `uploads/subcategory/${req.file.filename}` : null;
+  const { subcategory_name_EN, subcategory_name_AR, category_id } = req.body;
+  const photoPath = req.file
+    ? `uploads/subcategory/${req.file.filename}`
+    : null;
 
-  if (!subcategory_name || !category_id) {
+  if (!subcategory_name_EN || !subcategory_name_AR || !category_id) {
     return res.status(400).json({ error: "All Fields are Required!" });
   }
 
@@ -17,7 +19,8 @@ async function createSubcategory(req, res) {
 
   try {
     const result = await subcategoryRepository.saveSubcategory({
-      subcategory_name,
+      subcategory_name_EN,
+      subcategory_name_AR,
       category_id,
       photoPath,
     });
@@ -36,19 +39,34 @@ async function createSubcategory(req, res) {
 
 // Get All Subcategories
 async function getAllSubcategories(req, res) {
+  const language = req.language;
+
   try {
     const subcategories = await subcategoryRepository.findAllSubcategories();
-    const subcategoriesWithBase64Photos = subcategories.map((subcategory) => {
+    const subcategoriesWithPhotos = subcategories.map((subcategory) => {
       const base64Photo = subcategory.photoPath
         ? fs.readFileSync(subcategory.photoPath, { encoding: "base64" })
         : null;
 
       const { photoPath, ...subcategoryWithoutPhotoPath } = subcategory;
 
-      return { ...subcategoryWithoutPhotoPath, photo: base64Photo };
+      // Choose the right subcategory name based on language
+      const subcategoryData = {
+        id: subcategory.id,
+        category_id: subcategory.category_id,
+        photo: base64Photo,
+      };
+
+      if (language === "ar") {
+        subcategoryData.subcategory_name = subcategory.subcategory_name_AR;
+      } else {
+        subcategoryData.subcategory_name = subcategory.subcategory_name_EN;
+      }
+
+      return subcategoryData;
     });
 
-    return res.status(200).json(subcategoriesWithBase64Photos);
+    return res.status(200).json(subcategoriesWithPhotos);
   } catch (error) {
     return res.status(500).json({
       error: "Failed to retrieve subcategories",
@@ -60,18 +78,36 @@ async function getAllSubcategories(req, res) {
 // Get Subcategory By ID
 async function getSubcategoryById(req, res) {
   const { id } = req.params;
+  const language = req.language;
 
   try {
     const subcategory = await subcategoryRepository.findSubcategoryById(id);
     if (subcategory.photoPath) {
-      subcategory.photo = fs.readFileSync(subcategory.photoPath, { encoding: "base64" });
+      subcategory.photo = fs.readFileSync(subcategory.photoPath, {
+        encoding: "base64",
+      });
     } else {
       subcategory.photo = null;
     }
 
     const { photoPath, ...subcategoryWithoutPhotoPath } = subcategory;
 
-    return res.status(200).json(subcategoryWithoutPhotoPath);
+    // Choose the right subcategory name based on language
+    const subcategoryData = {
+      id: subcategoryWithoutPhotoPath.id,
+      category_id: subcategoryWithoutPhotoPath.category_id,
+      photo: subcategory.photo,
+    };
+
+    if (language === "ar") {
+      subcategoryData.subcategory_name =
+        subcategoryWithoutPhotoPath.subcategory_name_AR;
+    } else {
+      subcategoryData.subcategory_name =
+        subcategoryWithoutPhotoPath.subcategory_name_EN;
+    }
+
+    return res.status(200).json(subcategoryData);
   } catch (error) {
     return res.status(404).json({
       error: "Subcategory not found",
@@ -82,20 +118,38 @@ async function getSubcategoryById(req, res) {
 
 async function getSubcategoryByName(req, res) {
   const { name } = req.params;
-  try {
-    const subcategories = await subcategoryRepository.findSubcategoryByName(name);
+  const language = req.language;
 
-    const subcategoriesWithBase64Photos = subcategories.map((subcategory) => {
+  try {
+    const subcategories = await subcategoryRepository.findSubcategoryByName(
+      name
+    );
+    const subcategoriesWithPhotos = subcategories.map((subcategory) => {
       const base64Photo = subcategory.photoPath
         ? fs.readFileSync(subcategory.photoPath, { encoding: "base64" })
         : null;
 
       const { photoPath, ...subcategoryWithoutPhotoPath } = subcategory;
 
-      return { ...subcategoryWithoutPhotoPath, photo: base64Photo };
+      // Choose the right subcategory name based on language
+      const subcategoryData = {
+        id: subcategoryWithoutPhotoPath.id,
+        category_id: subcategoryWithoutPhotoPath.category_id,
+        photo: base64Photo,
+      };
+
+      if (language === "ar") {
+        subcategoryData.subcategory_name =
+          subcategoryWithoutPhotoPath.subcategory_name_AR;
+      } else {
+        subcategoryData.subcategory_name =
+          subcategoryWithoutPhotoPath.subcategory_name_EN;
+      }
+
+      return subcategoryData;
     });
 
-    return res.status(200).json(subcategoriesWithBase64Photos);
+    return res.status(200).json(subcategoriesWithPhotos);
   } catch (error) {
     return res.status(404).json({
       error: "Subcategory not found",
@@ -107,12 +161,20 @@ async function getSubcategoryByName(req, res) {
 // Update Subcategory
 async function updateSubcategory(req, res) {
   const { id } = req.params;
-  const { subcategory_name, category_id } = req.body;
-  const photoPath = req.file ? `uploads/subcategory/${req.file.filename}` : null;
+  const { subcategory_name_EN, subcategory_name_AR, category_id } = req.body;
+  const photoPath = req.file
+    ? `uploads/subcategory/${req.file.filename}`
+    : null;
 
-  if (subcategory_name === undefined && category_id === undefined && !req.file) {
+  if (
+    subcategory_name_EN === undefined &&
+    subcategory_name_AR === undefined &&
+    category_id === undefined &&
+    !req.file
+  ) {
     return res.status(400).json({
-      error: "At least one field (subcategory_name, category_id, or photo) is required!",
+      error:
+        "At least one field (subcategory_name_EN, subcategory_name_AR, category_id, or photo) is required!",
     });
   }
 
@@ -128,7 +190,10 @@ async function updateSubcategory(req, res) {
     }
 
     const updatedData = {};
-    updatedData.subcategory_name = subcategory_name || subcategory.subcategory_name;
+    updatedData.subcategory_name_EN =
+      subcategory_name_EN || subcategory.subcategory_name_EN;
+    updatedData.subcategory_name_AR =
+      subcategory_name_AR || subcategory.subcategory_name_AR;
     updatedData.category_id = category_id || subcategory.category_id;
     updatedData.photoPath = photoPath || subcategory.photoPath;
 
@@ -139,7 +204,7 @@ async function updateSubcategory(req, res) {
 
     if (result.success) {
       return res.status(200).json({
-        message: 'Subcategory updated.',
+        message: "Subcategory updated.",
       });
     } else {
       return res.status(400).json({
@@ -154,8 +219,6 @@ async function updateSubcategory(req, res) {
   }
 }
 
-
-
 // Delete Subcategory
 async function deleteSubcategory(req, res) {
   const { id } = req.params;
@@ -166,7 +229,9 @@ async function deleteSubcategory(req, res) {
     }
     await subcategoryRepository.deleteSubcategory(id);
 
-    return res.status(200).json({ message: "Subcategory deleted successfully" });
+    return res
+      .status(200)
+      .json({ message: "Subcategory deleted successfully" });
   } catch (error) {
     return res.status(404).json({
       error: "Failed to delete subcategory",

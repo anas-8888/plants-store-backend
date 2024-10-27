@@ -27,9 +27,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         const existingCustomer =
-          await customerRepository.findCustomerByGoogleId(
-            profile.id
-          );
+          await customerRepository.findCustomerByGoogleId(profile.id);
 
         if (existingCustomer) {
           await customerRepository.updateCustomer(existingCustomer.id, {

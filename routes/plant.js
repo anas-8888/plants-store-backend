@@ -1,23 +1,21 @@
 const express = require("express");
 const {
-  createPlant,
-  getAllPlants,
-  getPlantById,
-  updatePlant,
-  deletePlant,
-  deletePlantPhoto,
+  savePlant,
+  findAllPlantsWithPhotos,
+  findPlantById,
   findPlantsBySubcategory,
-} = require("./../controllers/plant.controller");
+  updatePlantAndPhotos,
+  deletePlant,
+} = require("../controllers/plant.controller");
 const upload = require("../middleware/uploadPlants");
 
 const plant = express.Router();
 
-plant.post("/createPlant", upload.array("photos", 5), createPlant);
-plant.get("/findAllPlants", getAllPlants);
-plant.get("/findPlantById/:id", getPlantById);
-plant.get("/findPlantsBySubcategory/:subcategory_id", findPlantsBySubcategory);
-plant.put("/updatePlant/:id", upload.array("photos", 5), updatePlant);
+plant.post("/createPlant", upload, savePlant);
+plant.get("/findAllPlantsWithPhotos", findAllPlantsWithPhotos);
+plant.get("/findPlantById/:id", findPlantById);
+plant.get("/findPlantsBySubcategory/:subcategoryId", findPlantsBySubcategory);
+plant.put("/updatePlant/:id", upload, updatePlantAndPhotos);
 plant.delete("/deletePlant/:id", deletePlant);
-plant.delete("/deletePlantPhoto/:photo_id", deletePlantPhoto);
 
 module.exports = plant;

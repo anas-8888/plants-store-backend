@@ -3,7 +3,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/category");
+    cb(null, path.join(__dirname, "../uploads/category"));
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -12,12 +12,15 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+  const extname = allowedTypes.test(
+    path.extname(file.originalname).toLowerCase()
+  );
   const mimetype = allowedTypes.test(file.mimetype);
 
   if (extname && mimetype) {
     cb(null, true);
   } else {
+    console.log(`Rejected file type: ${file.mimetype}`);
     cb(new Error("Only JPEG and PNG images are allowed!"), false);
   }
 };
@@ -28,4 +31,4 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
 });
 
-module.exports = upload.single('photo');
+module.exports = upload.single("photoPath");

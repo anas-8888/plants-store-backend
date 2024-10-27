@@ -20,13 +20,17 @@ const auth = require("./routes/auth");
 const category = require("./routes/category");
 const customer = require("./routes/customer");
 const subCategory = require("./routes/subCategory");
+const favorite = require("./routes/favorite");
+const homePhoto = require("./routes/homePhoto");
+const ourAlbum = require("./routes/ourAlbum");
 
 // Import middlewares
-const languageMiddleware = require('./middleware/languageMiddleware');
+const languageMiddleware = require("./middleware/languageMiddleware");
 
 // Init
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Cookies
@@ -82,6 +86,9 @@ app.use("/api", cart);
 app.use("/api", plant);
 app.use("/api", category);
 app.use("/api", customer);
+app.use("/api", favorite);
+app.use("/api", homePhoto);
+app.use("/api", ourAlbum);
 app.use("/api", subCategory);
 
 // URIs
