@@ -237,10 +237,8 @@ async function findPlantsBySubcategory(req, res) {
 }
 
 //Update Plant
-async function updatePlantAndPhotos(req, res) {
+async function updatePlant(req, res) {
   const plantId = req.params.id;
-  console.log("plantID:", plantId);
-  console.log("Request body:", req.body);
 
   const {
     plant_name_EN,
@@ -265,21 +263,10 @@ async function updatePlantAndPhotos(req, res) {
     medium_AR,
     newest,
     recommended,
-    subcategory_id,
-    photoUpdates,
+    subcategory_id
   } = req.body;
 
   try {
-    // Find the plant by ID to check if it exists
-    const existingPlant = await plantRepository.findPlantById(plantId);
-
-    if (!existingPlant) {
-      return res.status(404).json({
-        success: false,
-        message: "Plant not found.",
-      });
-    }
-
     // Check if plantId exists
     if (!plantId) {
       return res.status(400).json({
@@ -287,6 +274,16 @@ async function updatePlantAndPhotos(req, res) {
         message: "Plant ID is missing or invalid.",
       });
     }
+
+    // Find the plant by ID to check if it exists
+    const existingPlant = (await plantRepository.findPlantById(plantId))[0];
+    if (!existingPlant) {
+      return res.status(404).json({
+        success: false,
+        message: "Plant not found.",
+      });
+    }
+
     const updatedData = {
       id: plantId,
       plant_name_EN: plant_name_EN || existingPlant.plant_name_EN,
@@ -313,15 +310,9 @@ async function updatePlantAndPhotos(req, res) {
       recommended: recommended || existingPlant.recommended,
       subcategory_id: subcategory_id || existingPlant.subcategory_id,
     };
-    console.log("updatedData:", updatedData);
 
     // Update plant details, passing validated parameters
     const plantUpdateResult = await plantRepository.updatePlant(updatedData);
-
-    // Update photos if any
-    if (photoUpdates && photoUpdates.length > 0) {
-      await plantPhotoRepository.updatePlantPhotos(plantId, photoUpdates);
-    }
 
     // Send success response
     res.status(200).json({
@@ -330,11 +321,57 @@ async function updatePlantAndPhotos(req, res) {
       updatedPlant: plantUpdateResult,
     });
   } catch (error) {
-    console.error("Error updating plant and photos:", error);
+    console.error("Error updating plant:", error);
     res.status(500).json({
       success: false,
       message:
-        error.message || "An error occurred while updating plant and photos",
+        error.message || "An error occurred while updating plant",
+    });
+  }
+}
+
+// Update plant photo
+async function updatePhotoPlant(req, res) {
+  const { photoId } = req.params;
+  const photoPath = req.file?.path;
+
+  try {
+    if (!photoId) {
+      return res.status(400).json({ error: "Photo id is required!" });
+    }
+    if (!photoPath) {
+      return res.status(400).json({ error: "Photo is required!" });
+    }
+
+    // Find the existing photo
+    const existingPhoto = await plantPhotoRepository.findPhotoById(photoId);
+    if (!existingPhoto) {
+      return res.status(404).json({ error: "Photo not found!" });
+    }
+
+    // Delete old photo from file system if it exists
+    if (existingPhoto.photoPath) {
+      try {
+        fs.unlinkSync(existingPhoto.photoPath);
+      } catch (err) {
+        console.error("File deletion error:", err.message);
+      }
+    }
+
+    // Update photo in the database by deleting the old record and adding a new one
+    await plantPhotoRepository.updatePlantPhoto({
+      photoId,
+      plant_id: existingPhoto.plant_id,
+      photoPath,
+    });
+
+    return res.status(200).json({
+      message: "Plant photo updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Failed to update plant photo",
+      details: error.message,
     });
   }
 }
@@ -343,12 +380,59 @@ async function updatePlantAndPhotos(req, res) {
 async function deletePlant(req, res) {
   const { id } = req.params;
   try {
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Plant ID is missing or invalid.",
+      });
+    }
+
+    const plantExsist = (await plantRepository.findPlantById(id))[0];
+    if (!plantExsist) {
+      return res.status(404).json({ error: "Plant not found" });
+    }
+
     await plantPhotoRepository.deletePlantPhoto(id);
     await plantRepository.deletePlant(id);
-    res.status(204).send();
+    res.status(204).json({
+      message: "plant deleted succsesfuly"
+    });
   } catch (error) {
     console.error("Error deleting plant:", error);
     res.status(500).json({ error: "Could not delete plant" });
+  }
+}
+
+async function deletePlantPhoto(req, res) {
+  const { photoId } = req.params;
+
+  try {
+    // Fetch photo data by ID
+    const photo = await plantPhotoRepository.findPhotoById(photoId);
+    if (!photo) {
+      return res.status(404).json({ error: "Photo not found!" });
+    }
+
+    // Delete the photo from the filesystem
+    if (photo.photoPath) {
+      try {
+        fs.unlinkSync(photo.photoPath);
+      } catch (err) {
+        console.error("Error deleting file:", err.message);
+        return res.status(500).json({ error: "Failed to delete photo file" });
+      }
+    }
+
+    // Delete the photo record from the database
+    await plantPhotoRepository.deletePlantPhoto(photoId);
+
+    return res.status(200).json({ message: "Photo deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting plant photo:", error.message);
+    return res.status(500).json({
+      error: "Failed to delete plant photo",
+      details: error.message,
+    });
   }
 }
 
@@ -357,6 +441,8 @@ module.exports = {
   findAllPlantsWithPhotos,
   findPlantById,
   findPlantsBySubcategory,
-  updatePlantAndPhotos,
+  updatePlant,
+  updatePhotoPlant,
   deletePlant,
+  deletePlantPhoto
 };

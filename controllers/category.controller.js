@@ -152,6 +152,7 @@ async function updateCategory(req, res) {
 
   try {
     const existingCategory = await categoryRepository.findCategoryById(id);
+    
     if (!existingCategory) {
       if (photoPath) fs.unlinkSync(photoPath);
       return res.status(404).json({ error: "Category not found!" });

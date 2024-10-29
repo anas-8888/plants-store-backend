@@ -14,15 +14,17 @@ const cookieSession = require("cookie-session");
 
 // Import routes
 const test = require("./routes/test");
-const cart = require("./routes/cart");
+const order = require("./routes/order");
 const plant = require("./routes/plant");
 const auth = require("./routes/auth");
 const category = require("./routes/category");
 const customer = require("./routes/customer");
-const subCategory = require("./routes/subCategory");
+const subCategory = require("./routes/subcategory");
 const favorite = require("./routes/favorite");
 const homePhoto = require("./routes/homePhoto");
 const ourAlbum = require("./routes/ourAlbum");
+const locations = require("./routes/locations");
+const reviews = require("./routes/reviews");
 
 // Import middlewares
 const languageMiddleware = require("./middleware/languageMiddleware");
@@ -82,7 +84,7 @@ app.use(languageMiddleware);
 // APIs
 app.use("/auth", auth);
 app.use("/api", test);
-app.use("/api", cart);
+app.use("/api", order);
 app.use("/api", plant);
 app.use("/api", category);
 app.use("/api", customer);
@@ -90,6 +92,8 @@ app.use("/api", favorite);
 app.use("/api", homePhoto);
 app.use("/api", ourAlbum);
 app.use("/api", subCategory);
+app.use("/api", locations);
+app.use("/api", reviews);
 
 // URIs
 app.get("/", (req, res) => {

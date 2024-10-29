@@ -36,35 +36,6 @@ async function findHomeById(homeId) {
   }
 }
 
-//Update Home Photo
-async function updateHomePhoto(homeData) {
-  const { id, photoPath } = homeData;
-
-  try {
-    const connection = await pool.getConnection();
-    const query = `
-      UPDATE home_photo
-      SET photoPath = ?
-      WHERE id = ?
-    `;
-
-    const [result] = await connection.execute(query, [photoPath, id]);
-    connection.release();
-
-    if (result.affectedRows === 0) {
-      return {
-        success: false,
-        message: "Home Photo Not Found or No Changes Made",
-      };
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error updating Home Photo:", error);
-    throw error;
-  }
-}
-
 //Delete Home Photo
 async function deleteHomePhoto(homeId) {
   try {
@@ -85,9 +56,22 @@ async function deleteHomePhoto(homeId) {
   }
 }
 
+async function getAllHomePhotos() {
+  try {
+    const connection = await pool.getConnection();
+    const query = `SELECT id, photoPath FROM home_photo`;
+    const [rows] = await connection.execute(query);
+    connection.release();
+
+    return rows;
+  } catch (error) {
+    console.error("Error retrieving all home photos:", error.message);
+    throw error;
+  }
+}
 module.exports = {
   saveHomePhoto,
   findHomeById,
-  updateHomePhoto,
   deleteHomePhoto,
+  getAllHomePhotos
 };

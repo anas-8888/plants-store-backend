@@ -84,9 +84,35 @@ async function deleteFavorite(favoriteId) {
   }
 }
 
+// Retrieve all favorite plants by customer ID
+async function findFavoritesByCustomerId(customerId) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `SELECT * FROM favorite WHERE customerId = ?`;
+    const [rows] = await connection.execute(query, [customerId]);
+    return rows;
+  } finally {
+    connection.release();
+  }
+}
+
+// Check if a specific plant is a favorite for a customer
+async function isFavorite(customerId, plantId) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `SELECT * FROM favorite WHERE customerId = ? AND plantId = ?`;
+    const [rows] = await connection.execute(query, [customerId, plantId]);
+    return rows[0] || null; // Return the first row or null if not found
+  } finally {
+    connection.release();
+  }
+}
+
 module.exports = {
   saveFavorite,
   findAllFavorite,
   findFavoriteById,
   deleteFavorite,
+  findFavoritesByCustomerId,
+  isFavorite,
 };

@@ -1,5 +1,6 @@
 const homeRepository = require("../repositories/home.photo.repository");
 const fs = require("fs");
+const path = require('path');
 
 //Create Home Photo
 async function createHomePhoto(req, res) {
@@ -54,36 +55,6 @@ async function findHomePhotoById(req, res) {
   }
 }
 
-//Update Home Photo
-async function updateHomePhoto(req, res) {
-  const { id } = req.params;
-  const photoPath = req.file?.path || null;
-  try {
-    const existingHomePhoto = await homeRepository.findHomeById(id);
-    if (photoPath && existingHomePhoto.photoPath) {
-      try {
-        fs.unlinkSync(existingHomePhoto.photoPath);
-      } catch (err) {
-        console.error("File deletion error:", err.message);
-      }
-    }
-    const updatedData = {
-      id,
-      photoPath: photoPath || existingHomePhoto.photoPath,
-    };
-    await homeRepository.updateHomePhoto(updatedData);
-    return res.status(200).json({
-      message: "Home Photo updated successfully",
-    });
-  } catch (error) {
-    if (photoPath) fs.unlinkSync(photoPath);
-    return res.status(500).json({
-      error: "Failed to update Home Photo",
-      details: error.message,
-    });
-  }
-}
-
 //Delete Home Photo
 async function deleteHomePhoto(req, res) {
   const { id } = req.params;
@@ -111,9 +82,35 @@ async function deleteHomePhoto(req, res) {
   }
 }
 
+// Get all home photos with base64 encoding
+async function findAllHomePhotos(req, res) {
+  try {
+    const homePhotos = await homeRepository.getAllHomePhotos();
+
+    const responsePhotos = homePhotos.map((photo) => {
+      const base64Photo = photo.photoPath
+        ? fs.readFileSync(path.join(__dirname, "..", photo.photoPath), { encoding: "base64" })
+        : null;
+
+      return {
+        id: photo.id,
+        photo: base64Photo,
+      };
+    });
+
+    return res.status(200).json(responsePhotos);
+  } catch (error) {
+    console.error("Error retrieving home photos:", error.message);
+    return res.status(500).json({
+      error: "Failed to retrieve home photos",
+      details: error.message,
+    });
+  }
+}
+
 module.exports = {
   createHomePhoto,
   findHomePhotoById,
-  updateHomePhoto,
   deleteHomePhoto,
+  findAllHomePhotos
 };

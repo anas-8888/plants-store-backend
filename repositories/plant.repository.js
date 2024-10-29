@@ -448,6 +448,25 @@ async function deletePlant(plantId) {
   }
 }
 
+async function getPlantPrice(id) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `SELECT price FROM plant WHERE id = ?`;
+    const [rows] = await connection.execute(query, [id]);
+
+    if(rows.length === 0) {
+      return -1;
+    }
+
+    return rows[0].price;
+  } catch (error) {
+    console.error("Error finding plant by ID:", error.message);
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
 module.exports = {
   savePlant,
   findAllPlantsWithPhotos,
@@ -455,4 +474,5 @@ module.exports = {
   findPlantsBySubcategory,
   updatePlant,
   deletePlant,
+  getPlantPrice
 };

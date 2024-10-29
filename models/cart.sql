@@ -1,7 +1,7 @@
 CREATE TABLE cart (
     id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    total_price DECIMAL(10, 2) NOT NULL,
+    total_price DECIMAL(10, 2),
     customer_id INT NOT NULL,
     payment_id INT,
     location_id INT NOT NULL,

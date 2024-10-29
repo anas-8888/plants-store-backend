@@ -1,0 +1,1768 @@
+{
+	"info": {
+		"_postman_id": "8a22ce11-09b7-471a-abbf-9851382b772a",
+		"name": "E-Commerce API",
+		"description": "API documentation for the E-Commerce backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34149243"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAllCustomer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllCustomer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findCustomerById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findCustomerById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findCustomerByName/:name",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findCustomerByName",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "anas"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteCustomer/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteCustomer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findCustomerByName/:email",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findCustomerByName",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category_name_AR",
+									"value": "كاكتي",
+									"type": "text"
+								},
+								{
+									"key": "category_name_EN",
+									"value": "kakti",
+									"type": "text"
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Screenshot (387).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/createCategory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findAllCategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Category By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findCategoryById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findCategoryById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Category By Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findCategoryByName/:name",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findCategoryByName",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "كاكتي"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteCategory/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteCategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category_name_AR",
+									"value": "كاااكتي",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category_name_EN",
+									"value": "kaakti",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Screenshot (81).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/updateCategory/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateCategory",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subcategory",
+			"item": [
+				{
+					"name": "Create Subcategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "subcategory_name_AR",
+									"value": "قسم اول",
+									"type": "text"
+								},
+								{
+									"key": "subcategory_name_EN",
+									"value": "first class",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Screenshot (67).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/createSubcategory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createSubcategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Subcategories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findAllSubcategory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllSubcategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subcategory By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findSubcategoryById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findSubcategoryById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subcategory By Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findSubcategoryByName/:name",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findSubcategoryByName",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "قسم"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subcategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteSubcategory/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteSubcategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update subcategory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "subcategory_name_AR",
+									"value": "قسمم اولل",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "subcategory_name_EN",
+									"value": "firstt classs",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category_id",
+									"value": "5",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Screenshot (70).png",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/updateSubcategory/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateSubcategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plant",
+			"item": [
+				{
+					"name": "Create Plant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plant_name_EN",
+									"value": "koki1",
+									"type": "text"
+								},
+								{
+									"key": "plant_name_AR",
+									"value": "يبيبيب",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "fdffdsfdf",
+									"type": "text"
+								},
+								{
+									"key": "description_AR",
+									"value": "يبيبيب",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "45.5",
+									"type": "text"
+								},
+								{
+									"key": "pot_EN",
+									"value": "fdfd",
+									"type": "text"
+								},
+								{
+									"key": "pot_AR",
+									"value": "يبيبيب",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "54",
+									"type": "text"
+								},
+								{
+									"key": "water_EN",
+									"value": "dfdfd",
+									"type": "text"
+								},
+								{
+									"key": "water_AR",
+									"value": "بيبيب",
+									"type": "text"
+								},
+								{
+									"key": "light_EN",
+									"value": "dfdfd",
+									"type": "text"
+								},
+								{
+									"key": "light_AR",
+									"value": "يبيبيب",
+									"type": "text"
+								},
+								{
+									"key": "temperatures_EN",
+									"value": "dfdf",
+									"type": "text"
+								},
+								{
+									"key": "temperatures_AR",
+									"value": "يبيبيب",
+									"type": "text"
+								},
+								{
+									"key": "easy_EN",
+									"value": "dfdfd",
+									"type": "text"
+								},
+								{
+									"key": "easy_AR",
+									"value": "بيبيب",
+									"type": "text"
+								},
+								{
+									"key": "part_sun_EN",
+									"value": "dfdfdf",
+									"type": "text"
+								},
+								{
+									"key": "part_sun_AR",
+									"value": "يبيبيب",
+									"type": "text"
+								},
+								{
+									"key": "medium_EN",
+									"value": "dfdfdf",
+									"type": "text"
+								},
+								{
+									"key": "medium_AR",
+									"value": "يبيبيببي",
+									"type": "text"
+								},
+								{
+									"key": "newest",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "recommended",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "subcategory_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": [
+										"Screenshot (214).png",
+										"Screenshot (45).png",
+										"Screenshot (46).png",
+										"Screenshot (47).png",
+										"Screenshot (52).png",
+										"Screenshot (74).png",
+										"Screenshot (75).png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/createPlant",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createPlant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Plants",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findAllPlantsWithPhotos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllPlantsWithPhotos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Plant By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findPlantById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findPlantById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Plant By subcategory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findPlantsBySubcategory/:subcategoryId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findPlantsBySubcategory",
+								":subcategoryId"
+							],
+							"variable": [
+								{
+									"key": "subcategoryId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Plant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plant_name_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "plant_name_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pot_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pot_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "quantity",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "water_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "water_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "light_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "light_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "temperatures_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "temperatures_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "easy_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "easy_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "part_sun_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "part_sun_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "medium_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "medium_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "newest",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "recommended",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "subcategory_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/updatePlant/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updatePlant",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Plant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deletePlant/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deletePlant",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Photo Plant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deletePlantPhoto/:photoId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deletePlantPhoto",
+								":photoId"
+							],
+							"variable": [
+								{
+									"key": "photoId",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant photo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Screenshot (498).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/updatePlantPhoto/:photoId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updatePlantPhoto",
+								":photoId"
+							],
+							"variable": [
+								{
+									"key": "photoId",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"location_id\": 1,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 2,\r\n      \"quantity\": 3,\r\n      \"details\": \"Some detail about the plant\"\r\n    },\r\n    {\r\n      \"plantId\": 1,\r\n      \"quantity\": 1\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/createOrder",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My All Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findMyAllOrders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findMyAllOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findOrderById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findOrderById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all last orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAllOrders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all items by orderId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAllOrderItems/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllOrderItems",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Google OAuth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/providers/google",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Google Callback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/google/callback",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"google",
+								"callback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favorite",
+			"item": [
+				{
+					"name": "Get all favorite",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAllFavorite",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllFavorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get favorite by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findFavoriteById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findFavoriteById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"1\",\r\n    \"plantId\": \"3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/createFavorite",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createFavorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete favorite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteFavorite/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteFavorite",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all favorites by customer id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findFavoriteByCustomerId/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findFavoriteByCustomerId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get favorite by customer id and plant id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/isFavorite/:customerId/:plantID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"isFavorite",
+								":customerId",
+								":plantID"
+							],
+							"variable": [
+								{
+									"key": "customerId",
+									"value": "2"
+								},
+								{
+									"key": "plantID",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home photos",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "IMG_1907.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/createHomePhoto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createHomePhoto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all home photos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAllHomePhotos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllHomePhotos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get home photo by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findHomePhotoById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findHomePhotoById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locations",
+			"item": [
+				{
+					"name": "Get all locations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findAllLocations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllLocations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new location",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location_name_AR\": \"عمان\",\r\n    \"location_name_EN\": \"Amman\",\r\n    \"price\": 5.2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/createLocation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get location by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findLocationById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findLocationById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete location",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteLocation/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteLocation",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update location",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location_name_EN\": \"UAE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updateLocation/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateLocation",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customer_name_AR\": \"اسم العميل بالعربية\",\r\n  \"customer_name_EN\": \"Customer Name in English\",\r\n  \"message_AR\": \"رسالة العميل بالعربية\",\r\n  \"message_EN\": \"Customer's message in English\",\r\n  \"rate\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/createReview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createReview"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findAllReviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllReviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get review by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findReviewById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findReviewById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteReview/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteReview",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update review",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message_AR\": \"اهلا بكم\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updateReview/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateReview",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create location",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept-language",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"location_name_AR\": \"عمان\",\r\n    \"location_name_EN\": \"amman\",\r\n    \"price\": 3.25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/createLocation",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"createLocation"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:2500/api"
+		}
+	]
+}

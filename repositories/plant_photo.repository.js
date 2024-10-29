@@ -1,5 +1,35 @@
 const pool = require("../config/db");
 
+async function findPhotoById(photoId) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `SELECT * FROM plant_photo WHERE id = ?`;
+    const [rows] = await connection.execute(query, [photoId]);
+    return rows[0];
+  } finally {
+    connection.release();
+  }
+}
+
+async function updatePlantPhoto({ photoId, plant_id, photoPath }) {
+  const connection = await pool.getConnection();
+  try {
+    // Update the existing record with the new photo path
+    const updateQuery = `UPDATE plant_photo SET photoPath = ?, plant_id = ? WHERE id = ?`;
+    const [result] = await connection.execute(updateQuery, [photoPath, plant_id, photoId]);
+
+    if (result.affectedRows === 0) {
+      throw new Error("No photo found with the given id.");
+    }
+  } catch (error) {
+    console.error("Error updating plant photo:", error.message);
+    throw new Error("Could not update plant photo");
+  } finally {
+    connection.release();
+  }
+}
+
+
 async function savePlantPhotos(plantId, photos) {
   const connection = await pool.getConnection();
   try {
@@ -10,24 +40,6 @@ async function savePlantPhotos(plantId, photos) {
   } catch (error) {
     console.error("Error saving plant photos:", error);
     throw new Error("Could not save plant photos");
-  } finally {
-    connection.release();
-  }
-}
-
-// Update one or multiple plant photos
-async function updatePlantPhotos(photoUpdates) {
-  const connection = await pool.getConnection();
-  try {
-    const promises = photoUpdates.map(({ id, path }) => {
-      const query = `UPDATE plant_photo SET photoPath = ? WHERE id = ?`;
-      return connection.execute(query, [path, id]);
-    });
-
-    await Promise.all(promises);
-  } catch (error) {
-    console.error("Error updating plant photos:", error);
-    throw new Error("Could not update plant photos");
   } finally {
     connection.release();
   }
@@ -49,6 +61,7 @@ async function deletePlantPhoto(photoId) {
 
 module.exports = {
   savePlantPhotos,
-  updatePlantPhotos,
   deletePlantPhoto,
+  findPhotoById,
+  updatePlantPhoto
 };

@@ -15,9 +15,7 @@ async function saveFavorite(req, res) {
 
     // Ensure customerId and plantId are provided
     if (customerId === undefined || plantId === undefined) {
-      return res
-        .status(400)
-        .json({ message: "customerId and plantId are required" });
+      return res.status(400).json({ message: "customerId and plantId are required" });
     }
 
     // Call repository method
@@ -61,6 +59,32 @@ async function findFavoriteById(req, res) {
   }
 }
 
+// Get all favorites by customer ID
+async function findFavoriteByCustomerId(req, res) {
+  const { id: customerId } = req.params;
+
+  try {
+    const favorites = await favoriteRepository.findFavoritesByCustomerId(customerId);
+    return res.status(200).json(favorites);
+  } catch (error) {
+    console.error("Error retrieving favorites:", error.message);
+    return res.status(500).json({ error: "Failed to retrieve favorites" });
+  }
+}
+
+// Check if a plant is a favorite for a customer
+async function isFavorite(req, res) {
+  const { customerId, plantID: plantId } = req.params;
+
+  try {
+    const favorite = await favoriteRepository.isFavorite(customerId, plantId);
+    return res.status(200).json({ isFavorite: !!favorite });
+  } catch (error) {
+    console.error("Error checking favorite:", error.message);
+    return res.status(500).json({ error: "Failed to check if plant is a favorite" });
+  }
+}
+
 // Delete Favorite
 async function deleteFavorite(req, res) {
   try {
@@ -81,5 +105,7 @@ module.exports = {
   saveFavorite,
   findAllFavorites,
   findFavoriteById,
+  findFavoriteByCustomerId,
+  isFavorite,
   deleteFavorite,
 };
