@@ -5,7 +5,9 @@ const path = require('path');
 //Create Home Photo
 async function createHomePhoto(req, res) {
   try {
-    const photoPath = req.file?.path || null;
+    const photoPath = req.file
+    ? `uploads/home_photo/${req.file.filename}`
+    : null;
 
     if (!photoPath) {
       return res.status(400).json({ error: "Photo file is required." });
@@ -37,13 +39,10 @@ async function findHomePhotoById(req, res) {
     if (!homePhoto) {
       return res.status(404).json({ error: "ID not found" });
     }
-    const base64Photo = homePhoto.photoPath
-      ? fs.readFileSync(homePhoto.photoPath, { encoding: "base64" })
-      : null;
 
     const responseHomePhoto = {
       id: homePhoto.id,
-      photo: base64Photo,
+      photo: homePhoto.photoPath,
     };
 
     return res.status(200).json(responseHomePhoto);
@@ -82,19 +81,15 @@ async function deleteHomePhoto(req, res) {
   }
 }
 
-// Get all home photos with base64 encoding
+// Get all home photos
 async function findAllHomePhotos(req, res) {
   try {
     const homePhotos = await homeRepository.getAllHomePhotos();
 
     const responsePhotos = homePhotos.map((photo) => {
-      const base64Photo = photo.photoPath
-        ? fs.readFileSync(path.join(__dirname, "..", photo.photoPath), { encoding: "base64" })
-        : null;
-
       return {
         id: photo.id,
-        photo: base64Photo,
+        photo: photo.photoPath,
       };
     });
 

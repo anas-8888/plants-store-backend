@@ -52,14 +52,20 @@ const allowedDomains = [
   "https://frontend.com",
   "https://another-allowed-site.com",
 ];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (!origin || allowedDomains.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true,
+// };
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedDomains.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: true, // Allow all origins
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -97,7 +103,7 @@ app.use("/api", reviews);
 
 // URIs
 app.get("/", (req, res) => {
-  res.send("Welcome Programmer");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 app.use((req, res, next) => {
   res.status(404).json({ error: "Not found" });

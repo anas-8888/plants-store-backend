@@ -44,9 +44,6 @@ async function getAllSubcategories(req, res) {
   try {
     const subcategories = await subcategoryRepository.findAllSubcategories();
     const subcategoriesWithPhotos = subcategories.map((subcategory) => {
-      const base64Photo = subcategory.photoPath
-        ? fs.readFileSync(subcategory.photoPath, { encoding: "base64" })
-        : null;
 
       const { photoPath, ...subcategoryWithoutPhotoPath } = subcategory;
 
@@ -54,7 +51,7 @@ async function getAllSubcategories(req, res) {
       const subcategoryData = {
         id: subcategory.id,
         category_id: subcategory.category_id,
-        photo: base64Photo,
+        photo: subcategory.photoPath,
       };
 
       if (language === "ar") {
@@ -82,13 +79,6 @@ async function getSubcategoryById(req, res) {
 
   try {
     const subcategory = await subcategoryRepository.findSubcategoryById(id);
-    if (subcategory.photoPath) {
-      subcategory.photo = fs.readFileSync(subcategory.photoPath, {
-        encoding: "base64",
-      });
-    } else {
-      subcategory.photo = null;
-    }
 
     const { photoPath, ...subcategoryWithoutPhotoPath } = subcategory;
 
@@ -96,7 +86,7 @@ async function getSubcategoryById(req, res) {
     const subcategoryData = {
       id: subcategoryWithoutPhotoPath.id,
       category_id: subcategoryWithoutPhotoPath.category_id,
-      photo: subcategory.photo,
+      photo: subcategory.photoPath,
     };
 
     if (language === "ar") {
@@ -125,17 +115,13 @@ async function getSubcategoryByName(req, res) {
       name
     );
     const subcategoriesWithPhotos = subcategories.map((subcategory) => {
-      const base64Photo = subcategory.photoPath
-        ? fs.readFileSync(subcategory.photoPath, { encoding: "base64" })
-        : null;
-
       const { photoPath, ...subcategoryWithoutPhotoPath } = subcategory;
 
       // Choose the right subcategory name based on language
       const subcategoryData = {
         id: subcategoryWithoutPhotoPath.id,
         category_id: subcategoryWithoutPhotoPath.category_id,
-        photo: base64Photo,
+        photo: subcategory.photoPath,
       };
 
       if (language === "ar") {

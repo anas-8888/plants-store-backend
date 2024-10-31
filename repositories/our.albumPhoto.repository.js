@@ -18,6 +18,21 @@ async function saveAlbum(albumData) {
   }
 }
 
+
+async function getAllAlbumPhotos() {
+  try {
+    const connection = await pool.getConnection();
+    const query = `SELECT id, photoPath FROM our_album_photo`;
+    const [rows] = await connection.execute(query);
+    connection.release();
+
+    return rows;
+  } catch (error) {
+    console.error("Error retrieving all album photos:", error.message);
+    throw error;
+  }
+}
+
 //Find Album By ID
 async function findAlbumById(albumId) {
   try {
@@ -32,35 +47,6 @@ async function findAlbumById(albumId) {
     return rows[0];
   } catch (error) {
     console.error("Error finding Album by ID:", error);
-    throw error;
-  }
-}
-
-//Update Album
-async function updateAlbum(albumData) {
-  const { id, photoPath } = albumData;
-
-  try {
-    const connection = await pool.getConnection();
-    const query = `
-      UPDATE our_album_photo
-      SET photoPath = ?
-      WHERE id = ?
-    `;
-
-    const [result] = await connection.execute(query, [photoPath, id]);
-    connection.release();
-
-    if (result.affectedRows === 0) {
-      return {
-        success: false,
-        message: "Album Not Found or No Changes Made",
-      };
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error updating Home Photo:", error);
     throw error;
   }
 }
@@ -87,7 +73,7 @@ async function deleteAlbum(albumId) {
 
 module.exports = {
   saveAlbum,
+  getAllAlbumPhotos,
   findAlbumById,
-  updateAlbum,
   deleteAlbum,
 };

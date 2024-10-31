@@ -10,7 +10,7 @@ auth.get(
   checkNotLoggedIn,
   passport.authenticate("google", {
     scope: ["profile", "email"],
-  })
+  }),// TODO
 );
 
 // Routing the google callback

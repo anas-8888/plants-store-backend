@@ -19,7 +19,10 @@ async function createCategory(req, res) {
       });
     }
 
-    const photoPath = req.file?.path || null;
+    const photoPath = req.file
+    ? `uploads/category/${req.file.filename}`
+    : null;
+
     const result = await categoryRepository.saveCategory({
       category_name_AR,
       category_name_EN,
@@ -45,22 +48,17 @@ async function getAllCategories(req, res) {
     const language = req.language;
 
     const filteredCategories = categories.map((category) => {
-      const base64Photo = category.photoPath
-        ? fs.readFileSync(category.photoPath, { encoding: "base64" })
-        : null;
-
-      // Include only the fields based on the language header
       if (language === "ar") {
         return {
           id: category.id,
           category_name: category.category_name_AR,
-          photo: base64Photo,
+          photo: category.photoPath,
         };
       } else {
         return {
           id: category.id,
           category_name: category.category_name_EN,
-          photo: base64Photo,
+          photo: category.photoPath,
         };
       }
     });
@@ -83,16 +81,11 @@ async function getCategoryById(req, res) {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    const base64Photo = category.photoPath
-      ? fs.readFileSync(category.photoPath, { encoding: "base64" })
-      : null;
-
     const language = req.language;
 
-    // Include only the fields based on the language header
     const responseCategory = {
       id: category.id,
-      photo: base64Photo,
+      photo: category.photoPath,
     };
 
     if (language === "ar") {
@@ -117,14 +110,10 @@ async function findCategoryByName(req, res) {
 
     const language = req.language;
 
-    const categoriesWithBase64Photos = categories.map((category) => {
-      const base64Photo = category.photoPath
-        ? fs.readFileSync(category.photoPath, { encoding: "base64" })
-        : null;
-
+    const categoriesWithPhotos = categories.map((category) => {
       const responseCategory = {
         id: category.id,
-        photo: base64Photo,
+        photo: category.photoPath,
       };
 
       if (language === "ar") {
@@ -136,7 +125,7 @@ async function findCategoryByName(req, res) {
       return responseCategory;
     });
 
-    return res.status(200).json(categoriesWithBase64Photos);
+    return res.status(200).json(categoriesWithPhotos);
   } catch (error) {
     return res.status(404).json({
       error: "Category not found",
@@ -148,7 +137,9 @@ async function findCategoryByName(req, res) {
 async function updateCategory(req, res) {
   const { id } = req.params;
   const { category_name_AR, category_name_EN } = req.body;
-  const photoPath = req.file?.path || null;
+  const photoPath = req.file
+    ? `uploads/category/${req.file.filename}`
+    : null;
 
   try {
     const existingCategory = await categoryRepository.findCategoryById(id);

@@ -37,19 +37,6 @@ async function findAllPlantsWithPhotos(req, res) {
     const language = req.language;
 
     const filteredPlants = plants.map((plant) => {
-      let photoBase64 = null;
-
-      // Only read the first photo in the array
-      if (plant.photos && plant.photos.length > 0) {
-        try {
-          photoBase64 = fs.readFileSync(plant.photos[0], {
-            encoding: "base64",
-          });
-        } catch (err) {
-          console.error(`Error reading photo at path: ${plant.photos[0]}`, err);
-        }
-      }
-
       if (language === "ar") {
         return {
           id: plant.id,
@@ -67,7 +54,7 @@ async function findAllPlantsWithPhotos(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
-          photos: photoBase64,
+          photos: plant.photos[0],
         };
       } else {
         return {
@@ -86,7 +73,7 @@ async function findAllPlantsWithPhotos(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
-          photos: photoBase64,
+          photos: plant.photos[0],
         };
       }
     });
@@ -106,20 +93,12 @@ async function findPlantById(req, res) {
     if (!plants || plants.length === 0) {
       return res.status(404).json({ error: "Plant not found" });
     }
-
     const language = req.language;
     const filteredPlants = plants.map((plant) => {
-      const photosBase64 = plant.photos
-        .map((photoPath) => {
-          try {
-            return fs.readFileSync(photoPath, { encoding: "base64" });
-          } catch (err) {
-            console.error(`Error reading photo at path: ${photoPath}`, err);
-            return null;
-          }
-        })
-        .filter((photo) => photo !== null); // Filter out any null values
-
+      const photoPaths = plant.photos.filter((photoPath) => {
+        return 1;
+      });
+      
       if (language === "ar") {
         return {
           id: plant.id,
@@ -137,7 +116,7 @@ async function findPlantById(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
-          photos: photosBase64,
+          photos: photoPaths,
         };
       } else {
         return {
@@ -156,17 +135,17 @@ async function findPlantById(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
-          photos: photosBase64,
+          photos: photoPaths,
         };
       }
     });
-
     res.status(200).json(filteredPlants);
   } catch (error) {
     console.error("Error fetching plant by ID:", error);
     res.status(500).json({ error: "Could not fetch plant" });
   }
 }
+
 
 async function findPlantsBySubcategory(req, res) {
   try {
@@ -175,19 +154,6 @@ async function findPlantsBySubcategory(req, res) {
     const language = req.language;
 
     const filteredPlants = plants.map((plant) => {
-      let photoBase64 = null;
-
-      // Only read the first photo in the array
-      if (plant.photos && plant.photos.length > 0) {
-        try {
-          photoBase64 = fs.readFileSync(plant.photos[0], {
-            encoding: "base64",
-          });
-        } catch (err) {
-          console.error(`Error reading photo at path: ${plant.photos[0]}`, err);
-        }
-      }
-
       if (language === "ar") {
         return {
           id: plant.id,
@@ -205,7 +171,7 @@ async function findPlantsBySubcategory(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
-          photos: photoBase64,
+          photos: plant.photos[0],
         };
       } else {
         return {
@@ -224,7 +190,7 @@ async function findPlantsBySubcategory(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
-          photos: photoBase64,
+          photos: plant.photos[0],
         };
       }
     });
@@ -333,7 +299,9 @@ async function updatePlant(req, res) {
 // Update plant photo
 async function updatePhotoPlant(req, res) {
   const { photoId } = req.params;
-  const photoPath = req.file?.path;
+  const photoPath = req.file
+    ? `uploads/plants/${req.file.filename}`
+    : null;
 
   try {
     if (!photoId) {

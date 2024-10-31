@@ -76,30 +76,6 @@
 					"response": []
 				},
 				{
-					"name": "Delete Customer",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/deleteCustomer/:id",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"deleteCustomer",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Customer By Email",
 					"request": {
 						"method": "GET",
@@ -117,6 +93,30 @@
 								{
 									"key": "email",
 									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteCustomer/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteCustomer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
 								}
 							]
 						}
@@ -666,11 +666,7 @@
 									"src": [
 										"Screenshot (214).png",
 										"Screenshot (45).png",
-										"Screenshot (46).png",
-										"Screenshot (47).png",
-										"Screenshot (52).png",
-										"Screenshot (74).png",
-										"Screenshot (75).png"
+										"Screenshot (46).png"
 									]
 								}
 							]
@@ -733,7 +729,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "7"
 								}
 							]
 						}
@@ -763,7 +759,41 @@
 							"variable": [
 								{
 									"key": "subcategoryId",
-									"value": "3"
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant photo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Screenshot (498).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/updatePlantPhoto/:photoId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updatePlantPhoto",
+								":photoId"
+							],
+							"variable": [
+								{
+									"key": "photoId",
+									"value": "30"
 								}
 							]
 						}
@@ -983,40 +1013,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Update plant photo",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "photoPath",
-									"type": "file",
-									"src": "Screenshot (498).png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}/updatePlantPhoto/:photoId",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"updatePlantPhoto",
-								":photoId"
-							],
-							"variable": [
-								{
-									"key": "photoId",
-									"value": "30"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -1195,6 +1191,32 @@
 			"name": "Favorite",
 			"item": [
 				{
+					"name": "Create favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"1\",\r\n    \"plantId\": \"3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/createFavorite",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createFavorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all favorite",
 					"request": {
 						"method": "GET",
@@ -1223,56 +1245,6 @@
 							],
 							"path": [
 								"findFavoriteById",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create favorite",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"1\",\r\n    \"plantId\": \"3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/createFavorite",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"createFavorite"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete favorite",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/deleteFavorite/:id",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"deleteFavorite",
 								":id"
 							],
 							"variable": [
@@ -1337,6 +1309,30 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete favorite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deleteFavorite/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deleteFavorite",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1344,7 +1340,7 @@
 			"name": "Home photos",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Create home photo",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1412,10 +1408,27 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete home photo",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}//deleteHomePhoto/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"",
+								"deleteHomePhoto",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -1425,23 +1438,33 @@
 			"name": "Locations",
 			"item": [
 				{
-					"name": "Get all locations",
+					"name": "Create location",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "accept-language",
-								"value": "ar",
-								"type": "text"
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location_name_AR\": \"عمان\",\r\n    \"location_name_EN\": \"amman\",\r\n    \"price\": 3.25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/findAllLocations",
+							"raw": "{{base_url}}/createLocation",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"findAllLocations"
+								"createLocation"
 							]
 						}
 					},
@@ -1468,6 +1491,29 @@
 							],
 							"path": [
 								"createLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all locations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/findAllLocations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllLocations"
 							]
 						}
 					},
@@ -1598,7 +1644,7 @@
 						"header": [
 							{
 								"key": "accept-language",
-								"value": "ar",
+								"value": "en",
 								"type": "text"
 							}
 						],
@@ -1704,37 +1750,102 @@
 			]
 		},
 		{
-			"name": "Create location",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "accept-language",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"location_name_AR\": \"عمان\",\r\n    \"location_name_EN\": \"amman\",\r\n    \"price\": 3.25\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Our album",
+			"item": [
+				{
+					"name": "Create our album photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "IMG_1907.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/createAlbum",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createAlbum"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/createLocation",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"createLocation"
-					]
+				{
+					"name": "Get all our album photos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAllAlbumPhotos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAllAlbumPhotos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get our album photo by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/findAlbumById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"findAlbumById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete our album photo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}//deleteOurAlbum/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"",
+								"deleteOurAlbum",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	],
 	"event": [

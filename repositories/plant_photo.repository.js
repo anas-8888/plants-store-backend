@@ -35,7 +35,10 @@ async function savePlantPhotos(plantId, photos) {
   try {
     const query = `INSERT INTO plant_photo (plant_id, photoPath) VALUES (?, ?)`;
     for (const photo of photos) {
-      await connection.execute(query, [plantId, photo.path]);
+      const photoPath = photo
+        ? `uploads/plants/${photo.filename}`
+        : null;
+      await connection.execute(query, [plantId, photoPath]);
     }
   } catch (error) {
     console.error("Error saving plant photos:", error);

@@ -1,18 +1,19 @@
 const albumRepository = require("../repositories/our.albumPhoto.repository");
 const fs = require("fs");
 
-/// Create Album
+// Create Album
 async function createAlbum(req, res) {
   try {
-    const photoFiles = req.files;
-
+    const photoFiles = (req.files)[0];
     if (!photoFiles || photoFiles.length === 0) {
       return res.status(400).json({ error: "Album file is required." });
     }
 
     // Use the path of the first file, or loop through if you want to save multiple
-    const photoPath = photoFiles[0].path;
-
+    const photoPath = photoFiles
+    ? `uploads/ourAlbum/${photoFiles.filename}`
+    : null;
+    
     const result = await albumRepository.saveAlbum({
       photoPath,
     });
@@ -31,6 +32,28 @@ async function createAlbum(req, res) {
   }
 }
 
+// Get all album photos
+async function findAllAlbumPhotos(req, res) {
+  try {
+    const albumPhotos = await albumRepository.getAllAlbumPhotos();
+
+    const responsePhotos = albumPhotos.map((photo) => {
+      return {
+        id: photo.id,
+        photo: photo.photoPath,
+      };
+    });
+
+    return res.status(200).json(responsePhotos);
+  } catch (error) {
+    console.error("Error retrieving album photos:", error.message);
+    return res.status(500).json({
+      error: "Failed to retrieve album photos",
+      details: error.message,
+    });
+  }
+}
+
 //Find Album By ID
 async function findAlbumById(req, res) {
   try {
@@ -40,55 +63,16 @@ async function findAlbumById(req, res) {
     if (!album) {
       return res.status(404).json({ error: "ID not found" });
     }
-    const base64Photo = album.photoPath
-      ? fs.readFileSync(album.photoPath, { encoding: "base64" })
-      : null;
 
     const responseAlbum = {
       id: album.id,
-      photo: base64Photo,
+      photo: album.photoPath,
     };
 
     return res.status(200).json(responseAlbum);
   } catch (error) {
     return res.status(500).json({
       error: "Failed to retrieve Album",
-      details: error.message,
-    });
-  }
-}
-
-//Update Album
-async function updateAlbum(req, res) {
-  const { id } = req.params;
-  const photoPath = req.file?.path || null;
-
-  try {
-    const existingAlbum = await albumRepository.findAlbumById(id);
-
-    if (photoPath && existingAlbum.photoPath) {
-      try {
-        fs.unlinkSync(existingAlbum.photoPath);
-      } catch (err) {
-        console.error("File deletion error:", err.message);
-      }
-    }
-
-    const updatedData = {
-      id,
-      photoPath: photoPath || existingAlbum.photoPath,
-    };
-
-    await albumRepository.updateAlbum(updatedData);
-
-    return res.status(200).json({
-      message: "Album updated successfully",
-    });
-  } catch (error) {
-    if (photoPath) fs.unlinkSync(photoPath);
-
-    return res.status(500).json({
-      error: "Failed to update Album",
       details: error.message,
     });
   }
@@ -123,7 +107,7 @@ async function deleteAlbum(req, res) {
 
 module.exports = {
   createAlbum,
+  findAllAlbumPhotos,
   findAlbumById,
-  updateAlbum,
   deleteAlbum,
 };

@@ -3,7 +3,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads/category"));
+    cb(null, path.join(__dirname, "../httpdocs/uploads/category"));
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -20,7 +20,6 @@ const fileFilter = (req, file, cb) => {
   if (extname && mimetype) {
     cb(null, true);
   } else {
-    console.log(`Rejected file type: ${file.mimetype}`);
     cb(new Error("Only JPEG and PNG images are allowed!"), false);
   }
 };
