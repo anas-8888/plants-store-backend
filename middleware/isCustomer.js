@@ -1,7 +1,8 @@
 function isCustomer(req, res, next) {
-      const validate = true; // TODO
-      if (validate) {
-            next();
+      if (req.isAuthenticated() && req.user) {
+            return next();
+      } else {
+            return res.status(401).json({ error: "Unauthorized access. Please log in to continue." });
       }
 }
 

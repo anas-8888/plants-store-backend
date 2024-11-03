@@ -11,6 +11,6 @@ router.get("/findMyAllOrders", isCustomer, ordersController.findAllOrders);
 router.get("/findOrderById/:id", isCustomer, ordersController.findOrderById);
 router.get("/findAllOrders", isAdmin, ordersController.getAllLastOrders);
 router.get("/findAllOrderItems/:id", isCustomer, ordersController.findAllOrderItems);
-router.post("/paymentAction", validateCart, ordersController.paymentAction); // TODO
+router.post("/paymentAction", isCustomer, validateCart, ordersController.paymentAction); // TODO
 
 module.exports = router;

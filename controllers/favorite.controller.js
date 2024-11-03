@@ -60,11 +60,11 @@ async function findFavoriteById(req, res) {
 }
 
 // Get all favorites by customer ID
-async function findFavoriteByCustomerId(req, res) {
-  const { id: customerId } = req.params;
+async function findMyAllFavorite(req, res) {
+  const { id } = req.user.id;
 
   try {
-    const favorites = await favoriteRepository.findFavoritesByCustomerId(customerId);
+    const favorites = await favoriteRepository.findFavoritesByCustomerId(id);
     return res.status(200).json(favorites);
   } catch (error) {
     console.error("Error retrieving favorites:", error.message);
@@ -105,7 +105,7 @@ module.exports = {
   saveFavorite,
   findAllFavorites,
   findFavoriteById,
-  findFavoriteByCustomerId,
+  findMyAllFavorite,
   isFavorite,
   deleteFavorite,
 };

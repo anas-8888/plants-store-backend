@@ -10,7 +10,7 @@ auth.get(
   checkNotLoggedIn,
   passport.authenticate("google", {
     scope: ["profile", "email"],
-  }),// TODO
+  }),
 );
 
 // Routing the google callback
@@ -26,7 +26,7 @@ auth.get(
 // Auth logout
 auth.get("/logout", checkLoggedIn, (req, res) => {
   req.logout();
-  res.send("successful logout");
+  res.status(200).json({ message: "Successfully logged out" });
 });
 
 module.exports = auth;

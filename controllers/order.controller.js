@@ -12,8 +12,7 @@ const { getPlantPrice } = require("../repositories/plant.repository");
 const ordersController = {
       async createOrder(req, res) {
             const { location_id, items } = req.body;
-            // const customer_id = req.session.passport.user; // TODO
-            const customer_id = 1;
+            const customer_id = req.user.id;
             let total_price = 0;
 
             // Validate items

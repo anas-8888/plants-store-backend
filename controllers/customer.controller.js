@@ -3,7 +3,8 @@ const validator = require("validator");
 
 // Create a new customer
 async function createCustomer(req, res) {
-  const { firstName, lastName, email, thumbnail, googleId } = req.body;
+  const { firstName, lastName, email, thumbnail, googleId } = req.body; // Default to false if not provided
+  const is_admin = false;
 
   if (!firstName || !lastName || !email || !googleId) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -14,36 +15,26 @@ async function createCustomer(req, res) {
   }
 
   try {
-    // Check if customer with the same email or Google ID exists
-    const existingCustomer =
-      await customerRepository.findCustomerByEmailOrGoogleId(email, googleId);
+    const existingCustomer = await customerRepository.findCustomerByEmailOrGoogleId(email, googleId);
     if (existingCustomer) {
-      return res
-        .status(400)
-        .json({
-          error: "Customer with this email or Google ID already exists",
-        });
+      return res.status(400).json({ error: "Customer with this email or Google ID already exists" });
     }
 
-    // Create new customer
     const newCustomerId = await customerRepository.createCustomer({
       firstName,
       lastName,
       email,
       thumbnail,
       googleId,
+      is_admin,
     });
 
-    return res
-      .status(201)
-      .json({
-        message: "Customer created successfully",
-        customerId: newCustomerId,
-      });
+    return res.status(201).json({
+      message: "Customer created successfully",
+      customerId: newCustomerId,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to create customer", details: error.message });
+    return res.status(500).json({ error: "Failed to create customer", details: error.message });
   }
 }
 
@@ -56,6 +47,26 @@ async function getAllCustomer(req, res) {
     return res
       .status(500)
       .json({ error: "Failed to retrieve customers", details: error.message });
+  }
+}
+
+// Get customer info
+async function getMyInfo(req, res) {
+  try {
+    if(!req.user) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    
+    const customer = {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      thumbnail: req.user.thumbnail,
+    };
+    
+    return res.status(200).json(customer);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to retrieve customer info", details: error.message });
   }
 }
 
@@ -105,17 +116,9 @@ async function findCustomerByEmail(req, res) {
 }
 
 // Update customer information
-async function updateCustomer(req, res) {
+async function updateCustomerRole(req, res) {
   const { id } = req.params;
-  const { firstName, lastName, email, thumbnail, googleId } = req.body;
-
-  if (!firstName || !lastName || !email || !googleId) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-
-  if (!validator.isEmail(email)) {
-    return res.status(400).json({ error: "Invalid email format" });
-  }
+  const { is_admin } = req.body;
 
   try {
     const customer = await customerRepository.findCustomerById(id);
@@ -123,33 +126,17 @@ async function updateCustomer(req, res) {
       return res.status(404).json({ error: "Customer not found" });
     }
 
-    const existingCustomer =
-      await customerRepository.findCustomerByEmailOrGoogleId(
-        email,
-        googleId,
-        id
-      );
-    if (existingCustomer) {
-      return res
-        .status(400)
-        .json({
-          error: "Another customer with this email or Google ID already exists",
-        });
-    }
-
-    // Update the customer
     await customerRepository.updateCustomer(id, {
-      firstName,
-      lastName,
-      email,
-      thumbnail,
-      googleId,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      email: customer.email,
+      thumbnail: customer.thumbnail,
+      googleId: customer.googleId,
+      is_admin,
     });
     return res.status(200).json({ message: "Customer updated successfully" });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to update customer", details: error.message });
+    return res.status(500).json({ error: "Failed to update customer", details: error.message });
   }
 }
 
@@ -170,11 +157,10 @@ async function deleteCustomer(req, res) {
 module.exports = {
   createCustomer,
   getAllCustomer,
+  getMyInfo,
   getCustomerById,
   findCustomerByName,
   findCustomerByEmail,
-  updateCustomer,
+  updateCustomerRole,
   deleteCustomer,
-  createCustomer,
-  updateCustomer,
 };

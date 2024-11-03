@@ -1,6 +1,5 @@
 const express = require("express");
 const { locationsController } = require("./../controllers/locations.controller"); 
-const { isCustomer } = require("../middleware/isCustomer");
 const { isAdmin } = require("../middleware/isAdmin");
 
 const router = express.Router();

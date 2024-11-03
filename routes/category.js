@@ -8,7 +8,6 @@ const {
   findCategoryByName,
 } = require("./../controllers/category.controller");
 const upload = require("../middleware/uploadCategory");
-const { isCustomer } = require("../middleware/isCustomer");
 const { isAdmin } = require("../middleware/isAdmin");
 
 const category = express.Router();

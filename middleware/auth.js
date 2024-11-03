@@ -1,20 +1,17 @@
-const jwt = require("jsonwebtoken");
-
 function checkNotLoggedIn(req, res, next) {
-  const isLoggedIn = req.isAuthenticated() && req.user;
-  if (!isLoggedIn) {
-    next();
+  if (!req.isAuthenticated() || !req.user) {
+    return next();
   } else {
-    return res.redirect("/");
+    return res.status(403).json({ message: "Already logged in. Redirecting to home." });
   }
 }
 
 function checkLoggedIn(req, res, next) {
-  const isLoggedIn = req.isAuthenticated() && req.user;
-  if (!isLoggedIn) {
-    return res.send("You are not login");
+  if (req.isAuthenticated() && req.user) {
+    return next();
+  } else {
+    return res.status(401).json({ error: "Unauthorized access. Please log in to continue." });
   }
-  next();
 }
 
 module.exports = {

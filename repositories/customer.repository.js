@@ -3,16 +3,17 @@ const pool = require("../config/db");
 // Create a new customer
 async function createCustomer(customerData) {
   const connection = await pool.getConnection();
-  const { firstName, lastName, email, thumbnail, googleId } = customerData;
+  const { firstName, lastName, email, thumbnail, googleId, is_admin } = customerData;
 
   const [result] = await connection.execute(
-    'INSERT INTO customer (firstName, lastName, email, thumbnail, googleId) VALUES (?, ?, ?, ?, ?)',
-    [firstName, lastName, email, thumbnail, googleId]
+    'INSERT INTO customer (firstName, lastName, email, thumbnail, googleId, is_admin) VALUES (?, ?, ?, ?, ?, ?)',
+    [firstName, lastName, email, thumbnail, googleId, is_admin] 
   );
-  
+
   connection.release();
   return result.insertId;
 }
+
 
 // Find all customers
 async function findAllCustomer() {
@@ -68,14 +69,18 @@ async function findCustomerByEmail(email) {
 // Update customer by ID
 async function updateCustomer(id, customerData) {
   const connection = await pool.getConnection();
-  const { firstName, lastName, email, thumbnail, googleId } = customerData;
-
-  await connection.execute(
-    'UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ? WHERE id = ?',
-    [firstName, lastName, email, thumbnail, googleId, id]
-  );
-  
-  connection.release();
+  const { firstName, lastName, email, thumbnail, googleId, is_admin } = customerData;
+  try {
+    await connection.execute(
+      'UPDATE customer SET firstName = ?, lastName = ?, email = ?, thumbnail = ?, googleId = ?, is_admin = ? WHERE id = ?',
+      [firstName, lastName, email, thumbnail, googleId, is_admin, id]
+    );
+  } catch (error) {
+    console.error("Error updating customer:", error.message);
+    throw error; // Ensure error handling bubbles up
+  } finally {
+    connection.release();
+  }
 }
 
 // Delete customer by ID
@@ -93,7 +98,5 @@ module.exports = {
   findCustomerByName,
   findCustomerByEmail,
   updateCustomer,
-  deleteCustomer,
-  createCustomer,
-  updateCustomer,
+  deleteCustomer
 };

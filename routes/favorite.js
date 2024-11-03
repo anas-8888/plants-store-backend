@@ -5,9 +5,9 @@ const { isAdmin } = require("../middleware/isAdmin");
 
 const favorite = express.Router();
 
-favorite.get("/findAllFavorite", isCustomer, favoriteController.findAllFavorites);
-favorite.get("/findFavoriteById/:id", isAdmin, favoriteController.findFavoriteById);
-favorite.get("/findFavoriteByCustomerId/:id", isCustomer, favoriteController.findFavoriteByCustomerId);
+favorite.get("/findAllFavorite", isAdmin, favoriteController.findAllFavorites);
+favorite.get("/findFavoriteById/:id", isCustomer, favoriteController.findFavoriteById);
+favorite.get("/findMyAllFavorite", isCustomer, favoriteController.findMyAllFavorite);
 favorite.get("/isFavorite/:customerId/:plantID", isCustomer, favoriteController.isFavorite);
 favorite.post("/createFavorite", isCustomer, favoriteController.saveFavorite);
 favorite.delete("/deleteFavorite/:id", isCustomer, favoriteController.deleteFavorite);

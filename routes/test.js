@@ -1,9 +1,10 @@
 const express = require("express");
 const pool = require("./../config/db");
+const { isAdmin } = require("../middleware/isAdmin");
 
 const test = express.Router();
 
-test.get("/test", async (req, res) => {
+test.get("/test", isAdmin, async (req, res) => {
   try {
     const [rows] = await pool.query(`SELECT 1 + 1 AS result`);
     res.status(200).json({

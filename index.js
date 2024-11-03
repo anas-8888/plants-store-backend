@@ -35,6 +35,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+// Set trust proxy for secure cookies behind a proxy
+app.set("trust proxy", 1);
+
 // Cookies
 app.use(
   cookieSession({
@@ -42,35 +45,20 @@ app.use(
     keys: [process.env.COOKIE_KEY || "fallbackSecret"],
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Allowed domains
-const allowedDomains = [
-  "https://frontend.com",
-  "https://another-allowed-site.com",
-];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || allowedDomains.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   credentials: true,
-// };
-const corsOptions = {
-  origin: true, // Allow all origins
-  methods: ["GET", "POST", "PUT", "DELETE"],
+// CORS Configuration
+app.use(cors({
+  origin: "http://beautiful-mirzakhani.194-238-27-109.plesk.page",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
-};
-app.use(cors(corsOptions));
+}));
+
 
 // Rate limiting
 const apiLimiter = rateLimit({
@@ -79,9 +67,10 @@ const apiLimiter = rateLimit({
   message: "Too many requests, please try again later.",
 });
 app.use("/api/", apiLimiter);
+app.use("/auth", apiLimiter);
 
 // Protection
-app.use(helmet()); //USE to secure inspect //TODO LATER
+app.use(helmet()); //USE to secure inspect
 app.use(morgan("combined"));
 
 // Middleware
