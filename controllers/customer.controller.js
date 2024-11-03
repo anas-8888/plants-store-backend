@@ -1,43 +1,6 @@
 const customerRepository = require("../repositories/customer.repository");
 const validator = require("validator");
 
-// Create a new customer
-async function createCustomer(req, res) {
-  const { firstName, lastName, email, thumbnail, googleId } = req.body; // Default to false if not provided
-  const is_admin = false;
-
-  if (!firstName || !lastName || !email || !googleId) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-
-  if (!validator.isEmail(email)) {
-    return res.status(400).json({ error: "Invalid email format" });
-  }
-
-  try {
-    const existingCustomer = await customerRepository.findCustomerByEmailOrGoogleId(email, googleId);
-    if (existingCustomer) {
-      return res.status(400).json({ error: "Customer with this email or Google ID already exists" });
-    }
-
-    const newCustomerId = await customerRepository.createCustomer({
-      firstName,
-      lastName,
-      email,
-      thumbnail,
-      googleId,
-      is_admin,
-    });
-
-    return res.status(201).json({
-      message: "Customer created successfully",
-      customerId: newCustomerId,
-    });
-  } catch (error) {
-    return res.status(500).json({ error: "Failed to create customer", details: error.message });
-  }
-}
-
 // Get all customers
 async function getAllCustomer(req, res) {
   try {
@@ -126,6 +89,10 @@ async function updateCustomerRole(req, res) {
       return res.status(404).json({ error: "Customer not found" });
     }
 
+    if(!id || !is_admin) {
+      return res.status(404).json({ error: "Params not found" });
+    }
+
     await customerRepository.updateCustomer(id, {
       firstName: customer.firstName,
       lastName: customer.lastName,
@@ -155,7 +122,6 @@ async function deleteCustomer(req, res) {
 }
 
 module.exports = {
-  createCustomer,
   getAllCustomer,
   getMyInfo,
   getCustomerById,

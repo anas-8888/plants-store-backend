@@ -28,10 +28,6 @@ passport.use(
       try {
         const existingCustomer = await customerRepository.findCustomerByGoogleId(profile.id);
         
-        if(!existingCustomer.is_admin) {
-          existingCustomer.is_admin = 0;
-        }
-        
         if (existingCustomer) {
           await customerRepository.updateCustomer(existingCustomer.id, {
             firstName: profile.name.givenName,
@@ -49,6 +45,7 @@ passport.use(
             email: profile.emails[0].value,
             thumbnail: profile.photos[0].value,
             googleId: profile.id,
+            is_admin: 0
           });
 
           const newCustomer = await customerRepository.findCustomerById(newCustomerId);
