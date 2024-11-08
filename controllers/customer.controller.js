@@ -89,7 +89,7 @@ async function updateCustomerRole(req, res) {
       return res.status(404).json({ error: "Customer not found" });
     }
 
-    if(!id || !is_admin) {
+    if(!id) {
       return res.status(404).json({ error: "Params not found" });
     }
 

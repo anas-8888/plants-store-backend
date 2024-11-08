@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "36b1d93a-3f73-4e72-b562-ba629f832878",
+		"_postman_id": "8a22ce11-09b7-471a-abbf-9851382b772a",
 		"name": "E-Commerce API",
 		"description": "API documentation for the E-Commerce backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -16,11 +16,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAllCustomer",
+							"raw": "{{base_url}}/api/findAllCustomer",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllCustomer"
 							]
 						}
@@ -33,11 +34,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findCustomerById/:id",
+							"raw": "{{base_url}}/api/findCustomerById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findCustomerById",
 								":id"
 							],
@@ -57,11 +59,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findCustomerByName/:name",
+							"raw": "{{base_url}}/api/findCustomerByName/:name",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findCustomerByName",
 								":name"
 							],
@@ -81,11 +84,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findCustomerByName/:email",
+							"raw": "{{base_url}}/api/findCustomerByName/:email",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findCustomerByName",
 								":email"
 							],
@@ -105,11 +109,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deleteCustomer/:id",
+							"raw": "{{base_url}}/api/deleteCustomer/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deleteCustomer",
 								":id"
 							],
@@ -138,11 +143,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/updateCustomerRole/:id",
+							"raw": "{{base_url}}/api/updateCustomerRole/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updateCustomerRole",
 								":id"
 							],
@@ -162,11 +168,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findMyInfo",
+							"raw": "{{base_url}}/api/findMyInfo",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findMyInfo"
 							]
 						}
@@ -204,11 +211,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/createCategory",
+							"raw": "{{base_url}}/api/createCategory",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createCategory"
 							]
 						}
@@ -227,11 +235,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findAllCategories",
+							"raw": "{{base_url}}/api/findAllCategories",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllCategories"
 							]
 						}
@@ -250,11 +259,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findCategoryById/:id",
+							"raw": "{{base_url}}/api/findCategoryById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findCategoryById",
 								":id"
 							],
@@ -280,11 +290,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findCategoryByName/:name",
+							"raw": "{{base_url}}/api/findCategoryByName/:name",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findCategoryByName",
 								":name"
 							],
@@ -304,11 +315,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deleteCategory/:id",
+							"raw": "{{base_url}}/api/deleteCategory/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deleteCategory",
 								":id"
 							],
@@ -350,11 +362,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/updateCategory/:id",
+							"raw": "{{base_url}}/api/updateCategory/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updateCategory",
 								":id"
 							],
@@ -411,11 +424,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/createSubcategory",
+							"raw": "{{base_url}}/api/createSubcategory",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createSubcategory"
 							]
 						}
@@ -434,11 +448,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findAllSubcategory",
+							"raw": "{{base_url}}/api/findAllSubcategory",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllSubcategory"
 							]
 						}
@@ -457,11 +472,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findSubcategoryById/:id",
+							"raw": "{{base_url}}/api/findSubcategoryById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findSubcategoryById",
 								":id"
 							],
@@ -487,11 +503,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findSubcategoryByName/:name",
+							"raw": "{{base_url}}/api/findSubcategoryByName/:name",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findSubcategoryByName",
 								":name"
 							],
@@ -511,11 +528,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deleteSubcategory/:id",
+							"raw": "{{base_url}}/api/deleteSubcategory/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deleteSubcategory",
 								":id"
 							],
@@ -564,11 +582,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/updateSubcategory/:id",
+							"raw": "{{base_url}}/api/updateSubcategory/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updateSubcategory",
 								":id"
 							],
@@ -722,11 +741,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/createPlant",
+							"raw": "{{base_url}}/api/createPlant",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createPlant"
 							]
 						}
@@ -745,11 +765,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findAllPlantsWithPhotos",
+							"raw": "{{base_url}}/api/findAllPlantsWithPhotos",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllPlantsWithPhotos"
 							]
 						}
@@ -768,11 +789,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findPlantById/:id",
+							"raw": "{{base_url}}/api/findPlantById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findPlantById",
 								":id"
 							],
@@ -798,11 +820,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findPlantsBySubcategory/:subcategoryId",
+							"raw": "{{base_url}}/api/findPlantsBySubcategory/:subcategoryId",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findPlantsBySubcategory",
 								":subcategoryId"
 							],
@@ -832,11 +855,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/updatePlantPhoto/:photoId",
+							"raw": "{{base_url}}/api/updatePlantPhoto/:photoId",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updatePlantPhoto",
 								":photoId"
 							],
@@ -998,11 +1022,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/updatePlant/:id",
+							"raw": "{{base_url}}/api/updatePlant/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updatePlant",
 								":id"
 							],
@@ -1022,11 +1047,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deletePlant/:id",
+							"raw": "{{base_url}}/api/deletePlant/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deletePlant",
 								":id"
 							],
@@ -1046,11 +1072,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deletePlantPhoto/:photoId",
+							"raw": "{{base_url}}/api/deletePlantPhoto/:photoId",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deletePlantPhoto",
 								":photoId"
 							],
@@ -1101,11 +1128,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findMyAllOrders",
+							"raw": "{{base_url}}/api/findMyAllOrders",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findMyAllOrders"
 							]
 						}
@@ -1118,11 +1146,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findOrderById/:id",
+							"raw": "{{base_url}}/api/findOrderById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findOrderById",
 								":id"
 							],
@@ -1142,11 +1171,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAllOrders",
+							"raw": "{{base_url}}/api/findAllOrders",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllOrders"
 							]
 						}
@@ -1159,11 +1189,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAllOrderItems/:id",
+							"raw": "{{base_url}}/api/findAllOrderItems/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllOrderItems",
 								":id"
 							],
@@ -1188,11 +1219,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/providers/google",
+							"raw": "{{base_url}}/auth/providers/google",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"auth",
 								"providers",
 								"google"
 							]
@@ -1206,11 +1238,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/google/callback",
+							"raw": "{{base_url}}/auth/google/callback",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"auth",
 								"google",
 								"callback"
 							]
@@ -1224,11 +1257,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/logout",
+							"raw": "{{base_url}}/auth/logout",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"auth",
 								"logout"
 							]
 						}
@@ -1255,11 +1289,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/createFavorite",
+							"raw": "{{base_url}}/api/createFavorite",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createFavorite"
 							]
 						}
@@ -1272,11 +1307,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAllFavorite",
+							"raw": "{{base_url}}/api/findAllFavorite",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllFavorite"
 							]
 						}
@@ -1289,11 +1325,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findFavoriteById/:id",
+							"raw": "{{base_url}}/api/findFavoriteById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findFavoriteById",
 								":id"
 							],
@@ -1313,11 +1350,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findFavoriteByCustomerId/:id",
+							"raw": "{{base_url}}/api/findFavoriteByCustomerId/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findFavoriteByCustomerId",
 								":id"
 							],
@@ -1337,11 +1375,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/isFavorite/:customerId/:plantID",
+							"raw": "{{base_url}}/api/isFavorite/:customerId/:plantID",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"isFavorite",
 								":customerId",
 								":plantID"
@@ -1366,11 +1405,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deleteFavorite/:id",
+							"raw": "{{base_url}}/api/deleteFavorite/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deleteFavorite",
 								":id"
 							],
@@ -1405,11 +1445,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/createHomePhoto",
+							"raw": "{{base_url}}/api/createHomePhoto",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createHomePhoto"
 							]
 						}
@@ -1422,11 +1463,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAllHomePhotos",
+							"raw": "{{base_url}}/api/findAllHomePhotos",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllHomePhotos"
 							]
 						}
@@ -1439,11 +1481,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findHomePhotoById/:id",
+							"raw": "{{base_url}}/api/findHomePhotoById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findHomePhotoById",
 								":id"
 							],
@@ -1463,12 +1506,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}//deleteHomePhoto/:id",
+							"raw": "{{base_url}}/api/deleteHomePhoto/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"",
+								"api",
 								"deleteHomePhoto",
 								":id"
 							],
@@ -1509,11 +1552,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/createLocation",
+							"raw": "{{base_url}}/api/createLocation",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createLocation"
 							]
 						}
@@ -1532,11 +1576,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findAllLocations",
+							"raw": "{{base_url}}/api/findAllLocations",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllLocations"
 							]
 						}
@@ -1555,11 +1600,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findLocationById/:id",
+							"raw": "{{base_url}}/api/findLocationById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findLocationById",
 								":id"
 							],
@@ -1579,11 +1625,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deleteLocation/:id",
+							"raw": "{{base_url}}/api/deleteLocation/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deleteLocation",
 								":id"
 							],
@@ -1612,11 +1659,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/updateLocation/:id",
+							"raw": "{{base_url}}/api/updateLocation/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updateLocation",
 								":id"
 							],
@@ -1650,11 +1698,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/createReview",
+							"raw": "{{base_url}}/api/createReview",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createReview"
 							]
 						}
@@ -1673,11 +1722,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findAllReviews",
+							"raw": "{{base_url}}/api/findAllReviews",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllReviews"
 							]
 						}
@@ -1696,11 +1746,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/findReviewById/:id",
+							"raw": "{{base_url}}/api/findReviewById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findReviewById",
 								":id"
 							],
@@ -1720,11 +1771,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/deleteReview/:id",
+							"raw": "{{base_url}}/api/deleteReview/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"deleteReview",
 								":id"
 							],
@@ -1753,11 +1805,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/updateReview/:id",
+							"raw": "{{base_url}}/api/updateReview/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"updateReview",
 								":id"
 							],
@@ -1792,11 +1845,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/createAlbum",
+							"raw": "{{base_url}}/api/createAlbum",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"createAlbum"
 							]
 						}
@@ -1809,11 +1863,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAllAlbumPhotos",
+							"raw": "{{base_url}}/api/findAllAlbumPhotos",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAllAlbumPhotos"
 							]
 						}
@@ -1826,11 +1881,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/findAlbumById/:id",
+							"raw": "{{base_url}}/api/findAlbumById/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"api",
 								"findAlbumById",
 								":id"
 							],
@@ -1850,12 +1906,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}//deleteOurAlbum/:id",
+							"raw": "{{base_url}}/api/deleteOurAlbum/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"",
+								"api",
 								"deleteOurAlbum",
 								":id"
 							],
