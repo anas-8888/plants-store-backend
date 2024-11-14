@@ -725,18 +725,19 @@
 									"type": "text"
 								},
 								{
+									"key": "category_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
 									"key": "subcategory_id",
-									"value": "5",
+									"value": "7",
 									"type": "text"
 								},
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": [
-										"Screenshot (214).png",
-										"Screenshot (45).png",
-										"Screenshot (46).png"
-									]
+									"src": "Screenshot (214).png"
 								}
 							]
 						},
@@ -801,7 +802,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "7"
+									"value": "6"
 								}
 							]
 						}
@@ -809,7 +810,32 @@
 					"response": []
 				},
 				{
-					"name": "Get Plant By subcategory",
+					"name": "Get plants by category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/findPlantsByCategory/:categoryId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findPlantsByCategory",
+								":categoryId"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Plants By subcategory",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -832,7 +858,7 @@
 							"variable": [
 								{
 									"key": "subcategoryId",
-									"value": "5"
+									"value": "7"
 								}
 							]
 						}
@@ -1017,6 +1043,12 @@
 								{
 									"key": "subcategory_id",
 									"value": "3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category_id",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -1034,7 +1066,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2"
+									"value": "6"
 								}
 							]
 						}

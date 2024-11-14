@@ -3,6 +3,7 @@ const {
   savePlant,
   findAllPlantsWithPhotos,
   findPlantById,
+  findPlantsByCategory,
   findPlantsBySubcategory,
   updatePlant,
   updatePhotoPlant,
@@ -20,6 +21,7 @@ plant.post("/createPlant", isAdmin, upload, savePlant);
 plant.get("/findAllPlantsWithPhotos", findAllPlantsWithPhotos);
 plant.get("/findPlantById/:id", findPlantById);
 plant.get("/findPlantsBySubcategory/:subcategoryId", findPlantsBySubcategory);
+plant.get("/findPlantsBycategory/:categoryId", findPlantsByCategory);
 plant.put("/updatePlant/:id", isAdmin, upload, updatePlant);
 plant.put("/updatePlantPhoto/:photoId", isAdmin, uploadPlantPhoto, updatePhotoPlant);
 plant.delete("/deletePlant/:id", isAdmin, deletePlant);

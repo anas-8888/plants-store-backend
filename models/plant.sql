@@ -22,6 +22,8 @@ CREATE TABLE plant (
   part_sun_AR VARCHAR(255) NOT NULL DEFAULT 'لا يوجد معلومات',
   medium_EN VARCHAR(255) NOT NULL DEFAULT 'no info',
   medium_AR VARCHAR(255) NOT NULL DEFAULT 'لا يوجد معلومات',
-  subcategory_id INT NOT NULL,
-  FOREIGN KEY (subcategory_id) REFERENCES subcategory(id) ON DELETE CASCADE
+  subcategory_id INT,
+  category_id INT NOT NULL,
+  FOREIGN KEY (subcategory_id) REFERENCES subcategory(id) ON DELETE CASCADE,
+  FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE,
 );

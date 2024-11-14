@@ -3,7 +3,7 @@ const plantPhotoRepository = require("../repositories/plant_photo.repository");
 const validator = require("validator");
 const fs = require("fs");
 
-//Create plant with photos
+// Create plant with photos
 async function savePlant(req, res) {
   try {
     const plantData = req.body;
@@ -14,6 +14,9 @@ async function savePlant(req, res) {
     }
     if (!validator.isNumeric(plantData.quantity) || plantData.quantity < 0) {
       return res.status(400).json({ error: "Invalid quantity" });
+    }
+    if (!plantData.category_id || !validator.isNumeric(plantData.category_id)) {
+      return res.status(400).json({ error: "Invalid or missing category ID" });
     }
 
     const result = await plantRepository.savePlant(plantData);
@@ -30,7 +33,8 @@ async function savePlant(req, res) {
   }
 }
 
-//Find All Plants With Photos
+
+// Find all plants with photos
 async function findAllPlantsWithPhotos(req, res) {
   try {
     const plants = await plantRepository.findAllPlantsWithPhotos();
@@ -54,6 +58,7 @@ async function findAllPlantsWithPhotos(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
+          category_id: plant.category_id,
           photos: plant.photos[0],
         };
       } else {
@@ -73,6 +78,7 @@ async function findAllPlantsWithPhotos(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
+          category_id: plant.category_id,
           photos: plant.photos[0],
         };
       }
@@ -85,7 +91,7 @@ async function findAllPlantsWithPhotos(req, res) {
   }
 }
 
-// Find Plant By ID with Language Filtering
+// Find plant by ID with language filtering
 async function findPlantById(req, res) {
   const { id } = req.params;
   try {
@@ -95,10 +101,8 @@ async function findPlantById(req, res) {
     }
     const language = req.language;
     const filteredPlants = plants.map((plant) => {
-      const photoPaths = plant.photos.filter((photoPath) => {
-        return 1;
-      });
-      
+      const photoPaths = plant.photos.filter((photoPath) => true);
+
       if (language === "ar") {
         return {
           id: plant.id,
@@ -116,6 +120,7 @@ async function findPlantById(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
+          category_id: plant.category_id,
           photos: photoPaths,
         };
       } else {
@@ -135,6 +140,7 @@ async function findPlantById(req, res) {
           newest: plant.newest,
           recommended: plant.recommended,
           subcategory_id: plant.subcategory_id,
+          category_id: plant.category_id,
           photos: photoPaths,
         };
       }
@@ -146,6 +152,60 @@ async function findPlantById(req, res) {
   }
 }
 
+async function findPlantsByCategory(req, res) {
+  try {
+    const { categoryId } = req.params;
+    const plants = await plantRepository.findPlantsByCategory(categoryId);
+    const language = req.language;
+
+    const filteredPlants = plants.map((plant) => {
+      if (language === "ar") {
+        return {
+          id: plant.id,
+          plant_name: plant.plant_name_AR,
+          description: plant.description_AR,
+          price: plant.price,
+          pot: plant.pot_AR,
+          quantity: plant.quantity,
+          water: plant.water_AR,
+          light: plant.light_AR,
+          temperatures: plant.temperatures_AR,
+          easy: plant.easy_AR,
+          part_sun: plant.part_sun_AR,
+          medium: plant.medium_AR,
+          newest: plant.newest,
+          recommended: plant.recommended,
+          category_id: plant.category_id,
+          photos: plant.photos[0],
+        };
+      } else {
+        return {
+          id: plant.id,
+          plant_name: plant.plant_name_EN,
+          description: plant.description_EN,
+          price: plant.price,
+          pot: plant.pot_EN,
+          quantity: plant.quantity,
+          water: plant.water_EN,
+          light: plant.light_EN,
+          temperatures: plant.temperatures_EN,
+          easy: plant.easy_EN,
+          part_sun: plant.part_sun_EN,
+          medium: plant.medium_EN,
+          newest: plant.newest,
+          recommended: plant.recommended,
+          category_id: plant.category_id,
+          photos: plant.photos[0],
+        };
+      }
+    });
+
+    res.status(200).json(filteredPlants);
+  } catch (error) {
+    console.error("Error fetching plants by category:", error);
+    res.status(500).json({ error: "Could not fetch plants by category" });
+  }
+}
 
 async function findPlantsBySubcategory(req, res) {
   try {
@@ -202,7 +262,7 @@ async function findPlantsBySubcategory(req, res) {
   }
 }
 
-//Update Plant
+// Update plant
 async function updatePlant(req, res) {
   const plantId = req.params.id;
 
@@ -229,11 +289,11 @@ async function updatePlant(req, res) {
     medium_AR,
     newest,
     recommended,
-    subcategory_id
+    subcategory_id,
+    category_id,
   } = req.body;
 
   try {
-    // Check if plantId exists
     if (!plantId) {
       return res.status(400).json({
         success: false,
@@ -241,7 +301,6 @@ async function updatePlant(req, res) {
       });
     }
 
-    // Find the plant by ID to check if it exists
     const existingPlant = (await plantRepository.findPlantById(plantId))[0];
     if (!existingPlant) {
       return res.status(404).json({
@@ -275,12 +334,11 @@ async function updatePlant(req, res) {
       newest: newest || existingPlant.newest,
       recommended: recommended || existingPlant.recommended,
       subcategory_id: subcategory_id || existingPlant.subcategory_id,
+      category_id: category_id || existingPlant.category_id,
     };
 
-    // Update plant details, passing validated parameters
     const plantUpdateResult = await plantRepository.updatePlant(updatedData);
 
-    // Send success response
     res.status(200).json({
       success: true,
       message: plantUpdateResult.message,
@@ -290,8 +348,7 @@ async function updatePlant(req, res) {
     console.error("Error updating plant:", error);
     res.status(500).json({
       success: false,
-      message:
-        error.message || "An error occurred while updating plant",
+      message: error.message || "An error occurred while updating plant",
     });
   }
 }
@@ -408,6 +465,7 @@ module.exports = {
   savePlant,
   findAllPlantsWithPhotos,
   findPlantById,
+  findPlantsByCategory,
   findPlantsBySubcategory,
   updatePlant,
   updatePhotoPlant,

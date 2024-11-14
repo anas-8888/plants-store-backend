@@ -27,7 +27,8 @@ async function savePlant(plantData) {
       medium_AR = 'لا يوجد معلومات',
       newest = 1,
       recommended = 1,
-      subcategory_id,
+      category_id,
+      subcategory_id = null
     } = plantData;
 
     const query = `
@@ -35,8 +36,8 @@ async function savePlant(plantData) {
         plant_name_EN, plant_name_AR, description_EN, description_AR, price,
         pot_EN, pot_AR, quantity, water_EN, water_AR, light_EN, light_AR,
         temperatures_EN, temperatures_AR, easy_EN, easy_AR, part_sun_EN,
-        part_sun_AR, medium_EN, medium_AR, newest, recommended, subcategory_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        part_sun_AR, medium_EN, medium_AR, newest, recommended, category_id, subcategory_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
 
     const [result] = await connection.execute(query, [
@@ -62,7 +63,8 @@ async function savePlant(plantData) {
       medium_AR,
       newest,
       recommended,
-      subcategory_id,
+      category_id,
+      subcategory_id
     ]);
 
     return result;
@@ -118,6 +120,7 @@ async function findAllPlantsWithPhotos() {
         medium_AR,
         newest,
         recommended,
+        category_id,
         subcategory_id,
         photoPath,
       } = row;
@@ -147,6 +150,7 @@ async function findAllPlantsWithPhotos() {
           medium_AR,
           newest,
           recommended,
+          category_id,
           subcategory_id,
           photos: [],
         });
@@ -170,7 +174,8 @@ async function findAllPlantsWithPhotos() {
 async function findPlantById(plantId) {
   const connection = await pool.getConnection();
   try {
-    const query = `SELECT 
+    const query = `
+      SELECT 
         p.*, 
         pp.photoPath 
       FROM 
@@ -209,11 +214,11 @@ async function findPlantById(plantId) {
         medium_AR,
         newest,
         recommended,
+        category_id,
         subcategory_id,
         photoPath,
       } = row;
 
-      // Initialize plant entry in the map if not already present
       if (!plantsMap.has(id)) {
         plantsMap.set(id, {
           id,
@@ -239,6 +244,7 @@ async function findPlantById(plantId) {
           medium_AR,
           newest,
           recommended,
+          category_id,
           subcategory_id,
           photos: [],
         });
@@ -252,6 +258,99 @@ async function findPlantById(plantId) {
     return Array.from(plantsMap.values());
   } catch (error) {
     console.error("Error finding plant by ID:", error);
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
+async function findPlantsByCategory(categoryId) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `
+      SELECT 
+        p.*, 
+        pp.photoPath 
+      FROM 
+        plant p
+      LEFT JOIN 
+        plant_photo pp 
+      ON 
+        p.id = pp.plant_id
+      WHERE 
+        p.category_id = ?`;
+    const [rows] = await connection.execute(query, [categoryId]);
+
+    const plantsMap = new Map();
+
+    rows.forEach((row) => {
+      const {
+        id,
+        plant_name_EN,
+        plant_name_AR,
+        description_EN,
+        description_AR,
+        price,
+        pot_EN,
+        pot_AR,
+        quantity,
+        water_EN,
+        water_AR,
+        light_EN,
+        light_AR,
+        temperatures_EN,
+        temperatures_AR,
+        easy_EN,
+        easy_AR,
+        part_sun_EN,
+        part_sun_AR,
+        medium_EN,
+        medium_AR,
+        newest,
+        recommended,
+        category_id,
+        subcategory_id,
+        photoPath,
+      } = row;
+
+      if (!plantsMap.has(id)) {
+        plantsMap.set(id, {
+          id,
+          plant_name_EN,
+          plant_name_AR,
+          description_EN,
+          description_AR,
+          price,
+          pot_EN,
+          pot_AR,
+          quantity,
+          water_EN,
+          water_AR,
+          light_EN,
+          light_AR,
+          temperatures_EN,
+          temperatures_AR,
+          easy_EN,
+          easy_AR,
+          part_sun_EN,
+          part_sun_AR,
+          medium_EN,
+          medium_AR,
+          newest,
+          recommended,
+          category_id,
+          subcategory_id,
+          photos: [],
+        });
+      }
+
+      if (photoPath) {
+        plantsMap.get(id).photos.push(photoPath);
+      }
+    });
+    return Array.from(plantsMap.values());
+  } catch (error) {
+    console.error("Error fetching plants by category:", error);
     throw error;
   } finally {
     connection.release();
@@ -273,8 +372,7 @@ async function findPlantsBySubcategory(subcategoryId) {
       ON 
         p.id = pp.plant_id
       WHERE 
-        p.subcategory_id = ?
-    `;
+        p.subcategory_id = ?`;
     const [rows] = await connection.execute(query, [subcategoryId]);
 
     const plantsMap = new Map();
@@ -304,11 +402,11 @@ async function findPlantsBySubcategory(subcategoryId) {
         medium_AR,
         newest,
         recommended,
+        category_id,
         subcategory_id,
         photoPath,
       } = row;
 
-      // Initialize plant entry in the map if not already present
       if (!plantsMap.has(id)) {
         plantsMap.set(id, {
           id,
@@ -334,6 +432,7 @@ async function findPlantsBySubcategory(subcategoryId) {
           medium_AR,
           newest,
           recommended,
+          category_id,
           subcategory_id,
           photos: [],
         });
@@ -381,7 +480,8 @@ async function updatePlant(plantData) {
       medium_AR,
       newest,
       recommended,
-      subcategory_id,
+      category_id,
+      subcategory_id
     } = plantData;
 
     const query = `
@@ -391,9 +491,8 @@ async function updatePlant(plantData) {
           light_EN = ?, light_AR = ?, temperatures_EN = ?, temperatures_AR = ?, 
           easy_EN = ?, easy_AR = ?, part_sun_EN = ?, part_sun_AR = ?, 
           medium_EN = ?, medium_AR = ?, newest = ?, recommended = ?, 
-          subcategory_id = ?
-      WHERE id = ?
-    `;
+          category_id = ?, subcategory_id = ?
+      WHERE id = ?`;
 
     const [result] = await connection.execute(query, [
       plant_name_EN,
@@ -418,14 +517,12 @@ async function updatePlant(plantData) {
       medium_AR,
       newest,
       recommended,
+      category_id,
       subcategory_id,
-      id,
+      id
     ]);
 
-    return {
-      success: result.affectedRows > 0,
-      message: "Plant updated successfully",
-    };
+    return result;
   } catch (error) {
     console.error("Error updating plant:", error);
     throw error;
@@ -471,6 +568,7 @@ module.exports = {
   savePlant,
   findAllPlantsWithPhotos,
   findPlantById,
+  findPlantsByCategory,
   findPlantsBySubcategory,
   updatePlant,
   deletePlant,
