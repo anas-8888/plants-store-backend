@@ -46,6 +46,7 @@ app.use(
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+	  domain: ".nabtaty.com",
   })
 );
 app.use(passport.initialize());
@@ -53,7 +54,7 @@ app.use(passport.session());
 
 // CORS Configuration
 app.use(cors({
-  origin: "http://beautiful-mirzakhani.194-238-27-109.plesk.page",
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -70,7 +71,7 @@ app.use("/api/", apiLimiter);
 app.use("/auth", apiLimiter);
 
 // Protection
-app.use(helmet()); //USE to secure inspect
+app.use(helmet()); //USE to secure inspect //TODO LATER
 app.use(morgan("combined"));
 
 // Middleware

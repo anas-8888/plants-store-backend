@@ -18,14 +18,18 @@ auth.get(
   "/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/auth/login",
-    successRedirect: "/",
     session: true,
-  })
+  }),
+  (req, res) => {
+    res.redirect("https://nabtaty.com");
+  }
 );
 
 // Auth logout
 auth.get("/logout", checkLoggedIn, (req, res) => {
-  req.logout();
+  req.session = null; // Destroys the session on the server
+  res.clearCookie("session", { domain: ".nabtaty.com" });
+  req.logout(); // Passport-specific logout
   res.status(200).json({ message: "Successfully logged out" });
 });
 

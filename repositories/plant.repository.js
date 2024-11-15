@@ -83,6 +83,7 @@ async function findAllPlantsWithPhotos() {
     const query = `
       SELECT 
         p.*, 
+		    pp.id photo_id,
         pp.photoPath 
       FROM 
         plant p
@@ -122,6 +123,7 @@ async function findAllPlantsWithPhotos() {
         recommended,
         category_id,
         subcategory_id,
+		    photo_id,
         photoPath,
       } = row;
 
@@ -157,7 +159,10 @@ async function findAllPlantsWithPhotos() {
       }
 
       if (photoPath) {
-        plantsMap.get(id).photos.push(photoPath);
+        plantsMap.get(id).photos.push({
+			    photo_id,
+			    photoPath
+		    });
       }
     });
 
@@ -177,6 +182,7 @@ async function findPlantById(plantId) {
     const query = `
       SELECT 
         p.*, 
+		    pp.id photo_id,
         pp.photoPath 
       FROM 
         plant p
@@ -216,6 +222,7 @@ async function findPlantById(plantId) {
         recommended,
         category_id,
         subcategory_id,
+        photo_id,
         photoPath,
       } = row;
 
@@ -251,7 +258,10 @@ async function findPlantById(plantId) {
       }
 
       if (photoPath) {
-        plantsMap.get(id).photos.push(photoPath);
+        plantsMap.get(id).photos.push({
+          photo_id,
+          photoPath
+        });
       }
     });
 
@@ -270,6 +280,7 @@ async function findPlantsByCategory(categoryId) {
     const query = `
       SELECT 
         p.*, 
+        pp.id photo_id,
         pp.photoPath 
       FROM 
         plant p
@@ -310,6 +321,7 @@ async function findPlantsByCategory(categoryId) {
         recommended,
         category_id,
         subcategory_id,
+        photo_id,
         photoPath,
       } = row;
 
@@ -345,7 +357,10 @@ async function findPlantsByCategory(categoryId) {
       }
 
       if (photoPath) {
-        plantsMap.get(id).photos.push(photoPath);
+        plantsMap.get(id).photos.push({
+          photo_id,
+          photoPath
+        });
       }
     });
     return Array.from(plantsMap.values());
@@ -364,6 +379,7 @@ async function findPlantsBySubcategory(subcategoryId) {
     const query = `
       SELECT 
         p.*, 
+        pp.id photo_id,
         pp.photoPath 
       FROM 
         plant p
@@ -404,6 +420,7 @@ async function findPlantsBySubcategory(subcategoryId) {
         recommended,
         category_id,
         subcategory_id,
+        photo_id,
         photoPath,
       } = row;
 
@@ -439,7 +456,10 @@ async function findPlantsBySubcategory(subcategoryId) {
       }
 
       if (photoPath) {
-        plantsMap.get(id).photos.push(photoPath);
+        plantsMap.get(id).photos.push({
+          photo_id,
+          photoPath
+        });
       }
     });
 
