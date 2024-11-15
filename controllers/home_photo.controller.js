@@ -63,14 +63,6 @@ async function deleteHomePhoto(req, res) {
       return res.status(404).json({ error: "Home Photo not found!" });
     }
 
-    if (homePhoto.photoPath) {
-      try {
-        fs.unlinkSync(homePhoto.photoPath);
-      } catch (err) {
-        console.error("File deletion error:", err.message);
-      }
-    }
-
     await homeRepository.deleteHomePhoto(id);
     return res.status(200).json({ message: "Home Photo deleted successfully" });
   } catch (error) {

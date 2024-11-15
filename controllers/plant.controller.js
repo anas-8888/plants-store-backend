@@ -374,15 +374,6 @@ async function updatePhotoPlant(req, res) {
       return res.status(404).json({ error: "Photo not found!" });
     }
 
-    // Delete old photo from file system if it exists
-    if (existingPhoto.photoPath) {
-      try {
-        fs.unlinkSync(existingPhoto.photoPath);
-      } catch (err) {
-        console.error("File deletion error:", err.message);
-      }
-    }
-
     // Update photo in the database by deleting the old record and adding a new one
     await plantPhotoRepository.updatePlantPhoto({
       photoId,
@@ -437,17 +428,7 @@ async function deletePlantPhoto(req, res) {
     if (!photo) {
       return res.status(404).json({ error: "Photo not found!" });
     }
-
-    // Delete the photo from the filesystem
-    if (photo.photoPath) {
-      try {
-        fs.unlinkSync(photo.photoPath);
-      } catch (err) {
-        console.error("Error deleting file:", err.message);
-        return res.status(500).json({ error: "Failed to delete photo file" });
-      }
-    }
-
+    
     // Delete the photo record from the database
     await plantPhotoRepository.deletePlantPhoto(photoId);
 

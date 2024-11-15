@@ -87,14 +87,6 @@ async function deleteAlbum(req, res) {
       return res.status(404).json({ error: "Album not found!" });
     }
 
-    if (album.photoPath) {
-      try {
-        fs.unlinkSync(album.photoPath);
-      } catch (err) {
-        console.error("File deletion error:", err.message);
-      }
-    }
-
     await albumRepository.deleteAlbum(id);
     return res.status(200).json({ message: "Album deleted successfully" });
   } catch (error) {

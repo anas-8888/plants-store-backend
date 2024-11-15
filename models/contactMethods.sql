@@ -1,0 +1,7 @@
+CREATE TABLE contact_methods (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  phone VARCHAR(15),
+  email VARCHAR(100) NOT NULL,
+  website VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -17,6 +17,6 @@ category.get("/findAllCategories", getAllCategories);
 category.get("/findCategoryById/:id", getCategoryById);
 category.get("/findCategoryByName/:name", findCategoryByName);
 category.put("/updateCategory/:id", isAdmin, upload, updateCategory);
-category.delete("/deleteCategory/:id",isAdmin, deleteCategory);
+category.delete("/deleteCategory/:id", isAdmin, deleteCategory);
 
 module.exports = category;

@@ -210,14 +210,13 @@ async function deleteSubcategory(req, res) {
   const { id } = req.params;
   try {
     const subcategory = await subcategoryRepository.findSubcategoryById(id);
-    if (subcategory.photoPath) {
-      fs.unlinkSync(subcategory.photoPath);
+    if (!subcategory) {
+      return res.status(404).json({ error: "subcategory not found!" });
     }
+    
     await subcategoryRepository.deleteSubcategory(id);
 
-    return res
-      .status(200)
-      .json({ message: "Subcategory deleted successfully" });
+    return res.status(200).json({ message: "Subcategory deleted successfully" });
   } catch (error) {
     return res.status(404).json({
       error: "Failed to delete subcategory",

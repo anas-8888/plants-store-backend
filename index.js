@@ -25,6 +25,9 @@ const homePhoto = require("./routes/homePhoto");
 const ourAlbum = require("./routes/ourAlbum");
 const locations = require("./routes/locations");
 const reviews = require("./routes/reviews");
+const message = require("./routes/message");
+const contactMethods = require("./routes/contactMethods");
+const aboutUs = require("./routes/aboutUs");
 
 // Import middlewares
 const languageMiddleware = require("./middleware/languageMiddleware");
@@ -90,6 +93,9 @@ app.use("/api", ourAlbum);
 app.use("/api", subCategory);
 app.use("/api", locations);
 app.use("/api", reviews);
+app.use("/api", message);
+app.use("/api", contactMethods);
+app.use("/api", aboutUs);
 
 // URIs
 app.get("/", (req, res) => {
