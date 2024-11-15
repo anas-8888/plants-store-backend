@@ -195,18 +195,18 @@
 							"formdata": [
 								{
 									"key": "category_name_AR",
-									"value": "كاكتي",
+									"value": "الاكسسوارات والفخار",
 									"type": "text"
 								},
 								{
 									"key": "category_name_EN",
-									"value": "kakti",
+									"value": "Accessories and Pottery",
 									"type": "text"
 								},
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "Screenshot (387).png"
+									"src": "/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10949_www.bing.com.jpeg"
 								}
 							]
 						},
@@ -230,7 +230,7 @@
 						"header": [
 							{
 								"key": "accept-language",
-								"value": "ar",
+								"value": "en",
 								"type": "text"
 							}
 						],
@@ -616,23 +616,25 @@
 							"formdata": [
 								{
 									"key": "plant_name_EN",
-									"value": "koki1",
+									"value": "Monstera delciosa",
 									"type": "text"
 								},
 								{
 									"key": "plant_name_AR",
-									"value": "يبيبيب",
+									"value": "مونسترا ديلشوزا",
 									"type": "text"
 								},
 								{
 									"key": "description_EN",
-									"value": "fdffdsfdf",
-									"type": "text"
+									"value": "",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "description_AR",
 									"value": "يبيبيب",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "price",
@@ -641,12 +643,12 @@
 								},
 								{
 									"key": "pot_EN",
-									"value": "fdfd",
+									"value": "Pot",
 									"type": "text"
 								},
 								{
 									"key": "pot_AR",
-									"value": "يبيبيب",
+									"value": "حامل بلاستيك",
 									"type": "text"
 								},
 								{
@@ -657,66 +659,78 @@
 								{
 									"key": "water_EN",
 									"value": "dfdfd",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "water_AR",
 									"value": "بيبيب",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "light_EN",
 									"value": "dfdfd",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "light_AR",
 									"value": "يبيبيب",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "temperatures_EN",
 									"value": "dfdf",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "temperatures_AR",
 									"value": "يبيبيب",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "easy_EN",
 									"value": "dfdfd",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "easy_AR",
 									"value": "بيبيب",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "part_sun_EN",
 									"value": "dfdfdf",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "part_sun_AR",
 									"value": "يبيبيب",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "medium_EN",
 									"value": "dfdfdf",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "medium_AR",
 									"value": "يبيبيببي",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "newest",
-									"value": "0",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -726,18 +740,23 @@
 								},
 								{
 									"key": "category_id",
-									"value": "4",
+									"value": "11",
 									"type": "text"
 								},
 								{
 									"key": "subcategory_id",
-									"value": "7",
-									"type": "text"
+									"value": "11",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "Screenshot (214).png"
+									"src": [
+										"/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10949_www.bing.com.jpeg",
+										"/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10642_www.bing.com.jpeg",
+										"/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10546_www.bing.com.jpeg"
+									]
 								}
 							]
 						},
@@ -802,7 +821,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "9"
 								}
 							]
 						}
@@ -827,7 +846,7 @@
 							"variable": [
 								{
 									"key": "categoryId",
-									"value": "2"
+									"value": "7"
 								}
 							]
 						}
@@ -1925,7 +1944,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "7"
+									"value": "1"
 								}
 							]
 						}
@@ -1950,7 +1969,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "7"
+									"value": "1"
 								}
 							]
 						}
