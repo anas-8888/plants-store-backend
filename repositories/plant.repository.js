@@ -123,7 +123,7 @@ async function findAllPlantsWithPhotos() {
         recommended,
         category_id,
         subcategory_id,
-		    photo_id,
+        photo_id,
         photoPath,
       } = row;
 
@@ -160,9 +160,9 @@ async function findAllPlantsWithPhotos() {
 
       if (photoPath) {
         plantsMap.get(id).photos.push({
-			    photo_id,
-			    photoPath
-		    });
+          photo_id,
+          photoPath
+        });
       }
     });
 
@@ -268,6 +268,104 @@ async function findPlantById(plantId) {
     return Array.from(plantsMap.values());
   } catch (error) {
     console.error("Error finding plant by ID:", error);
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
+// Find Plant By name
+async function findPlantByName(plantName) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `
+        SELECT 
+        p.*, 
+        pp.id photo_id,
+        pp.photoPath 
+      FROM 
+        plant p
+      LEFT JOIN 
+        plant_photo pp 
+      ON 
+        p.id = pp.plant_id
+      WHERE p.plant_name_EN LIKE ? OR p.plant_name_AR LIKE ?`;
+    const [rows] = await connection.execute(query, [`%${plantName}%`, `%${plantName}%`]);
+
+    const plantsMap = new Map();
+
+    rows.forEach((row) => {
+      const {
+        id,
+        plant_name_EN,
+        plant_name_AR,
+        description_EN,
+        description_AR,
+        price,
+        pot_EN,
+        pot_AR,
+        quantity,
+        water_EN,
+        water_AR,
+        light_EN,
+        light_AR,
+        temperatures_EN,
+        temperatures_AR,
+        easy_EN,
+        easy_AR,
+        part_sun_EN,
+        part_sun_AR,
+        medium_EN,
+        medium_AR,
+        newest,
+        recommended,
+        category_id,
+        subcategory_id,
+        photo_id,
+        photoPath,
+      } = row;
+
+      if (!plantsMap.has(id)) {
+        plantsMap.set(id, {
+          id,
+          plant_name_EN,
+          plant_name_AR,
+          description_EN,
+          description_AR,
+          price,
+          pot_EN,
+          pot_AR,
+          quantity,
+          water_EN,
+          water_AR,
+          light_EN,
+          light_AR,
+          temperatures_EN,
+          temperatures_AR,
+          easy_EN,
+          easy_AR,
+          part_sun_EN,
+          part_sun_AR,
+          medium_EN,
+          medium_AR,
+          newest,
+          recommended,
+          category_id,
+          subcategory_id,
+          photos: [],
+        });
+      }
+
+      if (photoPath) {
+        plantsMap.get(id).photos.push({
+          photo_id,
+          photoPath
+        });
+      }
+    });
+    return Array.from(plantsMap.values());
+  } catch (error) {
+    console.error("Error fetching plants by name:", error);
     throw error;
   } finally {
     connection.release();
@@ -472,6 +570,106 @@ async function findPlantsBySubcategory(subcategoryId) {
   }
 }
 
+// Find newest Plants
+async function findAllNewestPlants() {
+  const connection = await pool.getConnection();
+  try {
+    const query = `
+      SELECT 
+        p.*, 
+        pp.id photo_id,
+        pp.photoPath 
+      FROM 
+        plant p
+      LEFT JOIN 
+        plant_photo pp 
+      ON 
+        p.id = pp.plant_id
+      WHERE 
+        p.newest = 1`;
+    const [rows] = await connection.execute(query);
+
+    const plantsMap = new Map();
+
+    rows.forEach((row) => {
+      const {
+        id,
+        plant_name_EN,
+        plant_name_AR,
+        description_EN,
+        description_AR,
+        price,
+        pot_EN,
+        pot_AR,
+        quantity,
+        water_EN,
+        water_AR,
+        light_EN,
+        light_AR,
+        temperatures_EN,
+        temperatures_AR,
+        easy_EN,
+        easy_AR,
+        part_sun_EN,
+        part_sun_AR,
+        medium_EN,
+        medium_AR,
+        newest,
+        recommended,
+        category_id,
+        subcategory_id,
+        photo_id,
+        photoPath,
+      } = row;
+
+      if (!plantsMap.has(id)) {
+        plantsMap.set(id, {
+          id,
+          plant_name_EN,
+          plant_name_AR,
+          description_EN,
+          description_AR,
+          price,
+          pot_EN,
+          pot_AR,
+          quantity,
+          water_EN,
+          water_AR,
+          light_EN,
+          light_AR,
+          temperatures_EN,
+          temperatures_AR,
+          easy_EN,
+          easy_AR,
+          part_sun_EN,
+          part_sun_AR,
+          medium_EN,
+          medium_AR,
+          newest,
+          recommended,
+          category_id,
+          subcategory_id,
+          photos: [],
+        });
+      }
+
+      if (photoPath) {
+        plantsMap.get(id).photos.push({
+          photo_id,
+          photoPath
+        });
+      }
+    });
+
+    return Array.from(plantsMap.values());
+  } catch (error) {
+    console.error("Error fetching newest plants:", error);
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
 // Update Plant
 async function updatePlant(plantData) {
   const connection = await pool.getConnection();
@@ -571,7 +769,7 @@ async function getPlantPrice(id) {
     const query = `SELECT price FROM plant WHERE id = ?`;
     const [rows] = await connection.execute(query, [id]);
 
-    if(rows.length === 0) {
+    if (rows.length === 0) {
       return -1;
     }
 
@@ -588,8 +786,10 @@ module.exports = {
   savePlant,
   findAllPlantsWithPhotos,
   findPlantById,
+  findPlantByName,
   findPlantsByCategory,
   findPlantsBySubcategory,
+  findAllNewestPlants,
   updatePlant,
   deletePlant,
   getPlantPrice

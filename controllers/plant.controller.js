@@ -152,6 +152,67 @@ async function findPlantById(req, res) {
   }
 }
 
+// Find plant by name with language filtering
+async function findPlantByName(req, res) {
+  const { name } = req.params;
+  try {
+    const plants = await plantRepository.findPlantByName(name);
+    if (!plants || plants.length === 0) {
+      return res.status(404).json({ error: "Plant not found" });
+    }
+    const language = req.language;
+    const filteredPlants = plants.map((plant) => {
+      const photoPaths = plant.photos.filter((photoPath) => true);
+
+      if (language === "ar") {
+        return {
+          id: plant.id,
+          plant_name: plant.plant_name_AR,
+          description: plant.description_AR,
+          price: plant.price,
+          pot: plant.pot_AR,
+          quantity: plant.quantity,
+          water: plant.water_AR,
+          light: plant.light_AR,
+          temperatures: plant.temperatures_AR,
+          easy: plant.easy_AR,
+          part_sun: plant.part_sun_AR,
+          medium: plant.medium_AR,
+          newest: plant.newest,
+          recommended: plant.recommended,
+          subcategory_id: plant.subcategory_id,
+          category_id: plant.category_id,
+          photos: plant.photos[0],
+        };
+      } else {
+        return {
+          id: plant.id,
+          plant_name: plant.plant_name_EN,
+          description: plant.description_EN,
+          price: plant.price,
+          pot: plant.pot_EN,
+          quantity: plant.quantity,
+          water: plant.water_EN,
+          light: plant.light_EN,
+          temperatures: plant.temperatures_EN,
+          easy: plant.easy_EN,
+          part_sun: plant.part_sun_EN,
+          medium: plant.medium_EN,
+          newest: plant.newest,
+          recommended: plant.recommended,
+          subcategory_id: plant.subcategory_id,
+          category_id: plant.category_id,
+          photos: plant.photos[0],
+        };
+      }
+    });
+    res.status(200).json(filteredPlants);
+  } catch (error) {
+    console.error("Error fetching plant by name:", error);
+    res.status(500).json({ error: "Could not fetch plant" });
+  }
+}
+
 async function findPlantsByCategory(req, res) {
   try {
     const { categoryId } = req.params;
@@ -259,6 +320,60 @@ async function findPlantsBySubcategory(req, res) {
   } catch (error) {
     console.error("Error fetching plants by subcategory:", error);
     res.status(500).json({ error: "Could not fetch plants by subcategory" });
+  }
+}
+
+async function findAllNewestPlants(req, res) {
+  try {
+    const plants = await plantRepository.findAllNewestPlants();
+    const language = req.language;
+
+    const filteredPlants = plants.map((plant) => {
+      if (language === "ar") {
+        return {
+          id: plant.id,
+          plant_name: plant.plant_name_AR,
+          description: plant.description_AR,
+          price: plant.price,
+          pot: plant.pot_AR,
+          quantity: plant.quantity,
+          water: plant.water_AR,
+          light: plant.light_AR,
+          temperatures: plant.temperatures_AR,
+          easy: plant.easy_AR,
+          part_sun: plant.part_sun_AR,
+          medium: plant.medium_AR,
+          newest: plant.newest,
+          recommended: plant.recommended,
+          category_id: plant.category_id,
+          photos: plant.photos[0],
+        };
+      } else {
+        return {
+          id: plant.id,
+          plant_name: plant.plant_name_EN,
+          description: plant.description_EN,
+          price: plant.price,
+          pot: plant.pot_EN,
+          quantity: plant.quantity,
+          water: plant.water_EN,
+          light: plant.light_EN,
+          temperatures: plant.temperatures_EN,
+          easy: plant.easy_EN,
+          part_sun: plant.part_sun_EN,
+          medium: plant.medium_EN,
+          newest: plant.newest,
+          recommended: plant.recommended,
+          category_id: plant.category_id,
+          photos: plant.photos[0],
+        };
+      }
+    });
+
+    res.status(200).json(filteredPlants);
+  } catch (error) {
+    console.error("Error fetching plants by category:", error);
+    res.status(500).json({ error: "Could not fetch plants by category" });
   }
 }
 
@@ -446,8 +561,10 @@ module.exports = {
   savePlant,
   findAllPlantsWithPhotos,
   findPlantById,
+  findPlantByName,
   findPlantsByCategory,
   findPlantsBySubcategory,
+  findAllNewestPlants,
   updatePlant,
   updatePhotoPlant,
   deletePlant,

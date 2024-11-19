@@ -21,10 +21,12 @@ async function getMyInfo(req, res) {
     }
     
     const customer = {
+      id: req.user.id,
       firstName: req.user.firstName,
       lastName: req.user.lastName,
       email: req.user.email,
       thumbnail: req.user.thumbnail,
+      is_admin: req.user.is_admin,
     };
     
     return res.status(200).json(customer);

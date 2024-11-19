@@ -57,7 +57,7 @@ app.use(passport.session());
 
 // CORS Configuration
 app.use(cors({
-  origin: true,
+  origin: 'https://nabtaty.com',
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,

@@ -3,8 +3,10 @@ const {
   savePlant,
   findAllPlantsWithPhotos,
   findPlantById,
+  findPlantByName,
   findPlantsByCategory,
   findPlantsBySubcategory,
+  findAllNewestPlants,
   updatePlant,
   updatePhotoPlant,
   deletePlant,
@@ -20,8 +22,10 @@ const plant = express.Router();
 plant.post("/createPlant", isAdmin, upload, savePlant);
 plant.get("/findAllPlantsWithPhotos", findAllPlantsWithPhotos);
 plant.get("/findPlantById/:id", findPlantById);
+plant.get("/findPlantByName/:name", findPlantByName);
 plant.get("/findPlantsBySubcategory/:subcategoryId", findPlantsBySubcategory);
 plant.get("/findPlantsBycategory/:categoryId", findPlantsByCategory);
+plant.get("/findAllNewestPlants", findAllNewestPlants);
 plant.put("/updatePlant/:id", isAdmin, upload, updatePlant);
 plant.put("/updatePlantPhoto/:photoId", isAdmin, uploadPlantPhoto, updatePhotoPlant);
 plant.delete("/deletePlant/:id", isAdmin, deletePlant);

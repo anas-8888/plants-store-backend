@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8a22ce11-09b7-471a-abbf-9851382b772a",
+		"_postman_id": "aac29c40-73d2-410d-b1b2-0425fab4a053",
 		"name": "E-Commerce API",
 		"description": "API documentation for the E-Commerce backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -740,7 +740,7 @@
 								},
 								{
 									"key": "category_id",
-									"value": "7",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -753,9 +753,8 @@
 									"key": "photoPath",
 									"type": "file",
 									"src": [
-										"/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10949_www.bing.com.jpeg",
-										"/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10642_www.bing.com.jpeg",
-										"/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10546_www.bing.com.jpeg"
+										"/F:/Media/Photos/berlin-in-money-heist-ua-1.jpg",
+										"/F:/Media/Photos/berlin-in-money-heist-ua-1.jpg"
 									]
 								}
 							]
@@ -829,6 +828,31 @@
 					"response": []
 				},
 				{
+					"name": "Get plant by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/findPlantByName/:name",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findPlantByName",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "مون"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get plants by category",
 					"request": {
 						"method": "GET",
@@ -846,7 +870,7 @@
 							"variable": [
 								{
 									"key": "categoryId",
-									"value": "7"
+									"value": "1"
 								}
 							]
 						}
@@ -1049,9 +1073,8 @@
 								},
 								{
 									"key": "newest",
-									"value": "",
-									"type": "text",
-									"disabled": true
+									"value": "0",
+									"type": "text"
 								},
 								{
 									"key": "recommended",
@@ -1068,7 +1091,8 @@
 								{
 									"key": "category_id",
 									"value": "3",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -1085,7 +1109,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "3"
 								}
 							]
 						}
@@ -1137,6 +1161,24 @@
 									"key": "photoId",
 									"value": "42"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all newest plants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/findAllNewestPlants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAllNewestPlants"
 							]
 						}
 					},
