@@ -56,13 +56,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // CORS Configuration
-app.use(cors({
-  origin: 'https://nabtaty.com',
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-}));
-
+// app.use(cors({
+//   origin: 'https://nabtaty.com',
+//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true,
+// }));
 
 // Rate limiting
 const apiLimiter = rateLimit({
