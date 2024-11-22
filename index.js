@@ -29,6 +29,9 @@ const message = require("./routes/message");
 const contactMethods = require("./routes/contactMethods");
 const aboutUs = require("./routes/aboutUs");
 const logo = require("./routes/logo");
+const social = require("./routes/social");
+const privacyPolicies = require("./routes/privacyPolicies");
+const helpSupport = require("./routes/helpSupport");
 
 // Import middlewares
 const languageMiddleware = require("./middleware/languageMiddleware");
@@ -97,6 +100,9 @@ app.use("/api", message);
 app.use("/api", contactMethods);
 app.use("/api", aboutUs);
 app.use("/api", logo);
+app.use("/api", social);
+app.use("/api", privacyPolicies);
+app.use("/api", helpSupport);
 
 // URIs
 app.get("/", (req, res) => {
