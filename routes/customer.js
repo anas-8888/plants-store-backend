@@ -1,5 +1,6 @@
 const express = require("express");
 const {
+  createCustomer,
   getAllCustomer,
   getMyInfo,
   getCustomerById,
@@ -12,7 +13,7 @@ const { isAdmin } = require("../middleware/isAdmin");
 const { isCustomer } = require("../middleware/isCustomer");
 
 const customer = express.Router();
-
+customer.post('/createCustomer', isAdmin, createCustomer);
 customer.get("/findAllCustomer", isAdmin, getAllCustomer);
 customer.get("/findMyInfo", isCustomer, getMyInfo);
 customer.get("/findCustomerById/:id", isAdmin, getCustomerById);

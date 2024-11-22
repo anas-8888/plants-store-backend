@@ -11,6 +11,33 @@
 			"name": "Customer",
 			"item": [
 				{
+					"name": "Create customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/createCustomer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"createCustomer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get All Customers",
 					"request": {
 						"method": "GET",
@@ -204,9 +231,14 @@
 									"type": "text"
 								},
 								{
+									"key": "priority",
+									"value": "1",
+									"type": "text"
+								},
+								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "/C:/Users/naseb/Downloads/Screenshot_14-11-2024_10949_www.bing.com.jpeg"
+									"src": "Media/Photos/n.logo (2).png"
 								}
 							]
 						},
@@ -271,7 +303,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -302,32 +334,7 @@
 							"variable": [
 								{
 									"key": "name",
-									"value": "كاكتي"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Category",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/deleteCategory/:id",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"deleteCategory",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
+									"value": "Accessories"
 								}
 							]
 						}
@@ -355,9 +362,15 @@
 									"disabled": true
 								},
 								{
+									"key": "priority",
+									"value": "5",
+									"type": "text"
+								},
+								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "Screenshot (81).png"
+									"src": "Screenshot (81).png",
+									"disabled": true
 								}
 							]
 						},
@@ -376,7 +389,37 @@
 									"key": "",
 									"value": "",
 									"disabled": true
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
 								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/deleteCategory/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"deleteCategory",
+								":id"
 							],
 							"variable": [
 								{
@@ -644,12 +687,14 @@
 								{
 									"key": "pot_EN",
 									"value": "Pot",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "pot_AR",
 									"value": "حامل بلاستيك",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "quantity",
@@ -752,10 +797,17 @@
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": [
-										"/F:/Media/Photos/berlin-in-money-heist-ua-1.jpg",
-										"/F:/Media/Photos/berlin-in-money-heist-ua-1.jpg"
-									]
+									"src": "/D:/Media/Photos/berlin-in-money-heist-ua-1.jpg"
+								},
+								{
+									"key": "size_EN",
+									"value": "larg",
+									"type": "text"
+								},
+								{
+									"key": "size_AR",
+									"value": "كبير",
+									"type": "text"
 								}
 							]
 						},
@@ -779,7 +831,7 @@
 						"header": [
 							{
 								"key": "accept-language",
-								"value": "en",
+								"value": "ar",
 								"type": "text"
 							}
 						],
@@ -803,7 +855,7 @@
 						"header": [
 							{
 								"key": "accept-language",
-								"value": "ar",
+								"value": "en",
 								"type": "text"
 							}
 						],
@@ -820,7 +872,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "9"
+									"value": "6"
 								}
 							]
 						}
@@ -909,35 +961,18 @@
 					"response": []
 				},
 				{
-					"name": "Update plant photo",
+					"name": "Get all newest plants",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "photoPath",
-									"type": "file",
-									"src": "Screenshot (498).png"
-								}
-							]
-						},
 						"url": {
-							"raw": "{{base_url}}/api/updatePlantPhoto/:photoId",
+							"raw": "{{base_url}}/api/findAllNewestPlants",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"updatePlantPhoto",
-								":photoId"
-							],
-							"variable": [
-								{
-									"key": "photoId",
-									"value": "30"
-								}
+								"findAllNewestPlants"
 							]
 						}
 					},
@@ -953,13 +988,13 @@
 							"formdata": [
 								{
 									"key": "plant_name_EN",
-									"value": "",
+									"value": "Monstera delciosa",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "plant_name_AR",
-									"value": "",
+									"value": "مونسترا ديلشوزا",
 									"type": "text",
 									"disabled": true
 								},
@@ -971,110 +1006,111 @@
 								},
 								{
 									"key": "description_AR",
-									"value": "",
+									"value": "يبيبيب",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "price",
-									"value": "",
+									"value": "45.5",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "pot_EN",
-									"value": "",
+									"value": "Pot",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "pot_AR",
-									"value": "",
+									"value": "حامل بلاستيك",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "quantity",
-									"value": "",
+									"value": "54",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "water_EN",
-									"value": "",
+									"value": "dfdfd",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "water_AR",
-									"value": "",
+									"value": "بيبيب",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "light_EN",
-									"value": "",
+									"value": "dfdfd",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "light_AR",
-									"value": "",
+									"value": "يبيبيب",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "temperatures_EN",
-									"value": "",
+									"value": "dfdf",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "temperatures_AR",
-									"value": "",
+									"value": "يبيبيب",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "easy_EN",
-									"value": "",
+									"value": "dfdfd",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "easy_AR",
-									"value": "",
+									"value": "بيبيب",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "part_sun_EN",
-									"value": "",
+									"value": "dfdfdf",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "part_sun_AR",
-									"value": "",
+									"value": "يبيبيب",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "medium_EN",
-									"value": "",
+									"value": "dfdfdf",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "medium_AR",
-									"value": "",
+									"value": "يبيبيببي",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "newest",
-									"value": "0",
-									"type": "text"
+									"value": "1",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "recommended",
@@ -1083,14 +1119,25 @@
 									"disabled": true
 								},
 								{
-									"key": "subcategory_id",
-									"value": "3",
+									"key": "category_id",
+									"value": "1",
 									"type": "text",
 									"disabled": true
 								},
 								{
-									"key": "category_id",
-									"value": "3",
+									"key": "subcategory_id",
+									"value": "11",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size_EN",
+									"value": "xlarg",
+									"type": "text"
+								},
+								{
+									"key": "size_AR",
+									"value": "كبير",
 									"type": "text",
 									"disabled": true
 								}
@@ -1109,7 +1156,42 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "3"
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant photo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Media/Photos/IMG_1943.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/updatePlantPhoto/:photoId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"updatePlantPhoto",
+								":photoId"
+							],
+							"variable": [
+								{
+									"key": "photoId",
+									"value": "6"
 								}
 							]
 						}
@@ -1161,24 +1243,6 @@
 									"key": "photoId",
 									"value": "42"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all newest plants",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/findAllNewestPlants",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"findAllNewestPlants"
 							]
 						}
 					},
@@ -1375,7 +1439,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"1\",\r\n    \"plantId\": \"3\"\r\n}",
+							"raw": "{\r\n    \"customerId\": \"1\",\r\n    \"plantId\": \"6\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1482,11 +1546,11 @@
 							"variable": [
 								{
 									"key": "customerId",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "plantID",
-									"value": "4"
+									"value": "5"
 								}
 							]
 						}
@@ -2390,6 +2454,150 @@
 								{
 									"key": "id",
 									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logos",
+			"item": [
+				{
+					"name": "Create logo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Media/Photos/tradestation-logo1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/createLogo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"createLogo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all logos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/findAllLogos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAllLogos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get logo by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/findLogoById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findLogoById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get acctive logo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/findAcctiveLogo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAcctiveLogo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update logo acctive",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/updateLogoAcctive/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"updateLogoAcctive",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete logo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/deleteLogo/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"deleteLogo",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
 								}
 							]
 						}

@@ -3,12 +3,12 @@ const fs = require("fs");
 
 async function createCategory(req, res) {
   try {
-    const { category_name_AR, category_name_EN } = req.body;
+    const { category_name_AR, category_name_EN, priority } = req.body;
 
-    if (!category_name_AR || !category_name_EN) {
+    if (!category_name_AR || !category_name_EN || !priority) {
       if (req.file) fs.unlinkSync(req.file.path);
       return res.status(400).json({
-        error: "Both Arabic and English category names are required!",
+        error: "Arabic and English category names and priority are required!",
       });
     }
 
@@ -26,6 +26,7 @@ async function createCategory(req, res) {
     const result = await categoryRepository.saveCategory({
       category_name_AR,
       category_name_EN,
+      priority,
       photoPath,
     });
 
@@ -52,12 +53,14 @@ async function getAllCategories(req, res) {
         return {
           id: category.id,
           category_name: category.category_name_AR,
+          priority: category.priority,
           photo: category.photoPath,
         };
       } else {
         return {
           id: category.id,
           category_name: category.category_name_EN,
+          priority: category.priority,
           photo: category.photoPath,
         };
       }
@@ -85,6 +88,7 @@ async function getCategoryById(req, res) {
 
     const responseCategory = {
       id: category.id,
+      priority: category.priority,
       photo: category.photoPath,
     };
 
@@ -113,6 +117,7 @@ async function findCategoryByName(req, res) {
     const categoriesWithPhotos = categories.map((category) => {
       const responseCategory = {
         id: category.id,
+        priority: category.priority,
         photo: category.photoPath,
       };
 
@@ -136,7 +141,7 @@ async function findCategoryByName(req, res) {
 
 async function updateCategory(req, res) {
   const { id } = req.params;
-  const { category_name_AR, category_name_EN } = req.body;
+  const { category_name_AR, category_name_EN, priority } = req.body;
   const photoPath = req.file
     ? `uploads/category/${req.file.filename}`
     : null;
@@ -149,7 +154,7 @@ async function updateCategory(req, res) {
       return res.status(404).json({ error: "Category not found!" });
     }
 
-    if (!category_name_AR && !category_name_EN && !photoPath) {
+    if (!category_name_AR && !category_name_EN && !priority && !photoPath) {
       if (photoPath) fs.unlinkSync(photoPath);
       return res.status(400).json({ error: "Nothing to update!" });
     }
@@ -166,6 +171,7 @@ async function updateCategory(req, res) {
       id,
       category_name_AR: category_name_AR || existingCategory.category_name_AR,
       category_name_EN: category_name_EN || existingCategory.category_name_EN,
+      priority: priority || existingCategory.priority,
       photoPath: photoPath || existingCategory.photoPath,
     };
 

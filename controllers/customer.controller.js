@@ -1,6 +1,26 @@
 const customerRepository = require("../repositories/customer.repository");
 const validator = require("validator");
 
+async function createCustomer(req, res) {
+  try {
+    const { firstName, lastName, email } = req.body;
+
+    if (!firstName || !lastName) {
+      return res.status(400).json({ message: 'First name and last name are required' });
+    }
+
+    const newCustomerId = await customerRepository.createCustomer({ firstName, lastName, email });
+
+    res.status(201).json({
+      message: 'Customer created successfully',
+      customerId: newCustomerId,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while creating the customer' });
+  }
+}
+
 // Get all customers
 async function getAllCustomer(req, res) {
   try {
@@ -16,10 +36,10 @@ async function getAllCustomer(req, res) {
 // Get customer info
 async function getMyInfo(req, res) {
   try {
-    if(!req.user) {
+    if (!req.user) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-    
+
     const customer = {
       id: req.user.id,
       firstName: req.user.firstName,
@@ -28,7 +48,7 @@ async function getMyInfo(req, res) {
       thumbnail: req.user.thumbnail,
       is_admin: req.user.is_admin,
     };
-    
+
     return res.status(200).json(customer);
   } catch (error) {
     return res.status(500).json({ error: "Failed to retrieve customer info", details: error.message });
@@ -91,7 +111,7 @@ async function updateCustomerRole(req, res) {
       return res.status(404).json({ error: "Customer not found" });
     }
 
-    if(!id) {
+    if (!id) {
       return res.status(404).json({ error: "Params not found" });
     }
 
@@ -124,6 +144,7 @@ async function deleteCustomer(req, res) {
 }
 
 module.exports = {
+  createCustomer,
   getAllCustomer,
   getMyInfo,
   getCustomerById,

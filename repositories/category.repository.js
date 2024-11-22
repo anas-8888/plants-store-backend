@@ -2,17 +2,18 @@ const pool = require("../config/db");
 
 async function saveCategory(categoryData) {
   try {
-    const { category_name_AR, category_name_EN, photoPath } = categoryData;
+    const { category_name_AR, category_name_EN, priority, photoPath } = categoryData;
     const connection = await pool.getConnection();
 
     const query = `
-      INSERT INTO category (category_name_AR,category_name_EN, photoPath)
-      VALUES (?, ?, ?)
+      INSERT INTO category (category_name_AR,category_name_EN, priority, photoPath)
+      VALUES (?, ?, ?, ?)
     `;
 
     const [result] = await connection.execute(query, [
       category_name_AR,
       category_name_EN,
+      priority,
       photoPath,
     ]);
     connection.release();
@@ -76,19 +77,20 @@ async function findCategoryByName(name) {
 }
 
 async function updateCategory(categoryData) {
-  const { id, category_name_AR, category_name_EN, photoPath } = categoryData;
+  const { id, category_name_AR, category_name_EN, priority, photoPath } = categoryData;
 
   try {
     const connection = await pool.getConnection();
     const query = `
       UPDATE category
-      SET category_name_AR = ?,category_name_EN = ?, photoPath = ?
+      SET category_name_AR = ?,category_name_EN = ?, priority = ?, photoPath = ?
       WHERE id = ?
     `;
 
     const [result] = await connection.execute(query, [
       category_name_AR,
       category_name_EN,
+      priority,
       photoPath,
       id,
     ]);

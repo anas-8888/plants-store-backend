@@ -88,7 +88,7 @@ async function deleteFavorite(favoriteId) {
 async function findFavoritesByCustomerId(customerId) {
   const connection = await pool.getConnection();
   try {
-    const query = `SELECT * FROM favorite WHERE customerId = ?`;
+    const query = `SELECT id, plantId FROM favorite WHERE customerId = ?`;
     const [rows] = await connection.execute(query, [customerId]);
     return rows;
   } finally {

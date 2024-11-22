@@ -1,16 +1,12 @@
 const pool = require("../config/db");
 
 // Create a new customer
-async function createCustomer(customerData) {
-  const connection = await pool.getConnection();
-  const { firstName, lastName, email, thumbnail, googleId, is_admin } = customerData;
-
-  const [result] = await connection.execute(
-    'INSERT INTO customer (firstName, lastName, email, thumbnail, googleId, is_admin) VALUES (?, ?, ?, ?, ?, ?)',
-    [firstName, lastName, email, thumbnail, googleId, is_admin] 
-  );
-
-  connection.release();
+async function createCustomer({ firstName, lastName, email = 'No email', thumbnail = null, googleId = 'No google id', is_admin = 0 }) {
+  const query = `
+        INSERT INTO customer (firstName, lastName, email, googleId, thumbnail, is_admin)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+  const [result] = await pool.execute(query, [firstName, lastName, email, googleId, thumbnail, is_admin]);
   return result.insertId;
 }
 

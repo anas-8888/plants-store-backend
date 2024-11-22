@@ -61,7 +61,7 @@ async function findFavoriteById(req, res) {
 
 // Get all favorites by customer ID
 async function findMyAllFavorite(req, res) {
-  const { id } = req.user.id;
+  const { id } = req.params;
 
   try {
     const favorites = await favoriteRepository.findFavoritesByCustomerId(id);

@@ -14,7 +14,6 @@ const {
 } = require("../controllers/plant.controller");
 const upload = require("../middleware/uploadPlants");
 const uploadPlantPhoto = require("../middleware/uploadPlantPhoto");
-const { isCustomer } = require("../middleware/isCustomer");
 const { isAdmin } = require("../middleware/isAdmin");
 
 const plant = express.Router();
