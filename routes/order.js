@@ -7,10 +7,9 @@ const { validateCart } = require("../middleware/cartValidation");
 const router = express.Router();
 
 router.post("/createOrder", isCustomer, ordersController.createOrder);
-router.get("/findMyAllOrders", isCustomer, ordersController.findAllOrders);
-router.get("/findOrderById/:id", isCustomer, ordersController.findOrderById);
 router.get("/findAllOrders", isAdmin, ordersController.getAllLastOrders);
-router.get("/findAllOrderItems/:id", isCustomer, ordersController.findAllOrderItems);
+router.get("/findMyAllOrders", isCustomer, ordersController.findAllOrders);
+router.get("/findOrderById/:id", isAdmin, ordersController.findOrderById);
 router.post("/paymentAction", isCustomer, validateCart, ordersController.paymentAction); // TODO
 
 module.exports = router;
