@@ -162,7 +162,7 @@ const ordersController = {
                 </tr>
               </tbody>
             </table>
-            <p>نحن نقدّر تعاملك معنا!</p>
+            <p> نقدّر تعاملك معنا!</p>
             <p>كل التمنيات,<br>فريق موقع nabtaty</p>
             <div style="text-align: center; margin-top: 20px;">
               <img src="cid:logo" alt="Nabtaty Logo" style="width: 100px; height: auto;">
