@@ -1,0 +1,6 @@
+CREATE TABLE plantPress(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  description_AR VARCHAR(100) NOT NULL,
+  description_EN VARCHAR(100) NOT NULL,
+  photoPath VARCHAR(255)
+);

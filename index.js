@@ -32,6 +32,9 @@ const logo = require("./routes/logo");
 const social = require("./routes/social");
 const privacyPolicies = require("./routes/privacyPolicies");
 const helpSupport = require("./routes/helpSupport");
+const plantCare = require("./routes/plantCare");
+const plantPress = require("./routes/plantPress");
+const plantTalk = require("./routes/plantTalk");
 
 // Import middlewares
 const languageMiddleware = require("./middleware/languageMiddleware");
@@ -53,7 +56,7 @@ app.use(
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-	  domain: ".nabtaty.com",
+	  domain: process.env.NODE_ENV === "production" ? `.${process.env.DOMAIN_NAME}` : null
   })
 );
 app.use(passport.initialize());
@@ -61,7 +64,7 @@ app.use(passport.session());
 
 // CORS Configuration
 // app.use(cors({
-//   origin: 'https://nabtaty.com',
+//   origin: process.env.NODE_ENV === "production" ? ${process.env.DOMAIN} : *,
 //   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 //   allowedHeaders: ["Content-Type", "Authorization"],
 //   credentials: true,
@@ -103,6 +106,9 @@ app.use("/api", logo);
 app.use("/api", social);
 app.use("/api", privacyPolicies);
 app.use("/api", helpSupport);
+app.use("/api", plantCare);
+app.use("/api", plantPress);
+app.use("/api", plantTalk);
 
 // URIs
 app.get("/", (req, res) => {

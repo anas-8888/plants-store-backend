@@ -131,25 +131,24 @@
 					"response": []
 				},
 				{
-					"name": "Delete Customer",
+					"name": "Get my info from session",
 					"request": {
-						"method": "DELETE",
-						"header": [],
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "username-localhost-8888=\"2|1:0|10:1732180138|23:username-localhost-8888|200:eyJ1c2VybmFtZSI6ICI4NWMyYjZjNTZmNTU0ZjljODJmZmFjNWFlODIwYmIzZSIsICJuYW1lIjogIkFub255bW91cyBQYXNpcGhhZSIsICJkaXNwbGF5X25hbWUiOiAiQW5vbnltb3VzIFBhc2lwaGFlIiwgImluaXRpYWxzIjogIkFQIiwgImNvbG9yIjogbnVsbH0=|62b92a98d41f070df8282a8932ad9fc8be87b0d508c13237d522f1ba69e2ea88\"; _xsrf=2|30a3b6d2|6b064f7933564a88541cafeeef3d383c|1732180138; session=eyJwYXNzcG9ydCI6eyJ1c2VyIjoxfX0=; session.sig=vWdMHtHP5qUdGPxJSRgra_q6Rco",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{base_url}}/api/deleteCustomer/:id",
+							"raw": "{{base_url}}/api/findMyInfo",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"deleteCustomer",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"findMyInfo"
 							]
 						}
 					},
@@ -190,18 +189,25 @@
 					"response": []
 				},
 				{
-					"name": "Get my info from session",
+					"name": "Delete Customer",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/findMyInfo",
+							"raw": "{{base_url}}/api/deleteCustomer/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"findMyInfo"
+								"deleteCustomer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -238,7 +244,7 @@
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "Media/Photos/n.logo (2).png"
+									"src": []
 								}
 							]
 						},
@@ -364,13 +370,13 @@
 								{
 									"key": "priority",
 									"value": "5",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "Screenshot (81).png",
-									"disabled": true
+									"src": "Media/Photos/berlin-in-money-heist-ua-1.jpg"
 								}
 							]
 						},
@@ -399,7 +405,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2"
+									"value": "7"
 								}
 							]
 						}
@@ -680,11 +686,6 @@
 									"disabled": true
 								},
 								{
-									"key": "price",
-									"value": "95.5",
-									"type": "text"
-								},
-								{
 									"key": "pot_EN",
 									"value": "Pot",
 									"type": "text",
@@ -790,9 +791,8 @@
 								},
 								{
 									"key": "subcategory_id",
-									"value": "11",
-									"type": "text",
-									"disabled": true
+									"value": "1",
+									"type": "text"
 								},
 								{
 									"key": "photoPath",
@@ -800,13 +800,53 @@
 									"src": "Media/Photos/berlin-in-money-heist-ua-1.jpg"
 								},
 								{
-									"key": "size_EN",
-									"value": "larg",
+									"key": "price1",
+									"value": "55",
 									"type": "text"
 								},
 								{
-									"key": "size_AR",
-									"value": "كبير",
+									"key": "price2",
+									"value": "56",
+									"type": "text"
+								},
+								{
+									"key": "price3",
+									"value": "57",
+									"type": "text"
+								},
+								{
+									"key": "size1_AR",
+									"value": "ببل",
+									"type": "text"
+								},
+								{
+									"key": "size1_EN",
+									"value": "s",
+									"type": "text"
+								},
+								{
+									"key": "size2_AR",
+									"value": "ؤرؤ",
+									"type": "text"
+								},
+								{
+									"key": "size2_EN",
+									"value": "m",
+									"type": "text"
+								},
+								{
+									"key": "size3_AR",
+									"value": "ؤرؤ",
+									"type": "text"
+								},
+								{
+									"key": "size3_EN",
+									"value": "l",
+									"type": "text"
+								},
+								{
+									"key": "is_active",
+									"value": "1",
 									"type": "text"
 								}
 							]
@@ -819,6 +859,30 @@
 							"path": [
 								"api",
 								"createPlant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All active Plants",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findAllActivePlantsWithPhotos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAllActivePlantsWithPhotos"
 							]
 						}
 					},
@@ -849,6 +913,37 @@
 					"response": []
 				},
 				{
+					"name": "Get active Plant By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept-language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findActivePlantById/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findActivePlantById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Plant By ID",
 					"request": {
 						"method": "GET",
@@ -872,7 +967,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "14"
 								}
 							]
 						}
@@ -897,7 +992,7 @@
 							"variable": [
 								{
 									"key": "name",
-									"value": "مون"
+									"value": "Monstera delciosa"
 								}
 							]
 						}
@@ -922,7 +1017,7 @@
 							"variable": [
 								{
 									"key": "categoryId",
-									"value": "1"
+									"value": "6"
 								}
 							]
 						}
@@ -953,7 +1048,7 @@
 							"variable": [
 								{
 									"key": "subcategoryId",
-									"value": "7"
+									"value": "1"
 								}
 							]
 						}
@@ -1007,12 +1102,6 @@
 								{
 									"key": "description_AR",
 									"value": "يبيبيب",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "price",
-									"value": "45.5",
 									"type": "text",
 									"disabled": true
 								},
@@ -1131,15 +1220,81 @@
 									"disabled": true
 								},
 								{
-									"key": "size_EN",
-									"value": "xlarg",
-									"type": "text"
-								},
-								{
-									"key": "size_AR",
-									"value": "كبير",
+									"key": "size1_EN",
+									"value": "s",
 									"type": "text",
 									"disabled": true
+								},
+								{
+									"key": "size1_AR",
+									"value": "يبي",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size2_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size2_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size3_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size3_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size4_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "size4_AR",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price1",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price2",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price3",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price4",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "is_active",
+									"value": "1",
+									"type": "text"
 								}
 							]
 						},
@@ -1156,7 +1311,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "5"
+									"value": "14"
 								}
 							]
 						}
@@ -1174,7 +1329,7 @@
 								{
 									"key": "photoPath",
 									"type": "file",
-									"src": "Media/Photos/IMG_1943.JPG"
+									"src": "Media/Photos/berlin-in-money-heist-ua-1.jpg"
 								}
 							]
 						},
@@ -1191,7 +1346,7 @@
 							"variable": [
 								{
 									"key": "photoId",
-									"value": "6"
+									"value": "10"
 								}
 							]
 						}
@@ -1216,7 +1371,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "4"
+									"value": "13"
 								}
 							]
 						}
@@ -1241,7 +1396,7 @@
 							"variable": [
 								{
 									"key": "photoId",
-									"value": "42"
+									"value": "11"
 								}
 							]
 						}
@@ -1255,19 +1410,26 @@
 			"item": [
 				{
 					"name": "Create Order",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"key": "Cookie",
+								"value": "username-localhost-8888=\"2|1:0|10:1732180138|23:username-localhost-8888|200:eyJ1c2VybmFtZSI6ICI4NWMyYjZjNTZmNTU0ZjljODJmZmFjNWFlODIwYmIzZSIsICJuYW1lIjogIkFub255bW91cyBQYXNpcGhhZSIsICJkaXNwbGF5X25hbWUiOiAiQW5vbnltb3VzIFBhc2lwaGFlIiwgImluaXRpYWxzIjogIkFQIiwgImNvbG9yIjogbnVsbH0=|62b92a98d41f070df8282a8932ad9fc8be87b0d508c13237d522f1ba69e2ea88\"; _xsrf=2|30a3b6d2|6b064f7933564a88541cafeeef3d383c|1732180138; session=eyJwYXNzcG9ydCI6eyJ1c2VyIjoxfX0=; session.sig=vWdMHtHP5qUdGPxJSRgra_q6Rco",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"location_id\": 1,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 9,\r\n      \"size\": \"medium\",\r\n      \"quantity\": 2,\r\n      \"details\": \"For indoor use\"\r\n    },\r\n    {\r\n      \"plantId\": 10,\r\n      \"size\": \"large\",\r\n      \"quantity\": 1,\r\n      \"details\": \"Includes decorative pot\"\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n  \"location_id\": 1,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 12,\r\n      \"size\": \"l\",\r\n      \"quantity\": 1,\r\n      \"details\": \"For indoor use\"\r\n    },\r\n    {\r\n      \"plantId\": 12,\r\n      \"size\": \"m\",\r\n      \"quantity\": 1,\r\n      \"details\": \"For indoor use\"\r\n    }\r\n  ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3037,6 +3199,516 @@
 								{
 									"key": "id",
 									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plant press",
+			"item": [
+				{
+					"name": "Create plant press",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description_AR",
+									"value": "نص",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "Text",
+									"type": "text"
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Media/Photos/berlin-in-money-heist-ua-1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/createPlantPress",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"createPlantPress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all plant press",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findAllPlantPresses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAllPlantPresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get plant press by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findPlantPressId/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findPlantPressId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant press",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description_AR",
+									"value": "نصص",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photoPath",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/updatePlantPress/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"updatePlantPress",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete plant press",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/deletePlantPress/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"deletePlantPress",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plant care",
+			"item": [
+				{
+					"name": "Create plant care",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description_AR",
+									"value": "نص",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "Text",
+									"type": "text"
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Media/Photos/berlin-in-money-heist-ua-1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/createPlantCare",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"createPlantCare"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all plant cares",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findAllPlantCares",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAllPlantCares"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get plant care by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findPlantCareId/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findPlantCareId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant care",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description_AR",
+									"value": "نصص",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photoPath",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/updatePlantCare/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"updatePlantCare",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete plant care",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/deletePlantCare/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"deletePlantCare",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plant talk",
+			"item": [
+				{
+					"name": "Create plant talk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description_AR",
+									"value": "نص",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "Text",
+									"type": "text"
+								},
+								{
+									"key": "photoPath",
+									"type": "file",
+									"src": "Media/Photos/berlin-in-money-heist-ua-1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/createPlantTalk",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"createPlantTalk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all plant talk",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findAllPlantTalks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findAllPlantTalks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get plant talk by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/findPlantTalkId/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"findPlantTalkId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant talk",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description_AR",
+									"value": "نصص",
+									"type": "text"
+								},
+								{
+									"key": "description_EN",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photoPath",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/updatePlantTalk/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"updatePlantTalk",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete plant talk",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/deletePlantTalk/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"deletePlantTalk",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
 								}
 							]
 						}

@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const { checkNotLoggedIn, checkLoggedIn } = require("./../middleware/auth");
+require("dotenv").config({ path: "./secret.env" });
 
 const auth = express.Router();
 
@@ -21,14 +22,18 @@ auth.get(
     session: true,
   }),
   (req, res) => {
-    res.redirect("https://nabtaty.com");
+    res.redirect(`${process.env.DOMAIN}`);
   }
 );
 
 // Auth logout
 auth.get("/logout", checkLoggedIn, (req, res) => {
   req.session = null; // Destroys the session on the server
-  res.clearCookie("session", { domain: ".nabtaty.com" });
+  res.clearCookie("session", { 
+    domain: process.env.NODE_ENV === "production" ? 
+      `.${process.env.DOMAIN_NAME}` : 
+      process.env.DOMAIN_NAME
+  });
   req.logout(); // Passport-specific logout
   res.status(200).json({ message: "Successfully logged out" });
 });

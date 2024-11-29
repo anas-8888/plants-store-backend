@@ -1,7 +1,9 @@
 const express = require("express");
 const {
   savePlant,
+  findAllActivePlantsWithPhotos,
   findAllPlantsWithPhotos,
+  findActivePlantById,
   findPlantById,
   findPlantByName,
   findPlantsByCategory,
@@ -19,8 +21,10 @@ const { isAdmin } = require("../middleware/isAdmin");
 const plant = express.Router();
 
 plant.post("/createPlant", isAdmin, upload, savePlant);
-plant.get("/findAllPlantsWithPhotos", findAllPlantsWithPhotos);
-plant.get("/findPlantById/:id", findPlantById);
+plant.get("/findAllActivePlantsWithPhotos", findAllActivePlantsWithPhotos);
+plant.get("/findAllPlantsWithPhotos", isAdmin, findAllPlantsWithPhotos);
+plant.get("/findActivePlantById/:id", findActivePlantById);
+plant.get("/findPlantById/:id", isAdmin, findPlantById);
 plant.get("/findPlantByName/:name", findPlantByName);
 plant.get("/findPlantsBySubcategory/:subcategoryId", findPlantsBySubcategory);
 plant.get("/findPlantsBycategory/:categoryId", findPlantsByCategory);

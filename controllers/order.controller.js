@@ -1,15 +1,22 @@
 const nodemailer = require("nodemailer");
+const { format } = require('date-fns');
+
 const {
   createNewOrder,
   getAllOrdersWithItems,
   getOrderById,
   getAllOrdersWithItemsForAdmin,
-  getItemByOrderId,
   createPayment,
 } = require("../repositories/order.repository");
 
-const { getPlantPrice } = require("../repositories/plant.repository");
-const { getLocationById } = require("../repositories/locations.repository");
+const {
+  getPlantPrice,
+  findActivePlantById
+} = require("../repositories/plant.repository");
+
+const { 
+  getLocationById
+ } = require("../repositories/locations.repository");
 
 const ordersController = {
   async createOrder(req, res) {
@@ -18,50 +25,38 @@ const ordersController = {
     const customer_email = req.user.email;
     let total_price = 0;
 
-    // Validate items
-    if (!Array.isArray(items)) {
-      return res.status(400).json({ error: "Items must be an array" });
-    }
-    if (!items.length) {
-      return res
-        .status(400)
-        .json({ error: "Order must contain at least one item" });
-    }
-    for (const item of items) {
-      if (!item.plantId || !item.size || !item.quantity) {
-        return res
-          .status(400)
-          .json({ error: "Missing required fields for an item" });
-      }
-    }
-
-    // Fetch and validate location
-    const location = await getLocationById(location_id);
-    if (!location) {
-      return res.status(400).json({ error: "Invalid location ID" });
-    }
-
-    // Add location price to total price
-    total_price += parseFloat(location.price);
-
-    // Calculate total price for items
-    for (const item of items) {
-      const plantPrice = await getPlantPrice(item.plantId);
-
-      if (plantPrice === -1) {
-        return res.status(400).json({ error: "Item not found" });
-      }
-
-      if (!item.size) {
-        return res
-          .status(400)
-          .json({ error: `Size is required for plant ID: ${item.plantId}` });
-      }
-
-      total_price += plantPrice * item.quantity;
-    }
-
     try {
+      // Validate items
+      if (!Array.isArray(items)) {
+        return res.status(400).json({ error: "Items must be an array" });
+      }
+      if (items.length === 0) {
+        return res.status(400).json({ error: "Order must contain at least one item" });
+      }
+      for (const item of items) {
+        if (!item.plantId || !item.size || !item.quantity) {
+          return res.status(400).json({ error: "Missing required fields for an item" });
+        }
+      }
+
+      // Fetch and validate location
+      const location = await getLocationById(location_id);
+      if (!location) {
+        return res.status(400).json({ error: "Invalid location ID" });
+      }
+
+      // Add location price to total price
+      total_price += parseFloat(location.price);
+
+      // Calculate total price for items
+      for (const item of items) {
+        const plantPrice = await getPlantPrice(item.size, item.plantId);
+        if (plantPrice == -1) {
+          return res.status(400).json({ error: `Plant not found for ID: ${item.plantId} and size: ${item.size}` });
+        }
+        total_price += plantPrice * item.quantity;
+      }
+
       // Create the new order
       const cartId = await createNewOrder({
         location_id,
@@ -71,33 +66,112 @@ const ordersController = {
         items,
       });
 
+      // Generate order details
+      const language = req.language || "en";
+      const orderDetails = await Promise.all(
+        items.map(async (item, index) => {
+          const Fullitem = await findActivePlantById(item.plantId);
+          return language === "en"
+            ? `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${Fullitem[0].plant_name_EN}</td>
+              <td>${item.size}</td>
+              <td>${item.quantity}</td>
+              <td>${await getPlantPrice(item.size, item.plantId)} JOD</td>
+            </tr>
+          `
+            : `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${Fullitem[0].plant_name_AR}</td>
+              <td>${item.size}</td>
+              <td>${item.quantity}</td>
+              <td>${await getPlantPrice(item.size, item.plantId)} دينار أردني</td>
+            </tr>
+          `;
+        })
+      );
+
+      // Get the current date and time
+      const currentDateTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
       // Prepare email content
-      const orderDetails = items
-        .map(
-          (item) =>
-            `Plant ID: ${item.plantId}, Size: ${item.size}, Quantity: ${item.quantity}`
-        )
-        .join("\n");
+      const emailContent = language === "en"
+        ? `
+        <html>
+          <body style="font-family: Arial, sans-serif; direction: ltr; text-align: left;">
+            <h2>Dear Customer,</h2>
+            <p>Thank you for ordering from nabtaty.com, Here are the details of your order:</p>
+            <p><strong>Date & Time:</strong> ${currentDateTime}</p>
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Plant Name</th>
+                  <th>Size</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${orderDetails.join("")}
+                <tr>
+                  <td colspan="4" style="text-align: right;"><strong>Delivery to ${location.location_name_EN}:</strong></td>
+                  <td>${location.price} JOD</td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
+                  <td>${total_price.toFixed(2)} JOD</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>We appreciate your business!</p>
+            <p>Best Regards,<br>Your Plant Store Team</p>
+            <div style="text-align: center; margin-top: 20px;">
+              <img src="cid:logo" alt="Nabtaty Logo" style="width: 100px; height: auto;">
+            </div>
+          </body>
+        </html>
+      `
+        : `
+        <html>
+          <body style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
+            <h2>عزيزنا العميل،</h2>
+            <p>شكراً لك لطلبك من موقع nabtaty.com، إليك تفاصيل طلبك:</p>
+            <p><strong>التاريخ والوقت:</strong> ${currentDateTime}</p>
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>اسم النبتة</th>
+                  <th>الحجم</th>
+                  <th>الكمية</th>
+                  <th>السعر</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${orderDetails.join("")}
+                <tr>
+                  <td colspan="4" style="text-align: left;"><strong>التوصيل إلى ${location.location_name_AR}:</strong></td>
+                  <td>${location.price} دينار أردني</td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align: left;"><strong>الإجمالي:</strong></td>
+                  <td>${total_price.toFixed(2)} دينار أردني</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>نحن نقدّر تعاملك معنا!</p>
+            <p>كل التمنيات,<br>فريق موقع nabtaty</p>
+            <div style="text-align: center; margin-top: 20px;">
+              <img src="cid:logo" alt="Nabtaty Logo" style="width: 100px; height: auto;">
+            </div>
+          </body>
+        </html>
+      `;
 
-      const emailContent = `
-                Dear Customer,
-
-                Thank you for your order!
-
-                Order ID: ${cartId}
-                Location: ${location.name} (${location.price} USD)
-                Total Price: ${total_price.toFixed(2)} USD
-
-                Items Ordered:
-                ${orderDetails}
-
-                We appreciate your business!
-
-                Best Regards,
-                Your Plant Store Team
-            `;
-
-      //Send Email
+      // Send email
       const transporter = nodemailer.createTransport({
         service: "gmail",
         host: "smtp.gmail.com",
@@ -112,17 +186,18 @@ const ordersController = {
       await transporter.sendMail({
         from: `"Plant Store" <${process.env.EMAIL_USER}>`,
         to: customer_email,
-        subject: "Order Confirmation",
-        text: emailContent,
+        subject: language === "en" ? "Order Confirmation" : "تأكيد الطلب",
+        html: emailContent,
+        attachments: [{
+          filename: 'logo.png',
+          path: 'httpdocs/assets/logo nabtaty-02.png',
+          cid: 'logo' // same cid value as in the html img src
+        }]
       });
 
-      return res
-        .status(201)
-        .json({ message: "Order created successfully", cartId });
+      return res.status(201).json({ message: "Order created successfully", cartId });
     } catch (error) {
-      return res
-        .status(500)
-        .json({ error: "Failed to create order", details: error.message });
+      return res.status(500).json({ error: "Failed to create order", details: error.message });
     }
   },
 
