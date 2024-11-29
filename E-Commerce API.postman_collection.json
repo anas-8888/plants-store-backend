@@ -137,7 +137,7 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "username-localhost-8888=\"2|1:0|10:1732180138|23:username-localhost-8888|200:eyJ1c2VybmFtZSI6ICI4NWMyYjZjNTZmNTU0ZjljODJmZmFjNWFlODIwYmIzZSIsICJuYW1lIjogIkFub255bW91cyBQYXNpcGhhZSIsICJkaXNwbGF5X25hbWUiOiAiQW5vbnltb3VzIFBhc2lwaGFlIiwgImluaXRpYWxzIjogIkFQIiwgImNvbG9yIjogbnVsbH0=|62b92a98d41f070df8282a8932ad9fc8be87b0d508c13237d522f1ba69e2ea88\"; _xsrf=2|30a3b6d2|6b064f7933564a88541cafeeef3d383c|1732180138; session=eyJwYXNzcG9ydCI6eyJ1c2VyIjoxfX0=; session.sig=vWdMHtHP5qUdGPxJSRgra_q6Rco",
+								"value": "session=eyJwYXNzcG9ydCI6eyJ1c2VyIjoxN319; session.sig=iM2_mnQmib5awG6VZgynwVj-RUc",
 								"type": "text"
 							}
 						],
@@ -1418,7 +1418,7 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "username-localhost-8888=\"2|1:0|10:1732180138|23:username-localhost-8888|200:eyJ1c2VybmFtZSI6ICI4NWMyYjZjNTZmNTU0ZjljODJmZmFjNWFlODIwYmIzZSIsICJuYW1lIjogIkFub255bW91cyBQYXNpcGhhZSIsICJkaXNwbGF5X25hbWUiOiAiQW5vbnltb3VzIFBhc2lwaGFlIiwgImluaXRpYWxzIjogIkFQIiwgImNvbG9yIjogbnVsbH0=|62b92a98d41f070df8282a8932ad9fc8be87b0d508c13237d522f1ba69e2ea88\"; _xsrf=2|30a3b6d2|6b064f7933564a88541cafeeef3d383c|1732180138; session=eyJwYXNzcG9ydCI6eyJ1c2VyIjoxfX0=; session.sig=vWdMHtHP5qUdGPxJSRgra_q6Rco",
+								"value": "session=eyJwYXNzcG9ydCI6eyJ1c2VyIjoxN319; session.sig=iM2_mnQmib5awG6VZgynwVj-RUc",
 								"type": "text"
 							},
 							{
@@ -1429,7 +1429,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"location_id\": 1,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 12,\r\n      \"size\": \"l\",\r\n      \"quantity\": 1,\r\n      \"details\": \"For indoor use\"\r\n    },\r\n    {\r\n      \"plantId\": 12,\r\n      \"size\": \"m\",\r\n      \"quantity\": 1,\r\n      \"details\": \"For indoor use\"\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n  \"location_id\": 6,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 85,\r\n      \"size\": \"larg\",\r\n      \"quantity\": 1,\r\n      \"details\": \"testing from fuzik teams\"\r\n    },\r\n    {\r\n      \"plantId\": 85,\r\n      \"size\": \"small\",\r\n      \"quantity\": 2,\r\n      \"details\": \"testing from fuzik teams\"\r\n    }\r\n  ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
