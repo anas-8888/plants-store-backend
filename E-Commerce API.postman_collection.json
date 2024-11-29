@@ -681,7 +681,7 @@
 								},
 								{
 									"key": "price",
-									"value": "45.5",
+									"value": "95.5",
 									"type": "text"
 								},
 								{
@@ -1257,10 +1257,17 @@
 					"name": "Create Order",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"location_id\": 1,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 9,\r\n      \"size\": \"medium\",\r\n      \"quantity\": 2,\r\n      \"details\": \"For indoor use\"\r\n    },\r\n    {\r\n      \"plantId\": 9,\r\n      \"size\": \"large\",\r\n      \"quantity\": 1,\r\n      \"details\": \"Includes decorative pot\"\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n  \"location_id\": 1,\r\n  \"items\": [\r\n    {\r\n      \"plantId\": 9,\r\n      \"size\": \"medium\",\r\n      \"quantity\": 2,\r\n      \"details\": \"For indoor use\"\r\n    },\r\n    {\r\n      \"plantId\": 10,\r\n      \"size\": \"large\",\r\n      \"quantity\": 1,\r\n      \"details\": \"Includes decorative pot\"\r\n    }\r\n  ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"

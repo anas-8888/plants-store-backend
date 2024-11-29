@@ -59,7 +59,7 @@ async function getAllOrdersWithItems(customerId, language) {
 
     const itemsQuery = `
       SELECT ci.cartId, ci.plantId, ci.quantity, ci.size, ci.details, 
-             ${plantNameColumn} AS plantName
+             ${plantNameColumn} AS plantName, p.price as plantPrice
       FROM cart_items ci
       JOIN plant p ON ci.plantId = p.id
       WHERE ci.cartId IN (${orderIds.map(() => "?").join(",")})
@@ -115,7 +115,8 @@ async function getOrderById(id, language) {
         ci.quantity, 
         ci.size, 
         ci.details, 
-        ${plantNameColumn} AS plantName
+        ${plantNameColumn} AS plantName,
+        p.price as plantPrice
       FROM cart_items ci
       JOIN plant p ON ci.plantId = p.id
       WHERE ci.cartId = ?
@@ -149,7 +150,7 @@ async function getAllOrdersWithItemsForAdmin(language) {
 
     // Query for items in the orders
     const itemsQuery = `
-      SELECT ci.cartId, ci.plantId, ci.quantity, ci.size, ci.details, ${plantNameColumn} AS plantName
+      SELECT ci.cartId, ci.plantId, ci.quantity, ci.size, ci.details, ${plantNameColumn} AS plantName, p.price as plantPrice
       FROM cart_items ci
       JOIN plant p ON ci.plantId = p.id
       WHERE ci.cartId IN (${orderIds.map(() => "?").join(",")})
