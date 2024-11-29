@@ -19,9 +19,7 @@ async function createCategory(req, res) {
       });
     }
 
-    const photoPath = req.file
-    ? `uploads/category/${req.file.filename}`
-    : null;
+    const photoPath = req.file ? `uploads/category/${req.file.filename}` : null;
 
     const result = await categoryRepository.saveCategory({
       category_name_AR,
@@ -142,13 +140,11 @@ async function findCategoryByName(req, res) {
 async function updateCategory(req, res) {
   const { id } = req.params;
   const { category_name_AR, category_name_EN, priority } = req.body;
-  const photoPath = req.file
-    ? `uploads/category/${req.file.filename}`
-    : null;
+  const photoPath = req.file ? `uploads/category/${req.file.filename}` : null;
 
   try {
     const existingCategory = await categoryRepository.findCategoryById(id);
-    
+
     if (!existingCategory) {
       if (photoPath) fs.unlinkSync(photoPath);
       return res.status(404).json({ error: "Category not found!" });
