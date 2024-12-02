@@ -190,8 +190,8 @@ const ordersController = {
         html: emailContent,
         attachments: [{
           filename: 'logo.png',
-          path: 'httpdocs/assets/logo nabtaty-02.png',
-          cid: 'logo' // same cid value as in the html img src
+          path: 'httpdocs/assets/logo nabtaty-03.png',
+          cid: 'logo'
         }]
       });
 

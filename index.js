@@ -43,7 +43,6 @@ const languageMiddleware = require("./middleware/languageMiddleware");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
 
 // Set trust proxy for secure cookies behind a proxy
 app.set("trust proxy", 1);

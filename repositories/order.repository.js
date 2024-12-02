@@ -59,7 +59,14 @@ async function getAllOrdersWithItems(customerId, language) {
 
     const itemsQuery = `
       SELECT ci.cartId, ci.plantId, ci.quantity, ci.size, ci.details, 
-             ${plantNameColumn} AS plantName, p.price as plantPrice
+             ${plantNameColumn} AS plantName,
+             CASE 
+               WHEN ci.size = p.size1_EN OR ci.size = p.size1_AR THEN p.price1
+               WHEN ci.size = p.size2_EN OR ci.size = p.size2_AR THEN p.price2
+               WHEN ci.size = p.size3_EN OR ci.size = p.size3_AR THEN p.price3
+               WHEN ci.size = p.size4_EN OR ci.size = p.size4_AR THEN p.price4
+               ELSE NULL
+             END AS plantPrice
       FROM cart_items ci
       JOIN plant p ON ci.plantId = p.id
       WHERE ci.cartId IN (${orderIds.map(() => "?").join(",")})
@@ -116,7 +123,13 @@ async function getOrderById(id, language) {
         ci.size, 
         ci.details, 
         ${plantNameColumn} AS plantName,
-        p.price as plantPrice
+        CASE 
+          WHEN ci.size = p.size1_EN OR ci.size = p.size1_AR THEN p.price1
+               WHEN ci.size = p.size2_EN OR ci.size = p.size2_AR THEN p.price2
+               WHEN ci.size = p.size3_EN OR ci.size = p.size3_AR THEN p.price3
+               WHEN ci.size = p.size4_EN OR ci.size = p.size4_AR THEN p.price4
+          ELSE NULL
+        END AS plantPrice
       FROM cart_items ci
       JOIN plant p ON ci.plantId = p.id
       WHERE ci.cartId = ?
@@ -150,7 +163,15 @@ async function getAllOrdersWithItemsForAdmin(language) {
 
     // Query for items in the orders
     const itemsQuery = `
-      SELECT ci.cartId, ci.plantId, ci.quantity, ci.size, ci.details, ${plantNameColumn} AS plantName, p.price as plantPrice
+      SELECT ci.cartId, ci.plantId, ci.quantity, ci.size, ci.details,
+             ${plantNameColumn} AS plantName,
+             CASE 
+               WHEN ci.size = p.size1_EN OR ci.size = p.size1_AR THEN p.price1
+               WHEN ci.size = p.size2_EN OR ci.size = p.size2_AR THEN p.price2
+               WHEN ci.size = p.size3_EN OR ci.size = p.size3_AR THEN p.price3
+               WHEN ci.size = p.size4_EN OR ci.size = p.size4_AR THEN p.price4
+               ELSE NULL
+             END AS plantPrice
       FROM cart_items ci
       JOIN plant p ON ci.plantId = p.id
       WHERE ci.cartId IN (${orderIds.map(() => "?").join(",")})
@@ -174,7 +195,6 @@ async function getAllOrdersWithItemsForAdmin(language) {
     connection.release();
   }
 }
-
 
 async function createPayment({ provider, status, amount, currency, paymentMethod, transactionId }) {
   // TODO
