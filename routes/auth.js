@@ -18,7 +18,7 @@ auth.get(
 auth.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/auth/login",
+    failureRedirect: "/auth/providers/google",
     session: true,
   }),
   (req, res) => {
